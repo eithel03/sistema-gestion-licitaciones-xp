@@ -213,8 +213,11 @@ La Fase 1 quedó completada con:
 - Rama: `chore/arquitectura-inicial`.
 - Duración: 2 horas.
 - Issue: `#3 — FASE-02: Inicialización técnica del monolito modular`.
-- Pull Request: Pendiente de completar por el equipo.
-- Commits: Pendiente de completar por el equipo.
+- Pull Request: `#4 Fase 2: inicialización técnica del monolito modular`.
+- Commits:
+  - `chore(arquitectura): crear solucion modular inicial`.
+  - `ci: configurar compilacion y pruebas iniciales`.
+  - `docs(arquitectura): documentar fase 2 y evidencias xp`.
 
 ### Objetivo de la sesión
 
@@ -331,3 +334,5 @@ v0.1.0
 - `Domain` permanece independiente.
 - El CI inicial quedó preparado localmente y su ejecución remota quedó pendiente del push.
 - No se implementó funcionalidad de fases posteriores.
+- GitHub Actions ejecutó correctamente restore, build y test.
+- El workflow CI finalizó sin errores.
