@@ -41,6 +41,7 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-35 | Iteracion 4 | Alta | 5 | Definidos en `historias-usuario.md` | Suites y cobertura | Pruebas, integracion continua | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
 | HU-36 | Iteracion 4 | Media | 5 | Definidos en `historias-usuario.md` | Contenedores y manifiestos | Infraestructura | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
 | HU-37 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | Revision documental | Documentacion, XP | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md`, `bitacora-xp.md` | v1.0.0-rc |
+| FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/` | `#3` | `chore/arquitectura-inicial` | Pendiente | Pendiente | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md`, `docs/README.md` | No aplica |
 
 ## Totales
 

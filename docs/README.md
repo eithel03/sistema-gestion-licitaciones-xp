@@ -23,7 +23,7 @@ Indice oficial de la documentacion del Sistema de Gestion de Licitaciones.
 
 Estos documentos pertenecen a fases posteriores. Los enlaces quedan registrados para mantener navegacion y trazabilidad, pero su contenido no se inventa en la Fase 1.
 
-- [Arquitectura general](arquitectura-general.md) - pendiente de una fase posterior.
+- [Arquitectura general](arquitectura-general.md) - documentada inicialmente en la Fase 2.
 - [Modelo de datos](modelo-datos.md) - pendiente de una fase posterior.
 - [API REST](api.md) - pendiente de una fase posterior.
 - [Pruebas](pruebas.md) - pendiente de una fase posterior.
