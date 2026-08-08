@@ -336,3 +336,59 @@ v0.1.0
 - No se implementó funcionalidad de fases posteriores.
 - GitHub Actions ejecutó correctamente restore, build y test.
 - El workflow CI finalizó sin errores.
+## Sesion 004 - Fase 3: preparacion del dominio y estrategia TDD
+
+- Fecha: 8 de agosto de 2026.
+- Fase: Fase 3 - Preparacion del dominio y estrategia TDD.
+- Modalidad: Programacion en parejas.
+- Driver: Luis Diego Chavala.
+- Navigator: Eithel Herrera Rojas.
+- Rama: Pendiente.
+- Issue: Pendiente.
+- Pull Request: Pendiente.
+
+### Objetivo de la sesion
+
+Preparar convenciones minimas de dominio y pruebas para iniciar las historias mediante TDD sin adelantar reglas de negocio de iteraciones futuras.
+
+### Actividades realizadas
+
+- Revision de la estructura actual de la solucion.
+- Creacion de tipos base para entidades, objetos de valor, excepciones y validacion.
+- Creacion de una guarda transversal minima.
+- Creacion de la abstraccion `IClock` para tiempo inyectable.
+- Creacion de `SystemClock` y registro en `AddInfrastructure`.
+- Creacion de pruebas unitarias de ejemplo para el ciclo TDD.
+- Actualizacion de documentacion tecnica, pruebas, trazabilidad y uso de IA.
+
+### Responsabilidades del driver
+
+Luis Diego Chavala realiza las acciones directas de implementacion, revisa los cambios y prepara la evidencia de la fase.
+
+### Responsabilidades del navigator
+
+Eithel Herrera Rojas revisa que la base no anticipe reglas futuras y que mantenga la separacion entre `Domain`, `Application` e `Infrastructure`.
+
+### Pruebas y validaciones realizadas
+
+- Se intento ejecutar `dotnet test Licitaciones.sln --configuration Release`.
+- Resultado local directo: no ejecutado por falta del SDK .NET `9.0.305` requerido por `global.json`.
+- Verificacion alternativa en `C:\tmp`: compilacion exitosa con SDK `10.0.102`, pruebas abortadas por falta del runtime `Microsoft.NETCore.App 9.0.0`.
+- SDK instalados en la maquina: `8.0.418` y `10.0.102`.
+
+### Aplicacion de TDD
+
+Se dejaron ejemplos minimos para guiar ciclos rojo-verde-refactorizacion:
+
+- Igualdad de entidades por identidad.
+- Igualdad de objetos de valor por componentes.
+- Resultados de validacion exitosos y fallidos.
+- Reloj reemplazable en pruebas.
+
+### Restricciones respetadas
+
+No se implementaron reglas de normalizacion de proveedores, estados de licitaciones, ofertas, aprobaciones ni moneda. Esas reglas permanecen asignadas a sus iteraciones.
+
+### Resultado
+
+La Fase 3 queda preparada a nivel de codigo y documentacion. La verificacion automatizada queda pendiente de ejecutar en un entorno con SDK .NET 9 compatible.

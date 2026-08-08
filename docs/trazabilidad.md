@@ -43,6 +43,8 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-37 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | Revision documental | Documentacion, XP | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md`, `bitacora-xp.md` | v1.0.0-rc |
 | FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/`, `.github/workflows/ci.yml` | `#3` | `chore/arquitectura-inicial` | `821ab9d `, `e0e5ad1`, `ad7913b`, `51e32eb`  | `#4` | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | CI aprobado |
 
+| FASE-03 | Preparacion dominio/TDD | N/A | N/A | Convenciones minimas de dominio y pruebas preparatorias | `EntityTests.cs`, `ValueObjectTests.cs`, `ValidationResultTests.cs`, `IClockTests.cs` | `Domain`, `Application`, `Infrastructure`, `UnitTests` | Pendiente | Pendiente | Pendiente | Pendiente | `docs/dominio-tdd.md`, `docs/pruebas.md`, `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md` | Pendiente |
+
 ## Totales
 
 | Iteracion | Puntos |

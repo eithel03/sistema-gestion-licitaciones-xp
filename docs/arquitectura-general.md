@@ -82,6 +82,19 @@ Se agregaron tres validaciones técnicas mínimas:
 - Smoke test del ensamblado de `Infrastructure`.
 - Prueba funcional de `GET /health`, que espera `200 OK` y contenido `Healthy`.
 
+## Base de dominio de Fase 3
+
+Se agregaron convenciones minimas para iniciar el desarrollo por TDD:
+
+- `Entity<TId>` para entidades con identidad.
+- `ValueObject` para objetos de valor con igualdad por componentes.
+- `DomainException` para violaciones de invariantes del dominio.
+- `ValidationError` y `ValidationResult` para validaciones acumulables.
+- `Guard` para validaciones transversales pequenas.
+- `IClock` en `Application` y `SystemClock` en `Infrastructure` para controlar dependencias de tiempo.
+
+Estas piezas no implementan reglas especificas de historias futuras. Las reglas de proveedores, licitaciones, ofertas, aprobaciones y moneda quedan diferidas a sus iteraciones.
+
 ## Integración continua
 
 El archivo `.github/workflows/ci.yml` ejecuta:
@@ -131,3 +144,4 @@ Todavía no se implementaron:
 - Módulos funcionales completos.
 
 Esta documentación refleja solo la estructura técnica real preparada en la Fase 2.
+La Fase 3 amplia esa base con convenciones minimas de dominio y pruebas TDD preparatorias.
