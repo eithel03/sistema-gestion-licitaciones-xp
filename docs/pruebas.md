@@ -19,8 +19,15 @@ dotnet build Licitaciones.sln --configuration Release --no-restore
 dotnet test Licitaciones.sln --configuration Release --no-build
 ```
 
-## Resultado local
+## Resultado de validación
 
-No se pudo ejecutar la suite directamente en esta maquina porque `global.json` requiere el SDK `9.0.305` y el entorno local tiene instalados los SDK `8.0.418` y `10.0.102`.
+Durante la sesión original del driver no fue posible ejecutar la suite con .NET 9 debido a que su entorno no disponía del SDK requerido por `global.json`.
 
-Se realizo una verificacion alternativa en `C:\tmp` sin `global.json`: la solucion compilo con el SDK `10.0.102` con `0` errores y `0` advertencias, pero la ejecucion de pruebas se aborto porque falta el runtime `Microsoft.NETCore.App 9.0.0`. No se modifica `global.json` porque la configuracion del proyecto y GitHub Actions estan orientadas a .NET 9.
+Posteriormente, la Fase 3 fue validada por el navigator en un entorno con SDK .NET `9.0.305`.
+
+Se ejecutaron correctamente:
+
+```bash
+dotnet restore Licitaciones.sln
+dotnet build Licitaciones.sln --configuration Release --no-restore
+dotnet test Licitaciones.sln --configuration Release --no-build

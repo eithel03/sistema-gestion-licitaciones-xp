@@ -105,7 +105,7 @@ El archivo `.github/workflows/ci.yml` ejecuta:
 - Build en `Release`.
 - Test.
 
-El resultado remoto de GitHub Actions todavía debe verificarse después del push.
+El workflow de GitHub Actions fue ejecutado correctamente y las validaciones de restore, build y test finalizaron exitosamente.
 
 ## Diagrama Mermaid
 

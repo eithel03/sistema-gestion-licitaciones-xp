@@ -38,6 +38,7 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Intervención humana: el driver autorizó comandos técnicos, revisó los cambios y comprobó los resultados,ademas se realizó ajuste en la documentación tanto en la bitácora y en la del uso-ia; el navigator realizo la revisión conjunta.
 - Limitaciones: Codex no realizó commits, push, merge ni Pull Request y no implementó reglas de negocio.
 - Resultado: propuesta técnica funcional pendiente de integración manual al repositorio.
+
 ### Registro 004
 
 - Fecha: 8 de agosto de 2026.
@@ -46,6 +47,6 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Finalidad: apoyo para revisar el proyecto y preparar la Fase 3 de dominio y estrategia TDD.
 - Componentes asistidos: convenciones de dominio, resultado de validacion, excepcion de dominio, reloj inyectable, pruebas unitarias de ejemplo y documentacion TDD.
 - Codigo generado: base minima en `Domain`, abstraccion `IClock` en `Application`, implementacion `SystemClock` en `Infrastructure` y pruebas preparatorias.
-- Validaciones realizadas: revision de estructura y ejecucion intentada de `dotnet test Licitaciones.sln --configuration Release`.
-- Limitaciones: la ejecucion local de pruebas no pudo completarse porque falta el SDK .NET `9.0.305` requerido por `global.json`; la compilacion alternativa con SDK `10.0.102` fue exitosa, pero las pruebas requieren el runtime .NET 9.
-- Resultado: propuesta de Fase 3 preparada sin implementar reglas de negocio futuras.
+- Validaciones realizadas: revisión de estructura, validación posterior con SDK .NET `9.0.305`, restore, build, ejecución de `11` pruebas automatizadas y validación mediante GitHub Actions.
+- Limitaciones: durante la sesión original el entorno del driver no disponía del SDK .NET `9.0.305`; posteriormente la validación fue completada por el navigator en un entorno compatible.
+- Resultado: Fase 3 preparada y validada correctamente, con `11` pruebas aprobadas y sin implementar reglas de negocio correspondientes a iteraciones futuras.

@@ -336,6 +336,7 @@ v0.1.0
 - No se implementó funcionalidad de fases posteriores.
 - GitHub Actions ejecutó correctamente restore, build y test.
 - El workflow CI finalizó sin errores.
+
 ## Sesion 004 - Fase 3: preparacion del dominio y estrategia TDD
 
 - Fecha: 8 de agosto de 2026.
@@ -343,10 +344,12 @@ v0.1.0
 - Modalidad: Programacion en parejas.
 - Driver: Luis Diego Chavala.
 - Navigator: Eithel Herrera Rojas.
-- Rama: Pendiente.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-
+- Rama: chore/fase-03-dominio-tdd.
+- Issue: #7 — FASE-03: Preparación del dominio y estrategia TDD.
+- Pull Request: #6 — Fase 3: preparación del dominio y estrategia TDD.
+- Commit principal:
+  - `2200fe3` — `feat(domain): preparar dominio y estrategia TDD`.
+  
 ### Objetivo de la sesion
 
 Preparar convenciones minimas de dominio y pruebas para iniciar las historias mediante TDD sin adelantar reglas de negocio de iteraciones futuras.
