@@ -41,7 +41,9 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-35 | Iteracion 4 | Alta | 5 | Definidos en `historias-usuario.md` | Suites y cobertura | Pruebas, integracion continua | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
 | HU-36 | Iteracion 4 | Media | 5 | Definidos en `historias-usuario.md` | Contenedores y manifiestos | Infraestructura | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
 | HU-37 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | Revision documental | Documentacion, XP | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md`, `bitacora-xp.md` | v1.0.0-rc |
-| FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/`, `.github/workflows/ci.yml` | `#3` | `chore/arquitectura-inicial` | `821ab9d `, `e0e5ad1`, `ad7913b`, `51e32eb`  | `#4` | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | CI aprobado |
+| FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/`, `.github/workflows/ci.yml` | `#3` | `chore/arquitectura-inicial` | `ad7913b`, `e0e5ad1`, `821ab9d`, `65a6afd`  | `#4` | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | CI aprobado |
+
+| FASE-03 | Preparación dominio/TDD | N/A | N/A | Convenciones mínimas de dominio y pruebas preparatorias | `EntityTests.cs`, `ValueObjectTests.cs`, `ValidationResultTests.cs`, `IClockTests.cs` | `Domain`, `Application`, `Infrastructure`, `UnitTests` | `#7` | `chore/fase-03-dominio-tdd` | `2200fe3` | `#6` | `docs/dominio-tdd.md`, `docs/pruebas.md`, `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md` | CI aprobado |
 
 ## Totales
 
