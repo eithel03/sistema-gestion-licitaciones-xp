@@ -62,7 +62,7 @@ Por ahora no registran servicios de negocio ni repositorios, solo dejan la estru
 
 La API expone `GET /health` usando los health checks nativos de ASP.NET Core.
 
-En esta fase el endpoint valida únicamente la disponibilidad básica de la API y responde con `200 OK` y el estado `Healthy`. Todavía no comprueba PostgreSQL, Docker ni servicios externos.
+El endpoint valida la disponibilidad basica de la API y responde con `200 OK` y el estado `Healthy`. Desde la Fase 4 existe un health check PostgreSQL opcional mediante `HealthChecks:PostgreSQL:Enabled`; permanece deshabilitado por defecto y no se registra en entorno `Testing` para no acoplar las pruebas funcionales a una base real.
 
 ## Configuración común
 
@@ -95,6 +95,19 @@ Se agregaron convenciones minimas para iniciar el desarrollo por TDD:
 
 Estas piezas no implementan reglas especificas de historias futuras. Las reglas de proveedores, licitaciones, ofertas, aprobaciones y moneda quedan diferidas a sus iteraciones.
 
+
+## Persistencia preparada en Fase 4
+
+La persistencia inicial vive en `Licitaciones.Infrastructure` y se compone de:
+
+- `LicitacionesDbContext`, basado en EF Core 9 y preparado para crecer mediante configuraciones separadas de entidades.
+- Provider `Npgsql.EntityFrameworkCore.PostgreSQL` para PostgreSQL 16.
+- Registro del contexto desde `AddInfrastructure(builder.Configuration)` usando `ConnectionStrings:DefaultConnection`.
+- Fabrica de diseno `LicitacionesDbContextFactory` para comandos de migraciones versionadas en Infrastructure.
+- Convenciones reutilizables para propiedades `CreatedAt`, `UpdatedAt`, `DeletedAt`, `Version` y precision monetaria explicita con `HasMoneyPrecision()`.
+- Pruebas de integracion con Testcontainers para levantar PostgreSQL 16 temporalmente y abrir conexion desde el `DbContext`.
+
+No existen todavia `DbSet` ni configuraciones de proveedores, licitaciones, ofertas, niveles de aprobacion o tipos de cambio. La primera migracion real debe aparecer cuando una iteracion introduzca una entidad persistente con valor funcional.
 ## Integración continua
 
 El archivo `.github/workflows/ci.yml` ejecuta:
@@ -131,17 +144,14 @@ flowchart TD
 
 ## Restricciones actuales
 
-Todavía no se implementaron:
+Todavia no se implementaron:
 
 - CRUD.
 - Entidades completas.
 - Reglas de negocio.
-- EF Core.
-- PostgreSQL.
-- Migraciones.
-- Docker.
+- Migraciones reales con tablas funcionales.
+- Dockerfile de aplicacion.
 - Kubernetes.
-- Módulos funcionales completos.
+- Modulos funcionales completos.
 
-Esta documentación refleja solo la estructura técnica real preparada en la Fase 2.
-La Fase 3 amplia esa base con convenciones minimas de dominio y pruebas TDD preparatorias.
+La Fase 4 agrego infraestructura de persistencia, PostgreSQL local y Testcontainers, pero no adelanto tablas ni reglas de historias futuras.

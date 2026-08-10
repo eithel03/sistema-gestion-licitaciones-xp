@@ -25,10 +25,10 @@ Estos documentos pertenecen a fases posteriores. Los enlaces quedan registrados 
 
 - [Arquitectura general](arquitectura-general.md) - documentada inicialmente en la Fase 2.
 - [Dominio y estrategia TDD](dominio-tdd.md) - documentada inicialmente en la Fase 3.
-- [Modelo de datos](modelo-datos.md) - pendiente de una fase posterior.
+- [Modelo de datos](modelo-datos.md) - iniciado en la Fase 4 con estrategia de persistencia, sin modelo completo de tablas.
 - [API REST](api.md) - pendiente de una fase posterior.
 - [Pruebas](pruebas.md) - iniciada en la Fase 3.
-- [Docker](docker.md) - pendiente de una fase posterior.
+- [Docker](docker.md) - pendiente como documento completo; PostgreSQL local queda preparado en Fase 4 mediante `compose.yaml`.
 - [Kubernetes](kubernetes.md) - pendiente de una fase posterior.
 - [Integracion de modulos](integracion-modulos.md) - pendiente de una fase posterior.
 - [Documentacion por modulos](modulos/README.md) - pendiente de una fase posterior.

@@ -374,10 +374,19 @@ Eithel Herrera Rojas revisa que la base no anticipe reglas futuras y que manteng
 
 ### Pruebas y validaciones realizadas
 
-- Se intento ejecutar `dotnet test Licitaciones.sln --configuration Release`.
-- Resultado local directo: no ejecutado por falta del SDK .NET `9.0.305` requerido por `global.json`.
-- Verificacion alternativa en `C:\tmp`: compilacion exitosa con SDK `10.0.102`, pruebas abortadas por falta del runtime `Microsoft.NETCore.App 9.0.0`.
-- SDK instalados en la maquina: `8.0.418` y `10.0.102`.
+Durante la sesión original, el entorno local del driver no disponía del SDK .NET `9.0.305` requerido por `global.json`.
+
+Posteriormente, el navigator realizó la validación en un entorno compatible:
+
+- `dotnet --version`: `9.0.305`.
+- `dotnet restore Licitaciones.sln`: exitoso.
+- `dotnet build Licitaciones.sln --configuration Release --no-restore`: exitoso.
+- `dotnet test Licitaciones.sln --configuration Release --no-build`: exitoso.
+- Total de pruebas ejecutadas: `11`.
+- Pruebas aprobadas: `11`.
+- Pruebas fallidas: `0`.
+- Pruebas omitidas: `0`.
+- GitHub Actions ejecutó correctamente el workflow de CI.
 
 ### Aplicacion de TDD
 
@@ -394,4 +403,106 @@ No se implementaron reglas de normalizacion de proveedores, estados de licitacio
 
 ### Resultado
 
-La Fase 3 queda preparada a nivel de codigo y documentacion. La verificacion automatizada queda pendiente de ejecutar en un entorno con SDK .NET 9 compatible.
+La Fase 3 quedó preparada y validada correctamente a nivel de código, documentación y pruebas automatizadas. La solución compiló correctamente, las `11` pruebas ejecutadas fueron aprobadas y GitHub Actions confirmó exitosamente la integración continua.
+
+## Sesion 005 - Fase 4: preparacion de persistencia
+
+- Fecha: 9 de agosto de 2026.
+- Fase: Fase 4 - Preparacion de persistencia.
+- Modalidad: Programacion en parejas.
+- Driver: Eithel Herrera Rojas.
+- Navigator: Luis Diego Chavala.
+- Rama: `chore/preparacion-persistencia`.
+- Issue: `#5 - FASE-04: Preparacion de persistencia`.
+- Pull Request: Pendiente.
+- Commits: Pendiente.
+
+### Objetivo
+
+Configurar la infraestructura minima de PostgreSQL, Entity Framework Core y Testcontainers para permitir que la persistencia crezca de forma incremental durante las iteraciones, sin construir por adelantado tablas ni reglas de historias futuras.
+
+### Actividades realizadas
+
+- Instalacion de paquetes EF Core 9, Npgsql y health checks EF en `Licitaciones.Infrastructure`.
+- Instalacion de Testcontainers PostgreSQL en `Licitaciones.IntegrationTests`.
+- Creacion de `LicitacionesDbContext` vacio, preparado para configuraciones separadas mediante `IEntityTypeConfiguration`.
+- Creacion de fabrica de diseno para comandos de migraciones.
+- Registro de `LicitacionesDbContext` con PostgreSQL desde `AddInfrastructure`.
+- Conservacion del registro existente de `IClock` y `SystemClock`.
+- Configuracion de `ConnectionStrings:DefaultConnection` con placeholders seguros y soporte de variables de entorno.
+- Creacion de `compose.yaml` para PostgreSQL 16 local con volumen y health check.
+- Creacion de `.env.example` con valores de ejemplo no secretos.
+- Preparacion de convenciones reutilizables para `CreatedAt`, `UpdatedAt`, `DeletedAt`, `Version` y precision monetaria explicita `numeric(18,2)`.
+- Creacion de prueba de convenciones de persistencia.
+- Creacion de prueba tecnica con Testcontainers para levantar PostgreSQL 16 y abrir conexion desde `LicitacionesDbContext`.
+- Configuracion opcional de health check PostgreSQL, deshabilitado por defecto y omitido en entorno `Testing`.
+- Actualizacion de documentacion de Fase 4.
+
+### Responsabilidades del driver
+
+Eithel Herrera Rojas ejecuta los cambios de infraestructura, configura paquetes, prepara Docker Compose, ejecuta validaciones locales y registra evidencia tecnica.
+
+### Responsabilidades del navigator
+
+Luis Diego Chavala revisa que la fase no adelante entidades ni reglas futuras, verifica la direccion de dependencias y valida que la documentacion mantenga la trazabilidad XP.
+
+### Archivos creados o actualizados
+
+- `src/Licitaciones.Infrastructure/Persistence/LicitacionesDbContext.cs`
+- `src/Licitaciones.Infrastructure/Persistence/LicitacionesDbContextFactory.cs`
+- `src/Licitaciones.Infrastructure/Persistence/Conventions/PersistencePropertyNames.cs`
+- `src/Licitaciones.Infrastructure/Persistence/Conventions/PersistenceModelBuilderExtensions.cs`
+- `src/Licitaciones.Infrastructure/Persistence/Conventions/MoneyPropertyBuilderExtensions.cs`
+- `tests/Licitaciones.IntegrationTests/Persistence/PersistenceConventionsTests.cs`
+- `tests/Licitaciones.IntegrationTests/Persistence/PostgreSqlContainerTests.cs`
+- `compose.yaml`
+- `.env.example`
+- `src/Licitaciones.Infrastructure/Licitaciones.Infrastructure.csproj`
+- `src/Licitaciones.Application/Licitaciones.Application.csproj`
+- `tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj`
+- `src/Licitaciones.Infrastructure/DependencyInjection.cs`
+- `src/Licitaciones.Api/Program.cs`
+- `src/Licitaciones.Api/appsettings.json`
+- `src/Licitaciones.Api/appsettings.Development.json`
+- `src/Licitaciones.Web/appsettings.json`
+- `src/Licitaciones.Web/appsettings.Development.json`
+- `docs/arquitectura-general.md`
+- `docs/modelo-datos.md`
+- `docs/pruebas.md`
+- `docs/trazabilidad.md`
+- `docs/uso-ia.md`
+- `docs/README.md`
+
+### Pruebas y validaciones realizadas
+
+- `dotnet restore Licitaciones.sln`: exitoso.
+- `dotnet build Licitaciones.sln --configuration Release --no-restore`: exitoso, 0 errores y 0 advertencias.
+- `dotnet test Licitaciones.sln --configuration Release --no-build`: exitoso.
+- Resultado final de pruebas: 13 pruebas aprobadas.
+- `docker --version`: Docker `29.6.2`.
+- `docker compose version`: Docker Compose `v5.3.1`.
+- `docker compose config`: exitoso.
+- `docker compose up -d`: exitoso.
+- `docker compose ps`: PostgreSQL `postgres:16` alcanzo estado `healthy`.
+- `docker compose down`: ejecutado sin eliminar volumenes.
+
+### Aplicacion de TDD
+
+No se forzo TDD en archivos declarativos. Se agregaron pruebas donde habia comportamiento verificable: convenciones del modelo EF Core y conexion real de `LicitacionesDbContext` contra PostgreSQL 16 con Testcontainers. Durante la implementacion se corrigio el fixture de Testcontainers hasta dejar build y suite en verde.
+
+### Decisiones tecnicas
+
+- Se eligio `ConnectionStrings:DefaultConnection` como convencion unica de cadena de conexion.
+- La persistencia queda dentro de `Licitaciones.Infrastructure`; `Domain` no recibe dependencias de EF Core.
+- No se crea migracion inicial porque el `DbContext` no tiene entidades reales todavia.
+- La precision monetaria se aplica mediante `HasMoneyPrecision()` en propiedades explicitamente configuradas, para no afectar decimales que no sean dinero.
+- Auditoria y concurrencia quedan preparadas por convenciones de nombres, sin agregar propiedades a entidades inexistentes.
+- El health check PostgreSQL queda opt-in para evitar fallos en pruebas funcionales sin base real.
+
+### Restricciones respetadas
+
+No se implementaron CRUD, entidades completas, proveedores, licitaciones, ofertas, niveles de aprobacion, tipos de cambio, reglas de moneda, endpoints funcionales nuevos ni interfaz funcional nueva.
+
+### Resultado actual
+
+La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convenciones basicas preparados para crecer durante las iteraciones. PR, commits, merge y CI remoto quedan pendientes para ejecucion manual del equipo.
