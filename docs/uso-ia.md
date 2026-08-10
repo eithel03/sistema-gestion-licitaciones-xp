@@ -50,3 +50,16 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Validaciones realizadas: revisión de estructura, validación posterior con SDK .NET `9.0.305`, restore, build, ejecución de `11` pruebas automatizadas y validación mediante GitHub Actions.
 - Limitaciones: durante la sesión original el entorno del driver no disponía del SDK .NET `9.0.305`; posteriormente la validación fue completada por el navigator en un entorno compatible.
 - Resultado: Fase 3 preparada y validada correctamente, con `11` pruebas aprobadas y sin implementar reglas de negocio correspondientes a iteraciones futuras.
+
+### Registro 005
+
+- Fecha: 9 de agosto de 2026.
+- Herramienta: Codex.
+- Participantes: Eithel Herrera Rojas y Luis Diego Chavala.
+- Finalidad: apoyar la preparacion de persistencia de la Fase 4 sin adelantar funcionalidades de iteraciones futuras.
+- Componentes asistidos: EF Core, Npgsql, `LicitacionesDbContext`, registro DI, Docker Compose PostgreSQL 16, Testcontainers, convenciones de persistencia, health check opcional y documentacion XP.
+- Codigo generado: infraestructura de persistencia en `Licitaciones.Infrastructure`, pruebas de integracion, `compose.yaml`, `.env.example` y actualizaciones de configuracion segura.
+- Validaciones realizadas: `dotnet restore`, `dotnet build`, `dotnet test`, verificacion de Docker, `docker compose config`, `docker compose up -d`, health check saludable y `docker compose down`.
+- Intervencion humana: el equipo define alcance, revisa decisiones, conserva PR/commits pendientes para ejecucion manual y valida que no se adelanten entidades ni historias futuras.
+- Limitaciones: no se realizaron commits, push, merge ni Pull Request; no se creo migracion inicial porque no hay modelo persistente real; CI remoto queda pendiente.
+- Resultado: Fase 4 preparada y validada localmente con 13 pruebas aprobadas y PostgreSQL 16 saludable en Docker Compose.

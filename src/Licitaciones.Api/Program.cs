@@ -6,7 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddHealthChecks();
+var healthChecks = builder.Services.AddHealthChecks();
+
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    healthChecks.AddInfrastructureHealthChecks(builder.Configuration);
+}
 
 var app = builder.Build();
 
