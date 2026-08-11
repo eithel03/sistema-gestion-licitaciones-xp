@@ -1,0 +1,15 @@
+@{
+    var modulo = (string?)ViewData["Modulo"] ?? "Modulo";
+    ViewData["Title"] = modulo;
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Planificado</p>
+        <h1>@modulo</h1>
+    </div>
+</section>
+
+<div class="planned-panel">
+    <p>Este modulo esta planificado para una iteracion posterior. En la Iteracion 1 el modulo funcional completo es Proveedores.</p>
+</div>

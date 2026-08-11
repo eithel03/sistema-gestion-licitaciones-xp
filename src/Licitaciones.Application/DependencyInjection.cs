@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Licitaciones.Application.Proveedores;
 
 namespace Licitaciones.Application;
 
@@ -7,6 +8,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
+
+        services.AddScoped<IProveedorService, ProveedorService>();
 
         return services;
     }

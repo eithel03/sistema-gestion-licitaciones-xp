@@ -30,13 +30,13 @@ ConnectionStrings__DefaultConnection
 PowerShell:
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection="Host=localhost;Port=5432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password"
+$env:ConnectionStrings__DefaultConnection="Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password"
 ```
 
 Git Bash:
 
 ```bash
-export ConnectionStrings__DefaultConnection='Host=localhost;Port=5432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password'
+export ConnectionStrings__DefaultConnection='Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password'
 ```
 
 Docker Compose usa variables del archivo `.env` local no versionado. El repositorio incluye `.env.example`:
@@ -51,7 +51,7 @@ Variables de Compose:
 POSTGRES_DB=licitaciones_dev
 POSTGRES_USER=licitaciones_app
 POSTGRES_PASSWORD=change_this_password
-POSTGRES_PORT=5432
+POSTGRES_PORT=55432
 ```
 
 Los valores son ejemplos de desarrollo y deben reemplazarse localmente. No se deben versionar secretos reales.

@@ -1,0 +1,18 @@
+@model Licitaciones.Web.Models.Proveedores.ProveedorFormViewModel
+
+@{
+    ViewData["Title"] = "Crear proveedor";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Proveedores</p>
+        <h1>Crear proveedor</h1>
+    </div>
+</section>
+
+<partial name="_ProveedorForm" model="Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

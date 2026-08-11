@@ -506,3 +506,28 @@ No se implementaron CRUD, entidades completas, proveedores, licitaciones, oferta
 ### Resultado actual
 
 La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convenciones basicas preparados para crecer durante las iteraciones. PR, commits, merge y CI remoto quedan pendientes para ejecucion manual del equipo.
+
+## Iteración 1 — Landing page y proveedores
+
+- Driver: Chavala
+- Navigator: Eithel
+- Rama: `feature/iteracion-01-landing-proveedores`
+- Historias trabajadas: HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09 y HU-10.
+- Ciclos TDD:
+  - Dominio de proveedores: ROJO por tipos inexistentes; VERDE con entidad, normalizador y validaciones; REFACTOR para conservar presentacion sin forzar Title Case.
+  - Application de proveedores: ROJO por contratos/servicio inexistentes; VERDE con DTO, servicio y repositorio abstracto; REFACTOR de resultado para evitar advertencias.
+  - Persistencia: ROJO por repositorio/configuracion faltantes; VERDE con EF Core, indice unico y migracion; REFACTOR generando migracion real con `dotnet ef`.
+  - Funcionales API/MVC: ROJO por configuracion de conexion de pruebas; VERDE con Testcontainers inyectado en `WebApplicationFactory`.
+- Pruebas:
+  - `dotnet restore Licitaciones.sln --force`: exitoso.
+  - `dotnet build Licitaciones.sln --no-restore`: exitoso, 0 errores y 0 advertencias.
+  - `dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --no-restore`: 34 pruebas aprobadas.
+  - `dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --no-restore`: 9 pruebas aprobadas.
+  - `dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --no-restore`: 6 pruebas aprobadas.
+- Refactorizaciones:
+  - Separacion de reglas en dominio, servicio en Application y repositorio EF en Infrastructure.
+  - Uso de borrado logico para mantener historial.
+  - Generacion de migracion EF real despues de detectar diferencia en snapshot manual.
+- Resultado: Landing, navegacion, CRUD MVC de proveedores, API REST, normalizacion, unicidad, PostgreSQL y pruebas automatizadas implementadas localmente.
+- Retroalimentacion: Pendiente de revision real del navigator.
+- Velocidad: 30 puntos implementados localmente, pendientes de validacion por PR y CI.

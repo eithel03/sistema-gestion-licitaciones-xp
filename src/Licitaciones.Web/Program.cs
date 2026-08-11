@@ -1,5 +1,7 @@
 using Licitaciones.Application;
 using Licitaciones.Infrastructure;
+using Licitaciones.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<LicitacionesDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -28,3 +38,5 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.Run();
+
+public partial class Program { }

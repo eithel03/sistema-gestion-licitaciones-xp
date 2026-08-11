@@ -1,3 +1,4 @@
+using Licitaciones.Domain.Proveedores;
 using Licitaciones.Infrastructure.Persistence.Conventions;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,8 @@ public sealed class LicitacionesDbContext : DbContext
         : base(options)
     {
     }
+
+    public DbSet<Proveedor> Proveedores => Set<Proveedor>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
