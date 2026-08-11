@@ -1,7 +1,57 @@
 @{
-    ViewData["Title"] = "Sistema de Gestión de Licitaciones";
+    ViewData["Title"] = "Sistema de Gestion de Licitaciones";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Sistema de Gestión de Licitaciones</h1>
-</div>
+<section class="landing-hero">
+    <div class="landing-copy">
+        <p class="eyebrow">Extreme Programming - Iteracion 1</p>
+        <h1>Sistema de Gestion de Licitaciones</h1>
+        <p>
+            Aplicacion academica para administrar procesos de compra, proveedores, ofertas,
+            aprobaciones y conversion CRC/USD con trazabilidad incremental.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" asp-controller="Proveedores" asp-action="Index">Administrar proveedores</a>
+            <a class="btn btn-outline-secondary btn-lg" asp-controller="Planificados" asp-action="ApiSwagger">Ver API</a>
+        </div>
+    </div>
+    <div class="landing-summary" aria-label="Resumen del sistema">
+        <div>
+            <span class="summary-number">01</span>
+            <strong>Catalogo inicial</strong>
+            <p>Proveedores con normalizacion, unicidad y borrado logico.</p>
+        </div>
+        <div>
+            <span class="summary-number">v0.1.0</span>
+            <strong>Pequena liberacion</strong>
+            <p>Base navegable preparada para las siguientes iteraciones XP.</p>
+        </div>
+    </div>
+</section>
+
+<section class="info-grid">
+    <article>
+        <h2>Que es una licitacion</h2>
+        <p>Es un proceso formal para solicitar, recibir y comparar ofertas de proveedores ante una necesidad de compra.</p>
+    </article>
+    <article>
+        <h2>Proveedores</h2>
+        <p>Son las organizaciones que participan en el catalogo y que posteriormente podran presentar ofertas.</p>
+    </article>
+    <article>
+        <h2>Ofertas</h2>
+        <p>Representan propuestas economicas asociadas a una licitacion y a un proveedor registrado.</p>
+    </article>
+    <article>
+        <h2>Mejor oferta</h2>
+        <p>Se determinara comparando montos validos; la propuesta menor sera la referencia principal de seleccion.</p>
+    </article>
+    <article>
+        <h2>Niveles de aprobacion</h2>
+        <p>Permiten identificar quien aprueba segun rangos o impacto economico definido por el proceso.</p>
+    </article>
+    <article>
+        <h2>CRC/USD</h2>
+        <p>CRC sera la fuente persistida y USD una conversion visual basada en el tipo de cambio vigente.</p>
+    </article>
+</section>

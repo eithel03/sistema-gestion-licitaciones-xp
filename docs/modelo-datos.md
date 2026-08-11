@@ -1,8 +1,10 @@
 # Modelo de datos
 
-## Estado en Fase 4
+## Estado actual
 
-La Fase 4 inicia la documentacion de persistencia, pero no define todavia un modelo completo de tablas. No existen tablas de proveedores, licitaciones, ofertas, niveles de aprobacion ni tipos de cambio porque esas piezas pertenecen a las iteraciones funcionales.
+La Fase 4 preparo la persistencia base. La Iteracion 1 agrega el modelo persistente de proveedores mediante EF Core y la migracion `20260810092133_CreateProveedores`.
+
+No existen todavia tablas de licitaciones, ofertas, niveles de aprobacion ni tipos de cambio.
 
 ## Motor
 
@@ -30,13 +32,13 @@ ConnectionStrings__DefaultConnection
 PowerShell:
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection="Host=localhost;Port=5432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password"
+$env:ConnectionStrings__DefaultConnection="Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password"
 ```
 
 Git Bash:
 
 ```bash
-export ConnectionStrings__DefaultConnection='Host=localhost;Port=5432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password'
+export ConnectionStrings__DefaultConnection='Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password'
 ```
 
 Docker Compose usa variables del archivo `.env` local no versionado. El repositorio incluye `.env.example`:
@@ -51,7 +53,7 @@ Variables de Compose:
 POSTGRES_DB=licitaciones_dev
 POSTGRES_USER=licitaciones_app
 POSTGRES_PASSWORD=change_this_password
-POSTGRES_PORT=5432
+POSTGRES_PORT=55432
 ```
 
 Los valores son ejemplos de desarrollo y deben reemplazarse localmente. No se deben versionar secretos reales.
@@ -78,7 +80,40 @@ Aplicacion local de migraciones:
 dotnet ef database update --project src/Licitaciones.Infrastructure --startup-project src/Licitaciones.Api
 ```
 
-No se crea una migracion inicial en Fase 4 porque el `DbContext` no tiene entidades persistentes reales. Crear una tabla ficticia solo para generar una migracion adelantaria diseno fuera del alcance.
+Migracion real existente:
+
+- `20260810092133_CreateProveedores`
+
+## Tabla `Proveedores`
+
+Entidad de dominio: `Licitaciones.Domain.Proveedores.Proveedor`.
+
+| Campo | Tipo EF/PostgreSQL | Requerido | Observaciones |
+| --- | --- | --- | --- |
+| `Id` | `uuid` | Si | Identificador generado por dominio; EF usa `ValueGeneratedNever`. |
+| `Nombre` | `character varying(200)` | Si | Nombre de presentacion normalizado para mostrar. |
+| `NombreNormalizado` | `character varying(200)` | Si | Clave normalizada para comparacion de duplicados. |
+| `CreatedAt` | `timestamp with time zone` | Si | Convencion de auditoria. |
+| `UpdatedAt` | `timestamp with time zone` | Si | Convencion de auditoria. |
+| `DeletedAt` | `timestamp with time zone` | No | Borrado logico. |
+| `Version` | `bigint` | Si | Campo preparado por convencion de persistencia. |
+
+Restricciones e indices reales:
+
+- Llave primaria: `PK_Proveedores` sobre `Id`.
+- Indice unico: `IX_Proveedores_NombreNormalizado` sobre `NombreNormalizado`.
+- Filtro global EF Core: excluye proveedores con `DeletedAt` distinto de `null`.
+
+Normalizacion y duplicidad:
+
+- `Nombre` se recorta, normaliza Unicode en Form C y reduce espacios repetidos.
+- `NombreNormalizado` usa normalizacion Form KC y mayusculas invariantes para comparacion.
+- La aplicacion valida duplicidad antes de guardar.
+- PostgreSQL refuerza la regla con el indice unico sobre `NombreNormalizado`.
+
+Relaciones:
+
+- La Iteracion 1 no define relaciones desde `Proveedores` hacia otras tablas.
 
 ## Ampliacion progresiva prevista
 

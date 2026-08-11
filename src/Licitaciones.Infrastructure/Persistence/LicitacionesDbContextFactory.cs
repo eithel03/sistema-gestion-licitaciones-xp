@@ -6,7 +6,7 @@ namespace Licitaciones.Infrastructure.Persistence;
 public sealed class LicitacionesDbContextFactory : IDesignTimeDbContextFactory<LicitacionesDbContext>
 {
     private const string LocalDevelopmentConnectionString =
-        "Host=localhost;Port=5432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password";
+        "Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password";
 
     public LicitacionesDbContext CreateDbContext(string[] args)
     {

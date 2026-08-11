@@ -1,0 +1,28 @@
+@model Licitaciones.Application.Proveedores.ProveedorResponse
+
+@{
+    ViewData["Title"] = "Eliminar proveedor";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Proveedores</p>
+        <h1>Eliminar proveedor</h1>
+    </div>
+</section>
+
+<div class="alert alert-warning" role="alert">
+    Esta accion retirara el proveedor del catalogo activo mediante borrado logico.
+</div>
+
+<dl class="detail-list">
+    <dt>Nombre</dt>
+    <dd>@Model.Nombre</dd>
+    <dt>Creado</dt>
+    <dd>@Model.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</dd>
+</dl>
+
+<form method="post" class="form-actions">
+    <button type="submit" class="btn btn-danger">Confirmar eliminacion</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+</form>

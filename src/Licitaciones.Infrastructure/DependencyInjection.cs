@@ -1,5 +1,7 @@
 using Licitaciones.Application.Abstractions.Time;
+using Licitaciones.Application.Proveedores;
 using Licitaciones.Infrastructure.Persistence;
+using Licitaciones.Infrastructure.Persistence.Repositories;
 using Licitaciones.Infrastructure.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,7 @@ public static class DependencyInjection
                 npgsqlOptions => npgsqlOptions.MigrationsAssembly(typeof(LicitacionesDbContext).Assembly.FullName)));
 
         services.TryAddSingleton<IClock, SystemClock>();
+        services.AddScoped<IProveedorRepository, ProveedorRepository>();
 
         return services;
     }

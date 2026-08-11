@@ -1,5 +1,9 @@
 # Documentacion por modulos
 
-Pendiente de una fase posterior.
+- [Proveedores](proveedores.md): catalogo inicial implementado en la Iteracion 1.
 
-Este archivo existe solo para mantener navegacion documental funcional. No contiene documentacion tecnica de modulos inventada durante la Fase 1.
+## Evidencia Iteracion 1
+
+- Rama: `feature/iteracion-01-landing-proveedores`.
+- Commit: `5696a0f`.
+- Pull Request: `#9`.

@@ -1,0 +1,39 @@
+@model Licitaciones.Application.Proveedores.ProveedorResponse
+
+@{
+    ViewData["Title"] = "Detalle de proveedor";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Proveedores</p>
+        <h1>@Model.Nombre</h1>
+    </div>
+    <div class="action-list">
+        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Eliminar</a>
+    </div>
+</section>
+
+@if (TempData["SuccessMessage"] is string message)
+{
+    <div class="alert alert-success" role="alert">@message</div>
+}
+
+<dl class="detail-list">
+    <dt>Id</dt>
+    <dd>@Model.Id</dd>
+    <dt>Nombre normalizado</dt>
+    <dd>@Model.NombreNormalizado</dd>
+    <dt>Fecha de creacion</dt>
+    <dd>@Model.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</dd>
+    <dt>Ultima actualizacion</dt>
+    <dd>@Model.UpdatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</dd>
+</dl>
+
+<section class="empty-related">
+    <h2>Ofertas relacionadas</h2>
+    <p>Las ofertas se implementaran en la Iteracion 3. Este detalle queda preparado para mostrar esa relacion cuando exista.</p>
+</section>
+
+<a class="btn btn-outline-secondary" asp-action="Index">Volver al listado</a>

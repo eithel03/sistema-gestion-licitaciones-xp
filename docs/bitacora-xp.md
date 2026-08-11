@@ -506,3 +506,41 @@ No se implementaron CRUD, entidades completas, proveedores, licitaciones, oferta
 ### Resultado actual
 
 La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convenciones basicas preparados para crecer durante las iteraciones. PR, commits, merge y CI remoto quedan pendientes para ejecucion manual del equipo.
+
+## Iteración 1 — Landing page y proveedores
+
+- Fecha: 11 de agosto de 2026.
+- Fase/Iteracion: Iteracion 1 - Landing page y proveedores.
+- Modalidad: Programacion en parejas.
+- Driver: Chavala.
+- Navigator: Eithel.
+- Rama: `feature/iteracion-01-landing-proveedores`.
+- Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
+- Destino del PR: `main`.
+- Origen del PR: `feature/iteracion-01-landing-proveedores`.
+- Estado del PR: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
+- Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
+- Historias trabajadas: HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09 y HU-10.
+- Ciclos TDD:
+  - Dominio de proveedores: ROJO por tipos inexistentes; VERDE con entidad, normalizador y validaciones; REFACTOR para conservar presentacion sin forzar Title Case.
+  - Application de proveedores: ROJO por contratos/servicio inexistentes; VERDE con DTO, servicio y repositorio abstracto; REFACTOR de resultado para evitar advertencias.
+  - Persistencia: ROJO por repositorio/configuracion faltantes; VERDE con EF Core, indice unico y migracion; REFACTOR generando migracion real con `dotnet ef`.
+  - Funcionales API/MVC: ROJO por configuracion de conexion de pruebas; VERDE con Testcontainers inyectado en `WebApplicationFactory`.
+- Pruebas:
+  - `dotnet restore Licitaciones.sln --force`: exitoso.
+  - `dotnet build Licitaciones.sln --no-restore`: exitoso, 0 errores y 0 advertencias.
+  - `dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --no-restore`: 34 pruebas aprobadas.
+  - `dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --no-restore`: 9 pruebas aprobadas.
+  - `dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --no-restore`: 6 pruebas aprobadas.
+- Refactorizaciones:
+  - Separacion de reglas en dominio, servicio en Application y repositorio EF en Infrastructure.
+  - Uso de borrado logico para mantener historial.
+  - Generacion de migracion EF real despues de detectar diferencia en snapshot manual.
+- Decisiones tecnicas:
+  - `Proveedor` queda en `Licitaciones.Domain.Proveedores` y mantiene reglas de nombre, normalizacion, auditoria y borrado logico.
+  - `ProveedorService` concentra los casos de uso y traduce validaciones a resultados de aplicacion.
+  - `ProveedorRepository` usa EF Core, filtro global para excluir retirados e indice unico sobre `NombreNormalizado`.
+  - MVC y API consumen `IProveedorService`; no acceden directamente a EF Core.
+- Resultado: implementacion funcional de landing y gestion de proveedores. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo.
+- Retroalimentacion: pendiente de registrar revision real del navigator.
+- Velocidad: 30 puntos implementados en la rama de Iteracion 1, pendientes de cierre formal despues de integracion a `main`.

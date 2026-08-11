@@ -25,10 +25,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Prueba funcional de navegacion y prueba E2E inicial de enlaces principales.
 - Modulos relacionados: Interfaz, navegacion.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorMvcTests.LandingPageAndProviderListAreAvailable`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-02 - Usar diseno adaptable en la interfaz base
 
@@ -44,10 +44,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Revision visual en al menos dos anchos de pantalla y prueba E2E de navegacion adaptable.
 - Modulos relacionados: Interfaz, navegacion.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: revision responsive en vistas MVC y cobertura funcional mediante `ProveedorMvcTests`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-03 - Visualizar mensajes de exito, advertencia y error
 
@@ -63,10 +63,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas funcionales de mensajes en formularios y respuestas de error.
 - Modulos relacionados: Interfaz, validaciones.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorMvcTests.CreateEditAndRejectDuplicateProviderThroughMvc`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-04 - Aplicar paginacion, filtrado y ordenamiento base
 
@@ -82,10 +82,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas funcionales de listado y pruebas de integracion para parametros de consulta.
 - Modulos relacionados: Interfaz, API REST.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorServiceTests.ListFiltersSortsAndPaginatesProviders`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-05 - Crear proveedores
 
@@ -101,10 +101,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de validacion y pruebas de integracion de creacion.
 - Modulos relacionados: Proveedores.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorTests`, `ProveedorServiceTests.CreateReturnsCreatedProvider`, `ProveedorApiTests.CreateProviderReturnsCreatedAndCanBeRead`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-06 - Listar y consultar proveedores
 
@@ -120,10 +120,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas funcionales de listado y consulta, pruebas de integracion de busqueda por identificador.
 - Modulos relacionados: Proveedores.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorPersistenceTests.SavesAndRetrievesProveedor`, `ProveedorMvcTests.LandingPageAndProviderListAreAvailable`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-07 - Editar y aplicar borrado logico de proveedores
 
@@ -139,10 +139,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas de integracion de actualizacion y borrado logico.
 - Modulos relacionados: Proveedores, persistencia.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorTests.RenameUpdatesNameAndTimestamp`, `ProveedorPersistenceTests.RetiresProveedorWithLogicalDelete`, `ProveedorApiTests.UpdateAndDeleteProviderUseExpectedStatusCodes`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-08 - Validar nombre unico y normalizado de proveedor
 
@@ -158,10 +158,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias con casos de espacios, Unicode y mayusculas; prueba de integracion de restriccion unica.
 - Modulos relacionados: Proveedores, persistencia.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorTests.NormalizedNameIgnoresCaseAndRepeatedSpaces`, `ProveedorPersistenceTests.UniqueIndexRejectsEquivalentNormalizedName`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-09 - Validar caracteres permitidos en proveedores
 
@@ -177,10 +177,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de caracteres validos e invalidos.
 - Modulos relacionados: Proveedores, validaciones.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorTests.CreateAcceptsAllowedCharacters`, `ProveedorTests.CreateRejectsDisallowedCharacters`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-10 - Exponer API REST basica de proveedores
 
@@ -196,10 +196,10 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas de integracion de endpoints de proveedores.
 - Modulos relacionados: Proveedores, API REST.
 - Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pull Request: `#9`.
+- Commits: `5696a0f`.
+- Pruebas ejecutadas: `ProveedorApiTests`.
+- Estado: Implementada en Iteracion 1.
 
 ### HU-11 - Consultar ofertas relacionadas con proveedor
 

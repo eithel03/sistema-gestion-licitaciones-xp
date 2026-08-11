@@ -1,6 +1,9 @@
 using Licitaciones.Application;
+using Licitaciones.Api;
 using Licitaciones.Infrastructure;
+using Licitaciones.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,10 @@ var app = builder.Build();
 if (!app.Environment.IsEnvironment("Testing"))
 {
     app.UseHttpsRedirection();
+
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<LicitacionesDbContext>();
+    dbContext.Database.Migrate();
 }
 
 app.MapHealthChecks("/health", new HealthCheckOptions
@@ -28,6 +35,8 @@ app.MapHealthChecks("/health", new HealthCheckOptions
         await context.Response.WriteAsync(report.Status.ToString());
     }
 });
+
+app.MapProveedorEndpoints();
 
 app.Run();
 

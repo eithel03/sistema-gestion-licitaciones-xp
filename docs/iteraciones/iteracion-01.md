@@ -1,77 +1,91 @@
-# Iteracion 1 - Base navegable y proveedores
+# Iteracion 1 - Landing page y proveedores
 
-- Objetivo: entregar la primera pequena liberacion con landing page, navegacion, diseno adaptable, proveedores, validaciones principales y API basica de proveedores.
-- Duracion uniforme propuesta: Pendiente de completar por el equipo.
-- Fecha prevista: Pendiente de completar por el equipo.
+- Objetivo: entregar una primera version funcional con landing page, navegacion y administracion completa de proveedores por MVC y API REST.
 - Driver principal: Chavala.
 - Navigator principal: Eithel.
-- Version prevista: v0.1.0.
+- Rama de trabajo: `feature/iteracion-01-landing-proveedores`.
+- Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
+- Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
+- Estado del PR: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
+- Version prevista: `v0.1.0`.
 - Puntos planificados: 30.
+- Estado de la iteracion: tecnicamente implementada en la rama de trabajo, pendiente de merge a `main`.
 
 ## Historias seleccionadas
 
-| Historia | Puntos | Proposito |
-| --- | ---: | --- |
-| HU-01 | 3 | Landing page y navegacion principal |
-| HU-02 | 2 | Diseno adaptable |
-| HU-03 | 2 | Mensajes de exito, advertencia y error |
-| HU-04 | 3 | Paginacion, filtrado y ordenamiento base |
-| HU-05 | 3 | Crear proveedores |
-| HU-06 | 2 | Listar y consultar proveedores |
-| HU-07 | 3 | Editar y aplicar borrado logico de proveedores |
-| HU-08 | 5 | Nombre unico y normalizado de proveedor |
-| HU-09 | 2 | Caracteres permitidos en proveedores |
-| HU-10 | 5 | API REST basica de proveedores |
+| Historia | Prioridad | Puntos | Resultado |
+| --- | --- | ---: | --- |
+| HU-01 | Alta | 3 | Implementada |
+| HU-02 | Alta | 2 | Implementada |
+| HU-03 | Alta | 2 | Implementada |
+| HU-04 | Media | 3 | Implementada |
+| HU-05 | Alta | 3 | Implementada |
+| HU-06 | Alta | 2 | Implementada |
+| HU-07 | Alta | 3 | Implementada |
+| HU-08 | Alta | 5 | Implementada |
+| HU-09 | Media | 2 | Implementada |
+| HU-10 | Alta | 5 | Implementada |
 
-## Dependencias
+## Criterios de aceptacion verificados
 
-- HU-01 prepara la navegacion para HU-02, HU-03 y HU-04.
-- HU-05 precede a HU-06, HU-07, HU-08, HU-09 y HU-10.
+- La pagina inicial presenta el sistema y enlaces a modulos principales.
+- La navegacion incluye Inicio, Licitaciones, Proveedores, Ofertas, Niveles de aprobacion, Tipo de cambio y API / Swagger.
+- Los modulos futuros muestran estado planificado sin adelantar CRUD.
+- Proveedores permite crear, listar, consultar, editar y retirar mediante borrado logico.
+- El listado permite buscar por nombre, ordenar y paginar.
+- El servidor valida nombre requerido, caracteres permitidos y duplicidad normalizada.
+- PostgreSQL protege la unicidad mediante indice unico sobre `NombreNormalizado`.
+- La API REST expone `GET`, `POST`, `PUT` y `DELETE` bajo `/api/v1/proveedores`.
+- La API usa DTO y devuelve `201`, `200`, `204`, `400`, `404` y `409` segun corresponda.
 
-## Criterios de aceptacion principales
+## Ciclos TDD realizados
 
-- La aplicacion ofrece una entrada navegable y adaptable.
-- Los proveedores pueden crearse, consultarse, actualizarse y retirarse de forma logica.
-- Los nombres de proveedor se normalizan y se valida duplicidad.
-- La API basica de proveedores usa DTO, codigos HTTP correctos y errores controlados.
+1. ROJO: pruebas unitarias de dominio fallaron porque no existian `Proveedor` ni normalizador.
+   VERDE: se implementaron entidad, normalizador, excepcion y reglas de caracteres.
+   REFACTOR: se mantuvo la presentacion del nombre sin forzar Title Case y se centralizaron errores.
 
-## Pruebas previstas
+2. ROJO: pruebas unitarias de Application fallaron porque no existian contratos, repositorio ni servicio.
+   VERDE: se implemento `ProveedorService`, DTO, resultado de aplicacion y validacion de duplicados.
+   REFACTOR: se separaron fabricas de resultado para evitar advertencias de analisis.
 
-- Pruebas unitarias de normalizacion, unicidad y caracteres permitidos.
-- Pruebas de integracion de operaciones de proveedores.
-- Pruebas funcionales de navegacion, mensajes y listados.
-- Evidencia inicial de ciclos TDD para reglas de proveedor.
+3. ROJO: pruebas de persistencia fallaron por ausencia de repositorio/configuracion EF.
+   VERDE: se agregaron `DbSet`, configuracion EF, repositorio e indice unico.
+   REFACTOR: se genero migracion real con `dotnet ef` y se valido con `Database.Migrate`.
 
-## Riesgos
+4. ROJO: pruebas funcionales API/MVC detectaron configuracion de conexion de pruebas.
+   VERDE: se inyecto PostgreSQL de Testcontainers en `WebApplicationFactory`.
+   REFACTOR: se aislaron colecciones de prueba para evitar interferencia entre contenedores.
 
-- Reglas de normalizacion Unicode insuficientemente definidas.
-- Listados reutilizables sobredisenados antes de conocer todos los modulos.
+## Pruebas realizadas
 
-## Resultado demostrable esperado
+- `dotnet restore Licitaciones.sln --force`: exitoso.
+- `dotnet build Licitaciones.sln --no-restore`: exitoso, 0 errores y 0 advertencias.
+- `dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --no-restore`: 34 pruebas aprobadas.
+- `dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --no-restore`: 9 pruebas aprobadas con PostgreSQL real.
+- `dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --no-restore`: 6 pruebas aprobadas con API, MVC y PostgreSQL real.
 
-Primera pequena liberacion con navegacion usable, modulo de proveedores funcional, validaciones verificables y API basica demostrable.
+## Resultado
+
+La Iteracion 1 queda tecnicamente implementada en la rama de trabajo. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo. Falta merge a `main` y tag `v0.1.0` para cerrar la liberacion.
 
 ## Velocidad observada
 
-Pendiente de completar por el equipo.
+30 puntos implementados localmente, pendientes de validacion final por PR y CI.
 
-## Retroalimentacion del cliente
+## Retroalimentacion
 
-Pendiente de completar por el equipo.
+Pendiente de registrar despues de la revision real del navigator.
 
 ## Ajustes
 
-Pendiente de completar por el equipo.
-
-## Ciclos TDD
-
-Pendiente de completar por el equipo.
-
-## Refactorizaciones
-
-Pendiente de completar por el equipo.
+- Se mantuvo la API / Swagger como pagina informativa en MVC porque Swagger formal esta planificado para Iteracion 4.
+- Se uso borrado logico para proveedores segun HU-07.
+- Se reutilizo `LicitacionesDbContext`, PostgreSQL y Testcontainers de Fase 4.
 
 ## Commits y Pull Requests
 
-- Commits: Pendiente.
-- Pull Request: Pendiente.
+- Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
+- Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
+- Base: `main`.
+- Rama origen: `feature/iteracion-01-landing-proveedores`.
+- Estado: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.

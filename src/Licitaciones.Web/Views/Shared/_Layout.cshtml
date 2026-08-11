@@ -11,13 +11,27 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom app-navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Licitaciones</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Licitaciones XP</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Alternar navegacion">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="Licitaciones">Licitaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Proveedores" asp-action="Index">Proveedores</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="Ofertas">Ofertas</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="NivelesAprobacion">Niveles de aprobacion</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="TipoCambio">Tipo de cambio</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="ApiSwagger">API / Swagger</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container app-shell">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -25,7 +39,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - Sistema de Gestión de Licitaciones
+            &copy; 2026 - Sistema de Gestion de Licitaciones
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

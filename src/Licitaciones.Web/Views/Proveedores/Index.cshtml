@@ -1,0 +1,87 @@
+@model Licitaciones.Web.Models.Proveedores.ProveedorIndexViewModel
+
+@{
+    ViewData["Title"] = "Proveedores";
+    var nextSort = Model.Sort == "name" ? "name_desc" : "name";
+}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Catalogo</p>
+        <h1>Proveedores</h1>
+    </div>
+    <a class="btn btn-primary" asp-action="Create">Crear proveedor</a>
+</section>
+
+<form method="get" class="toolbar">
+    <div class="search-box">
+        <label for="search" class="form-label">Buscar por nombre</label>
+        <input id="search" name="search" value="@Model.Search" class="form-control" />
+    </div>
+    <input type="hidden" name="sort" value="@Model.Sort" />
+    <input type="hidden" name="pageSize" value="@Model.PageSize" />
+    <button type="submit" class="btn btn-outline-primary">Buscar</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Limpiar</a>
+</form>
+
+@if (TempData["SuccessMessage"] is string message)
+{
+    <div class="alert alert-success" role="alert">@message</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-search="@Model.Search" asp-route-sort="@nextSort" asp-route-pageSize="@Model.PageSize">
+                    Nombre
+                </a>
+            </th>
+            <th>Creado</th>
+            <th class="text-end">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model.Items.Count == 0)
+        {
+            <tr>
+                <td colspan="3" class="text-muted">No hay proveedores registrados con los filtros actuales.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var proveedor in Model.Items)
+            {
+                <tr>
+                    <td>@proveedor.Nombre</td>
+                    <td>@proveedor.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td class="text-end action-list">
+                        <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@proveedor.Id">Ver</a>
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@proveedor.Id">Editar</a>
+                        <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@proveedor.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<nav aria-label="Paginacion de proveedores" class="pagination-row">
+    <span>Pagina @Model.Page de @(Model.TotalPages == 0 ? 1 : Model.TotalPages) · @Model.TotalItems registros</span>
+    <div class="btn-group">
+        <a class="btn btn-outline-secondary @(Model.HasPreviousPage ? "" : "disabled")"
+           asp-action="Index"
+           asp-route-page="@(Model.Page - 1)"
+           asp-route-pageSize="@Model.PageSize"
+           asp-route-search="@Model.Search"
+           asp-route-sort="@Model.Sort">Anterior</a>
+        <a class="btn btn-outline-secondary @(Model.HasNextPage ? "" : "disabled")"
+           asp-action="Index"
+           asp-route-page="@(Model.Page + 1)"
+           asp-route-pageSize="@Model.PageSize"
+           asp-route-search="@Model.Search"
+           asp-route-sort="@Model.Sort">Siguiente</a>
+    </div>
+</nav>
