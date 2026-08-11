@@ -509,9 +509,17 @@ La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convencion
 
 ## Iteración 1 — Landing page y proveedores
 
-- Driver: Chavala
-- Navigator: Eithel
-- Rama: `feature/iteracion-01-landing-proveedores`
+- Fecha: 11 de agosto de 2026.
+- Fase/Iteracion: Iteracion 1 - Landing page y proveedores.
+- Modalidad: Programacion en parejas.
+- Driver: Chavala.
+- Navigator: Eithel.
+- Rama: `feature/iteracion-01-landing-proveedores`.
+- Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
+- Destino del PR: `main`.
+- Origen del PR: `feature/iteracion-01-landing-proveedores`.
+- Estado del PR: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
+- Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
 - Historias trabajadas: HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09 y HU-10.
 - Ciclos TDD:
   - Dominio de proveedores: ROJO por tipos inexistentes; VERDE con entidad, normalizador y validaciones; REFACTOR para conservar presentacion sin forzar Title Case.
@@ -528,6 +536,11 @@ La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convencion
   - Separacion de reglas en dominio, servicio en Application y repositorio EF en Infrastructure.
   - Uso de borrado logico para mantener historial.
   - Generacion de migracion EF real despues de detectar diferencia en snapshot manual.
-- Resultado: Landing, navegacion, CRUD MVC de proveedores, API REST, normalizacion, unicidad, PostgreSQL y pruebas automatizadas implementadas localmente.
-- Retroalimentacion: Pendiente de revision real del navigator.
-- Velocidad: 30 puntos implementados localmente, pendientes de validacion por PR y CI.
+- Decisiones tecnicas:
+  - `Proveedor` queda en `Licitaciones.Domain.Proveedores` y mantiene reglas de nombre, normalizacion, auditoria y borrado logico.
+  - `ProveedorService` concentra los casos de uso y traduce validaciones a resultados de aplicacion.
+  - `ProveedorRepository` usa EF Core, filtro global para excluir retirados e indice unico sobre `NombreNormalizado`.
+  - MVC y API consumen `IProveedorService`; no acceden directamente a EF Core.
+- Resultado: implementacion funcional de landing y gestion de proveedores. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo.
+- Retroalimentacion: pendiente de registrar revision real del navigator.
+- Velocidad: 30 puntos implementados en la rama de Iteracion 1, pendientes de cierre formal despues de integracion a `main`.

@@ -4,6 +4,14 @@
 
 Mantener el catalogo inicial de proveedores del Sistema de Gestion de Licitaciones. Este modulo permite registrar organizaciones que luego podran participar en ofertas.
 
+## Evidencia Iteracion 1
+
+- Rama: `feature/iteracion-01-landing-proveedores`.
+- Commit: `5696a0f`.
+- Pull Request: `#9`.
+- Driver: Chavala.
+- Navigator: Eithel.
+
 ## Responsabilidades
 
 - Crear proveedores.
@@ -17,6 +25,7 @@ Mantener el catalogo inicial de proveedores del Sistema de Gestion de Licitacion
 
 - `Id` se genera automaticamente y no se edita desde la interfaz.
 - `Nombre` es requerido.
+- `Nombre` tiene longitud maxima de 200 caracteres en persistencia.
 - `NombreNormalizado` se calcula en el servidor.
 - La normalizacion elimina espacios laterales, reduce espacios repetidos, normaliza Unicode y compara sin distinguir mayusculas/minusculas.
 - Caracteres permitidos: letras, numeros, espacios, punto, coma y parentesis.
@@ -41,7 +50,8 @@ Mantener el catalogo inicial de proveedores del Sistema de Gestion de Licitacion
 - `Licitaciones.Domain.Proveedores`.
 - `Licitaciones.Application.Proveedores`.
 - `Licitaciones.Infrastructure.Persistence.LicitacionesDbContext`.
-- PostgreSQL configurado por Fase 4.
+- `Licitaciones.Infrastructure.Persistence.Repositories.ProveedorRepository`.
+- PostgreSQL configurado para desarrollo local mediante `compose.yaml`.
 
 ## Errores
 

@@ -33,7 +33,7 @@ tests/
 - `Licitaciones.IntegrationTests`: pruebas técnicas y futuras pruebas con infraestructura real.
 - `Licitaciones.FunctionalTests`: pruebas funcionales mediante el arranque real de la API con `WebApplicationFactory`.
 
-No existen todavía casos de uso completos, repositorios, entidades de negocio ni persistencia real; esa implementación pertenece a fases posteriores.
+La base tecnica inicial fue ampliada en la Iteracion 1 con el modulo de proveedores: entidad de dominio, casos de uso de aplicacion, repositorio EF Core, persistencia PostgreSQL, API REST y MVC.
 
 ## Dirección de dependencias
 
@@ -56,7 +56,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 ```
 
-Por ahora no registran servicios de negocio ni repositorios, solo dejan la estructura lista para crecer sin acoplar capas.
+Desde la Iteracion 1 registran servicios y repositorios de proveedores sin acoplar `Domain` a infraestructura.
 
 ## Health check
 
@@ -93,7 +93,7 @@ Se agregaron convenciones minimas para iniciar el desarrollo por TDD:
 - `Guard` para validaciones transversales pequenas.
 - `IClock` en `Application` y `SystemClock` en `Infrastructure` para controlar dependencias de tiempo.
 
-Estas piezas no implementan reglas especificas de historias futuras. Las reglas de proveedores, licitaciones, ofertas, aprobaciones y moneda quedan diferidas a sus iteraciones.
+Estas piezas sirvieron como base para implementar las reglas de proveedores en la Iteracion 1. Las reglas de licitaciones, ofertas, aprobaciones y moneda quedan diferidas a sus iteraciones.
 
 
 ## Persistencia preparada en Fase 4
@@ -107,7 +107,7 @@ La persistencia inicial vive en `Licitaciones.Infrastructure` y se compone de:
 - Convenciones reutilizables para propiedades `CreatedAt`, `UpdatedAt`, `DeletedAt`, `Version` y precision monetaria explicita con `HasMoneyPrecision()`.
 - Pruebas de integracion con Testcontainers para levantar PostgreSQL 16 temporalmente y abrir conexion desde el `DbContext`.
 
-No existen todavia `DbSet` ni configuraciones de proveedores, licitaciones, ofertas, niveles de aprobacion o tipos de cambio. La primera migracion real debe aparecer cuando una iteracion introduzca una entidad persistente con valor funcional.
+Desde la Iteracion 1 existe `DbSet<Proveedor>`, configuracion Fluent API de proveedores y la migracion real `20260810092133_CreateProveedores`. Todavia no existen `DbSet` ni configuraciones de licitaciones, ofertas, niveles de aprobacion o tipos de cambio.
 ## Integración continua
 
 El archivo `.github/workflows/ci.yml` ejecuta:
@@ -146,12 +146,11 @@ flowchart TD
 
 Todavia no se implementaron:
 
-- CRUD.
-- Entidades completas.
-- Reglas de negocio.
-- Migraciones reales con tablas funcionales.
+- CRUD de licitaciones, ofertas, niveles de aprobacion ni tipos de cambio.
+- Entidades completas fuera del modulo de proveedores.
+- Reglas de negocio fuera del modulo de proveedores.
 - Dockerfile de aplicacion.
 - Kubernetes.
-- Modulos funcionales completos.
+- Modulos funcionales completos fuera de proveedores.
 
-La Fase 4 agrego infraestructura de persistencia, PostgreSQL local y Testcontainers, pero no adelanto tablas ni reglas de historias futuras.
+La Fase 4 agrego infraestructura de persistencia, PostgreSQL local y Testcontainers. La Iteracion 1 agrego la primera tabla funcional y reglas de proveedores.

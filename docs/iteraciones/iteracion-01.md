@@ -4,8 +4,12 @@
 - Driver principal: Chavala.
 - Navigator principal: Eithel.
 - Rama de trabajo: `feature/iteracion-01-landing-proveedores`.
+- Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
+- Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
+- Estado del PR: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
 - Version prevista: `v0.1.0`.
 - Puntos planificados: 30.
+- Estado de la iteracion: tecnicamente implementada en la rama de trabajo, pendiente de merge a `main`.
 
 ## Historias seleccionadas
 
@@ -62,7 +66,7 @@
 
 ## Resultado
 
-La Iteracion 1 queda tecnicamente implementada en la rama de trabajo. Falta revision del navigator, PR, CI remoto, merge y tag `v0.1.0` para cerrar la liberacion.
+La Iteracion 1 queda tecnicamente implementada en la rama de trabajo. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo. Falta merge a `main` y tag `v0.1.0` para cerrar la liberacion.
 
 ## Velocidad observada
 
@@ -80,5 +84,8 @@ Pendiente de registrar despues de la revision real del navigator.
 
 ## Commits y Pull Requests
 
-- Commits: Pendiente.
-- Pull Request: Pendiente.
+- Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
+- Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
+- Base: `main`.
+- Rama origen: `feature/iteracion-01-landing-proveedores`.
+- Estado: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.

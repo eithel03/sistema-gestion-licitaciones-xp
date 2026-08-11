@@ -24,3 +24,34 @@ Errores esperados:
 - `400 Bad Request`: datos invalidos.
 - `404 Not Found`: proveedor inexistente o retirado.
 - `409 Conflict`: nombre equivalente a otro proveedor activo.
+
+### Contratos reales
+
+Solicitudes:
+
+- `CrearProveedorRequest`: `nombre`.
+- `ActualizarProveedorRequest`: `nombre`.
+
+Respuesta de proveedor:
+
+- `id`
+- `nombre`
+- `nombreNormalizado`
+- `createdAt`
+- `updatedAt`
+- `deletedAt`
+
+Respuesta paginada:
+
+- `items`
+- `totalItems`
+- `page`
+- `pageSize`
+- `totalPages`
+
+### Evidencia Iteracion 1
+
+- Rama: `feature/iteracion-01-landing-proveedores`.
+- Commit: `5696a0f`.
+- Pull Request: `#9`.
+- Pruebas funcionales: `ProveedorApiTests`.

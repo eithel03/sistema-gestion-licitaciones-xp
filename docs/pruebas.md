@@ -2,7 +2,7 @@
 
 ## Estado actual
 
-La Fase 3 preparo la suite unitaria para sostener TDD en las siguientes historias. La base actual incluye pruebas tecnicas de arquitectura y ejemplos minimos de dominio.
+La Fase 3 preparo la suite unitaria para sostener TDD. La Fase 4 agrego pruebas de persistencia base y la Iteracion 1 agrego pruebas de proveedores en Domain, Application, Infrastructure, API y MVC.
 
 ## Pruebas unitarias agregadas en Fase 3
 
@@ -87,3 +87,21 @@ No usar `docker compose down -v` salvo que se quiera borrar manualmente el volum
 - Docker Compose: configuracion valida.
 - PostgreSQL local: contenedor `postgres:16` alcanzo estado `healthy`.
 - Contenedores de Compose: detenidos con `docker compose down` sin borrar volumenes.
+
+## Resultado de validacion Iteracion 1
+
+Evidencia registrada en `docs/iteraciones/iteracion-01.md`:
+
+- `dotnet restore Licitaciones.sln --force`: exitoso.
+- `dotnet build Licitaciones.sln --no-restore`: exitoso, 0 errores y 0 advertencias.
+- `dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --no-restore`: 34 pruebas aprobadas.
+- `dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --no-restore`: 9 pruebas aprobadas con PostgreSQL real.
+- `dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --no-restore`: 6 pruebas aprobadas con API, MVC y PostgreSQL real.
+
+Pruebas de proveedores verificables en el repositorio:
+
+- Unitarias de dominio: `tests/Licitaciones.UnitTests/Domain/Proveedores/ProveedorTests.cs`.
+- Unitarias de aplicacion: `tests/Licitaciones.UnitTests/Application/Proveedores/ProveedorServiceTests.cs`.
+- Integracion de persistencia: `tests/Licitaciones.IntegrationTests/Persistence/ProveedorPersistenceTests.cs`.
+- Funcionales API: `tests/Licitaciones.FunctionalTests/ProveedorApiTests.cs`.
+- Funcionales MVC: `tests/Licitaciones.FunctionalTests/ProveedorMvcTests.cs`.
