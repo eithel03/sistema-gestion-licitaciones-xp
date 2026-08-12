@@ -544,3 +544,87 @@ La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convencion
 - Resultado: implementacion funcional de landing y gestion de proveedores. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo.
 - Retroalimentacion: pendiente de registrar revision real del navigator.
 - Velocidad: 30 puntos implementados en la rama de Iteracion 1, pendientes de cierre formal despues de integracion a `main`.
+
+## Iteracion 2 - Licitaciones y persistencia base
+
+- Driver: Eithel.
+- Navigator: Chavala.
+- Rama: feature/iteracion-02-licitaciones.
+- Historias: HU-12 a HU-19.
+- Puntos: 36.
+- Version prevista: v0.2.0.
+
+### Objetivo
+
+Implementar gestion de licitaciones con reglas de codigo, presupuesto, fecha, estados, persistencia, API, auditoria y concurrencia.
+
+### Actividades realizadas
+
+- Entidad y reglas de licitacion en Domain.
+- Casos de uso y contratos en Application.
+- Repositorio y configuracion EF Core en Infrastructure.
+- Migracion real 20260812002104_CreateLicitaciones.
+- CRUD MVC y acciones de publicar/cerrar.
+- API REST bajo /api/v1/licitaciones.
+- Pruebas unitarias, integracion con PostgreSQL/Testcontainers y funcionales.
+- Validacion manual del flujo MVC de licitaciones.
+
+### TDD
+
+#### Dominio
+
+- ROJO: tipos y reglas de licitacion aun inexistentes.
+- VERDE: entidad, normalizador, validaciones, estados, publicacion, cierre y vencimiento.
+- REFACTOR: reglas mantenidas en Domain y separacion de Application.
+
+#### Persistencia
+
+- ROJO: faltaba persistencia del modulo.
+- VERDE: repositorio, configuracion EF, tabla, migracion e indices.
+- REFACTOR: EF Core permanece en Infrastructure y Domain no depende de persistencia.
+
+#### Concurrencia
+
+- ROJO: dos actualizaciones con versiones obsoletas no tenian deteccion comprobable.
+- VERDE: concurrencia optimista mediante PostgreSQL xmin y prueba de integracion.
+- REFACTOR: traduccion de conflicto a resultado controlado de Application/API.
+
+### Pruebas
+
+- dotnet restore Licitaciones.sln.
+- dotnet build Licitaciones.sln --configuration Release --no-restore.
+- dotnet test Licitaciones.sln --configuration Release --no-build.
+- Resultado: 64 ejecutadas, 64 aprobadas, 0 fallidas, 0 omitidas.
+
+### Validacion manual
+
+Flujo validado: crear, listar, detalle, editar, publicar, transicion invalida rechazada y cerrar.
+
+### Retroalimentacion del navigator
+
+El navigator propuso corregir la coherencia del formato decimal de PresupuestoCrc con cultura Costa Rica y simplificar las acciones de interfaz segun estado. Ambas observaciones fueron aplicadas.
+
+### Refactorizaciones y ajustes
+
+- Cultura es-CR y ajuste de presupuesto decimal en MVC.
+- Compatibilidad de validacion cliente del codigo.
+- Botones de acciones visibles segun estado.
+- Separacion Domain/Application/Infrastructure.
+- Uso de IClock para reglas temporales.
+- Concurrencia controlada con xmin.
+- Los ajustes visuales no reemplazan validaciones del dominio.
+
+### Velocidad
+
+36 puntos implementados y validados localmente. El cierre formal depende de revision final, commits, PR, CI y merge.
+
+### Commits y PR
+
+- Issue: `#10`.
+- Commit de implementacion: `cce95ad`.
+- Commit de pruebas: `812b59c`.
+- Commit documental: `ed89c5a`.
+- Pull Request: `#12 - feat: completar Iteración 2 - Licitaciones y persistencia base`.
+- CI remoto: aprobado correctamente.
+- Merge: pendiente.
+- Tag `v0.2.0`: pendiente.

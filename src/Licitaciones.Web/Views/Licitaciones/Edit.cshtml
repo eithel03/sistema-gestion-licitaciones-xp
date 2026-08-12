@@ -1,0 +1,10 @@
+@model Licitaciones.Web.Models.Licitaciones.LicitacionFormViewModel
+@{
+    ViewData["Title"] = "Editar licitacion";
+}
+<section class="page-header"><div><p class="eyebrow">Licitaciones</p><h1>Editar licitacion</h1></div></section>
+<form asp-action="Edit" asp-route-id="@ViewData["LicitacionId"]" method="post">
+    @Html.AntiForgeryToken()
+    <partial name="_LicitacionForm" model="Model" />
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

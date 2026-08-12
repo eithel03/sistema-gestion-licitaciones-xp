@@ -37,6 +37,7 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 });
 
 app.MapProveedorEndpoints();
+app.MapLicitacionEndpoints();
 
 app.Run();
 

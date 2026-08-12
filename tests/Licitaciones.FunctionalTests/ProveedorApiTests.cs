@@ -86,6 +86,17 @@ public sealed class ProveedorApiTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task CreateProviderWithTooLongNameReturnsBadRequest()
+    {
+        using var client = _factory!.CreateClient();
+
+        using var response = await client.PostAsJsonAsync(
+            "/api/v1/proveedores",
+            new CrearProveedorRequest(new string('A', 201)));
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+    [Fact]
     public async Task UpdateAndDeleteProviderUseExpectedStatusCodes()
     {
         using var client = _factory!.CreateClient();

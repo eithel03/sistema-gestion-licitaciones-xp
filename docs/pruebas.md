@@ -2,7 +2,9 @@
 
 ## Estado actual
 
-La Fase 3 preparo la suite unitaria para sostener TDD. La Fase 4 agrego pruebas de persistencia base y la Iteracion 1 agrego pruebas de proveedores en Domain, Application, Infrastructure, API y MVC.
+La Fase 3 preparo la suite unitaria para sostener TDD. La Fase 4 agrego pruebas de persistencia base. La Iteracion 1 incorporo pruebas de proveedores en Domain, Application, Infrastructure, API y MVC.
+
+La Iteracion 2 amplio la cobertura con pruebas de licitaciones, reglas de estado, validaciones, persistencia relacional, concurrencia optimista y API REST, manteniendo PostgreSQL real mediante Testcontainers para las pruebas de integracion y funcionales.
 
 ## Pruebas unitarias agregadas en Fase 3
 
@@ -105,3 +107,127 @@ Pruebas de proveedores verificables en el repositorio:
 - Integracion de persistencia: `tests/Licitaciones.IntegrationTests/Persistence/ProveedorPersistenceTests.cs`.
 - Funcionales API: `tests/Licitaciones.FunctionalTests/ProveedorApiTests.cs`.
 - Funcionales MVC: `tests/Licitaciones.FunctionalTests/ProveedorMvcTests.cs`.
+
+## Resultado de validación Iteración 2
+
+Durante la Iteración 2 se validaron las historias HU-12 a HU-19 mediante pruebas unitarias, de integración y funcionales.
+
+Se ejecutaron:
+
+```bash
+dotnet restore Licitaciones.sln
+dotnet build Licitaciones.sln --configuration Release --no-restore
+dotnet test Licitaciones.sln --configuration Release --no-build
+```
+
+### Resultado final
+
+* **Restore:** exitoso.
+* **Build Release:** exitoso.
+* **Pruebas ejecutadas:** 64.
+* **Pruebas aprobadas:** 64.
+* **Pruebas fallidas:** 0.
+* **Pruebas omitidas:** 0.
+* **PostgreSQL 16:** disponible mediante Docker.
+* **Testcontainers:** ejecutó correctamente las pruebas con PostgreSQL real.
+
+Las pruebas validaron la aplicación de las migraciones:
+
+* `20260810092133_CreateProveedores`
+* `20260811234653_MakeProveedorNameUniqueIndexPartial`
+* `20260812002104_CreateLicitaciones`
+
+## Pruebas de licitaciones - Iteracion 2
+
+### Pruebas unitarias
+
+Se validan reglas de dominio y Application sin depender de infraestructura externa.
+
+Cobertura principal:
+
+- Creacion de licitaciones.
+- Normalizacion del codigo.
+- Rechazo de codigos invalidos.
+- Validacion de presupuesto mayor que cero.
+- Validacion de fecha de cierre.
+- Estado inicial `Borrador`.
+- Publicacion de licitaciones.
+- Cierre de licitaciones.
+- Rechazo de transiciones invalidas.
+- Comportamiento de licitaciones vencidas.
+- Uso de `IClock` para controlar reglas temporales.
+
+### Pruebas de integracion
+
+Se utiliza PostgreSQL 16 real mediante Testcontainers.
+
+Se valida:
+
+- Persistencia de licitaciones.
+- Lectura y actualizacion de registros.
+- Indice unico parcial sobre `CodigoNormalizado`.
+- Borrado logico.
+- Precision monetaria `numeric(18,2)`.
+- Migraciones EF Core.
+- Auditoria.
+- Concurrencia optimista mediante `xmin`.
+- Conflictos de actualizacion controlados.
+
+### Pruebas funcionales API
+
+Se valida la API REST de licitaciones mediante `WebApplicationFactory` y PostgreSQL real.
+
+Operaciones verificadas:
+
+- Crear licitacion.
+- Consultar licitacion.
+- Listar licitaciones.
+- Editar licitacion.
+- Retirar licitacion.
+- Publicar licitacion.
+- Cerrar licitacion.
+- Rechazar datos invalidos.
+- Rechazar recursos inexistentes.
+- Manejar conflictos controlados.
+
+Base de endpoints:
+
+```text
+/api/v1/licitaciones
+
+## Validacion manual de Iteracion 2
+
+Ademas de las pruebas automatizadas, se realizo una validacion manual completa del flujo MVC de licitaciones.
+
+Flujo ejecutado:
+
+1. Crear una licitacion.
+2. Verificar su aparicion en el listado.
+3. Consultar el detalle.
+4. Editarla mientras se encuentra en estado `Borrador`.
+5. Publicarla.
+6. Intentar una transicion invalida y verificar su rechazo.
+7. Cerrar la licitacion.
+
+La validacion manual confirmo que las reglas de estado se aplican correctamente.
+
+Durante esta revision tambien se detectaron y corrigieron dos aspectos de interfaz:
+
+- Formato de entrada de `PresupuestoCrc` para mantener coherencia con la cultura `es-CR`.
+- Visibilidad de acciones segun el estado actual de la licitacion.
+
+Las reglas del dominio permanecen como validacion definitiva independientemente de los controles mostrados en la interfaz.
+
+## Estado actual de la suite
+
+La suite completa se encuentra en verde al cierre tecnico local de la Iteracion 2.
+
+```text
+UnitTests        Exitosas
+IntegrationTests Exitosas
+FunctionalTests  Exitosas
+
+Total:     64
+Aprobadas: 64
+Fallidas:   0
+Omitidas:   0
