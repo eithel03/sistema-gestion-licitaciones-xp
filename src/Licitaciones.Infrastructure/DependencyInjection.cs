@@ -1,4 +1,5 @@
 using Licitaciones.Application.Abstractions.Time;
+using Licitaciones.Application.Licitaciones;
 using Licitaciones.Application.Proveedores;
 using Licitaciones.Infrastructure.Persistence;
 using Licitaciones.Infrastructure.Persistence.Repositories;
@@ -30,6 +31,7 @@ public static class DependencyInjection
 
         services.TryAddSingleton<IClock, SystemClock>();
         services.AddScoped<IProveedorRepository, ProveedorRepository>();
+        services.AddScoped<ILicitacionRepository, LicitacionRepository>();
 
         return services;
     }

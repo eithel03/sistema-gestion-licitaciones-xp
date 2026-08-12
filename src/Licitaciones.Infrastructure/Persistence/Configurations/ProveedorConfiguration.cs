@@ -27,6 +27,7 @@ public sealed class ProveedorConfiguration : IEntityTypeConfiguration<Proveedor>
 
         builder.HasIndex(proveedor => proveedor.NombreNormalizado)
             .IsUnique()
+            .HasFilter("\"DeletedAt\" IS NULL")
             .HasDatabaseName("IX_Proveedores_NombreNormalizado");
 
         builder.HasQueryFilter(proveedor => proveedor.DeletedAt == null);

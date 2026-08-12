@@ -1,0 +1,30 @@
+@model Licitaciones.Web.Models.Licitaciones.LicitacionFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input type="hidden" asp-for="Version" />
+<div class="mb-3">
+    <label asp-for="Codigo" class="form-label"></label>
+    <input asp-for="Codigo" class="form-control" />
+    <span asp-validation-for="Codigo" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Titulo" class="form-label"></label>
+    <input asp-for="Titulo" class="form-control" />
+    <span asp-validation-for="Titulo" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="PresupuestoCrc" class="form-label"></label>
+    <input asp-for="PresupuestoCrc"
+       class="form-control"
+       type="text"
+       inputmode="decimal"
+       value="@Model.PresupuestoCrc.ToString("0.00", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))" />
+    <span asp-validation-for="PresupuestoCrc" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="FechaCierreLocal" class="form-label"></label>
+    <input asp-for="FechaCierreLocal" type="datetime-local" class="form-control" />
+    <span asp-validation-for="FechaCierreLocal" class="text-danger"></span>
+</div>
+<button type="submit" class="btn btn-primary">Guardar</button>
+<a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>

@@ -2,6 +2,8 @@ namespace Licitaciones.Domain.Proveedores;
 
 public sealed class Proveedor
 {
+    public const int NombreMaxLength = 200;
+
     private Proveedor()
     {
         Id = Guid.Empty;
@@ -64,6 +66,14 @@ public sealed class Proveedor
         {
             throw new ProveedorValidationException(
                 new ProveedorValidationError(ProveedorErrors.NombreRequerido, "El nombre del proveedor es requerido."));
+        }
+
+        if (displayName.Length > NombreMaxLength)
+        {
+            throw new ProveedorValidationException(
+                new ProveedorValidationError(
+                    ProveedorErrors.NombreLongitudMaxima,
+                    "El nombre del proveedor no debe superar 200 caracteres."));
         }
 
         if (!ProveedorNameNormalizer.HasAllowedCharacters(displayName))

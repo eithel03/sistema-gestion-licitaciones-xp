@@ -1,6 +1,8 @@
+using System.Globalization;
 using Licitaciones.Application;
 using Licitaciones.Infrastructure;
 using Licitaciones.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllersWithViews();
+
+var costaRicaCulture = new CultureInfo("es-CR");
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture(costaRicaCulture);
+    options.SupportedCultures = [costaRicaCulture];
+    options.SupportedUICultures = [costaRicaCulture];
+});
 
 var app = builder.Build();
 
@@ -18,6 +29,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+var localizationOptions = app.Services
+    .GetRequiredService<Microsoft.Extensions.Options.IOptions<RequestLocalizationOptions>>()
+    .Value;
+
+app.UseRequestLocalization(localizationOptions);
 
 if (!app.Environment.IsEnvironment("Testing"))
 {
