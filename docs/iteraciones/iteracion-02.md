@@ -164,9 +164,14 @@ Se implemento concurrencia optimista mediante `xmin` de PostgreSQL y se tradujer
 
 ## Commits y Pull Requests
 
+## Commits y Pull Requests
+
+- Issue: `#10 - ITER-02: Implementar gestion de licitaciones y persistencia base`.
 - Rama: `feature/iteracion-02-licitaciones`.
-- Commits: Pendiente de cierre.
-- Pull Request: Pendiente.
-- CI remoto: Pendiente.
+- Commit de implementacion: `cce95ad` - `feat(licitaciones): implementar gestion de licitaciones`.
+- Commit de pruebas: `812b59c` - `test(licitaciones): completar pruebas de iteracion 2`.
+- Commit documental: `ed89c5a` - `docs(xp): documentar iteracion 2 y evidencias`.
+- Pull Request: `#12 - feat: completar Iteración 2 - Licitaciones y persistencia base`.
+- CI remoto: Aprobado.
 - Merge a `main`: Pendiente.
 - Tag previsto: `v0.2.0`.

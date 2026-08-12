@@ -6,14 +6,19 @@ Gestionar el ciclo de vida de licitaciones del Sistema de Gestion de Licitacione
 
 ## Evidencia Iteracion 2
 
-- Rama: feature/iteracion-02-licitaciones.
+- Rama: `feature/iteracion-02-licitaciones`.
 - Driver: Eithel.
 - Navigator: Chavala.
 - Historias: HU-12 a HU-19.
 - Puntos planificados: 36.
-- Version prevista: v0.2.0.
 - Issue: `#10`.
-- PR: Pendiente.
+- Commit de implementacion: `cce95ad`.
+- Commit de pruebas: `812b59c`.
+- Commit documental: `ed89c5a`.
+- Pull Request: `#12`.
+- CI remoto: Aprobado.
+- Version prevista: `v0.2.0`.
+- Merge: Pendiente.
 
 ## Responsabilidades
 

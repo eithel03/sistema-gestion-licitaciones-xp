@@ -11,13 +11,16 @@
 
 ## Evidencia Iteracion 2
 
-- Rama: feature/iteracion-02-licitaciones.
+## Evidencia Iteracion 2
+
+- Rama: `feature/iteracion-02-licitaciones`.
 - Driver: Eithel.
 - Navigator: Chavala.
 - Historias: HU-12 a HU-19.
 - Puntos: 36.
-- Commits: Pendiente.
-- Pull Request: Pendiente.
-- CI remoto: Pendiente.
+- Issue: `#10`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`.
+- Pull Request: `#12`.
+- CI remoto: Aprobado.
 - Merge: Pendiente.
-- Liberacion prevista: v0.2.0.
+- Liberacion prevista: `v0.2.0`.

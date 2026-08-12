@@ -620,8 +620,11 @@ El navigator propuso corregir la coherencia del formato decimal de PresupuestoCr
 
 ### Commits y PR
 
-- Commits definitivos: Pendiente.
-- Pull Request: Pendiente.
-- CI remoto: Pendiente.
-- Merge: Pendiente.
-- Tag v0.2.0: Pendiente.
+- Issue: `#10`.
+- Commit de implementacion: `cce95ad`.
+- Commit de pruebas: `812b59c`.
+- Commit documental: `ed89c5a`.
+- Pull Request: `#12 - feat: completar Iteración 2 - Licitaciones y persistencia base`.
+- CI remoto: aprobado correctamente.
+- Merge: pendiente.
+- Tag `v0.2.0`: pendiente.
