@@ -19,6 +19,25 @@ public sealed class ProveedorTests
         Assert.Null(proveedor.DeletedAt);
     }
 
+    [Fact]
+    public void CreateAcceptsNameWithExactlyTwoHundredCharacters()
+    {
+        var nombre = new string('A', 200);
+
+        var proveedor = Proveedor.Create(nombre, Now);
+
+        Assert.Equal(nombre, proveedor.Nombre);
+    }
+
+    [Fact]
+    public void CreateRejectsNameLongerThanTwoHundredCharacters()
+    {
+        var nombre = new string('A', 201);
+
+        var exception = Assert.Throws<ProveedorValidationException>(() => Proveedor.Create(nombre, Now));
+
+        Assert.Contains(exception.Errors, error => error.Code == ProveedorErrors.NombreLongitudMaxima);
+    }
     [Theory]
     [InlineData("")]
     [InlineData("   ")]

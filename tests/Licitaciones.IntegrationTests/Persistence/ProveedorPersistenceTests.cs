@@ -96,6 +96,45 @@ public sealed class ProveedorPersistenceTests
     }
 
     [Fact]
+    public async Task UniqueIndexAllowsReusingNormalizedNameAfterLogicalDelete()
+    {
+        await using var context = await CreateContextAsync();
+        var repository = new ProveedorRepository(context);
+        var retired = Proveedor.Create("Empresa Central", Now);
+        await repository.AddAsync(retired);
+        await repository.SaveChangesAsync();
+        retired.Retire(Now.AddHours(1));
+        await repository.SaveChangesAsync();
+
+        await repository.AddAsync(Proveedor.Create(" empresa   central ", Now.AddHours(2)));
+        await repository.SaveChangesAsync();
+
+        var activeProviders = await repository.ListAsync(new ProveedorQuery());
+        var allProviders = await context.Proveedores.IgnoreQueryFilters().CountAsync();
+
+        Assert.Single(activeProviders.Items);
+        Assert.Equal(2, allProviders);
+    }
+
+    [Fact]
+    public async Task RepositoryListFiltersSortsAndPaginatesWithPostgreSql()
+    {
+        await using var context = await CreateContextAsync();
+        var repository = new ProveedorRepository(context);
+        await repository.AddAsync(Proveedor.Create("Delta Central", Now));
+        await repository.AddAsync(Proveedor.Create("Alfa Central", Now));
+        await repository.AddAsync(Proveedor.Create("Beta Norte", Now));
+        await repository.SaveChangesAsync();
+
+        var ascending = await repository.ListAsync(new ProveedorQuery(Page: 1, PageSize: 1, Search: "central", Sort: "name"));
+        var descending = await repository.ListAsync(new ProveedorQuery(Page: 1, PageSize: 1, Search: "central", Sort: "name_desc"));
+
+        Assert.Equal(2, ascending.TotalItems);
+        Assert.Single(ascending.Items);
+        Assert.Equal("Alfa Central", ascending.Items[0].Nombre);
+        Assert.Equal("Delta Central", descending.Items[0].Nombre);
+    }
+    [Fact]
     public async Task RetiresProveedorWithLogicalDelete()
     {
         await using var context = await CreateContextAsync();
