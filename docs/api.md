@@ -55,3 +55,53 @@ Respuesta paginada:
 - Commit: `5696a0f`.
 - Pull Request: `#9`.
 - Pruebas funcionales: `ProveedorApiTests`.
+
+
+## Licitaciones - Iteracion 2
+
+La API REST de licitaciones esta disponible bajo /api/v1/licitaciones.
+
+Endpoints reales:
+- GET /api/v1/licitaciones: lista paginada de licitaciones activas; responde 200.
+- GET /api/v1/licitaciones/{id}: consulta detalle; responde 200 o 404.
+- POST /api/v1/licitaciones: crea licitacion en Borrador; responde 201, 400 o 409.
+- PUT /api/v1/licitaciones/{id}: actualiza licitacion permitida; responde 200, 400, 404 o 409.
+- DELETE /api/v1/licitaciones/{id}: aplica borrado logico; responde 204, 400, 404 o 409.
+- POST /api/v1/licitaciones/{id}/publish: publica una licitacion en Borrador y vigente; responde 200, 400, 404 o 409.
+- POST /api/v1/licitaciones/{id}/close: cierra una licitacion Publicada; responde 200, 400, 404 o 409.
+
+Parametros de listado reales:
+- page, pageSize, search y sort.
+- page menor que 1 se normaliza a 1; pageSize menor que 1 se normaliza a 10 y el maximo es 100.
+- search filtra por Codigo o Titulo.
+- sort acepta code, code_desc y close_desc.
+
+Contratos de solicitud reales:
+- CrearLicitacionRequest: codigo, titulo, presupuestoCrc, fechaCierreUtc.
+- ActualizarLicitacionRequest: codigo, titulo, presupuestoCrc, fechaCierreUtc, version.
+
+Respuesta LicitacionResponse:
+- id, codigo, codigoNormalizado, titulo, presupuestoCrc, fechaCierreUtc.
+- estado, estadoEfectivo, createdAt, updatedAt, publishedAt, closedAt, deletedAt, version.
+- LicitacionPage: items, totalItems, page, pageSize, totalPages.
+
+Errores esperados:
+- 400 Bad Request: validaciones de dominio, datos invalidos o transiciones no permitidas.
+- 404 Not Found: licitacion inexistente o retirada.
+- 409 Conflict: codigo normalizado duplicado o conflicto de concurrencia.
+- ProblemDetails incluye code con el codigo de error de aplicacion.
+
+Publicacion, cierre, borrado logico y concurrencia:
+- publish cambia Borrador a Publicada si la fecha de cierre sigue vigente.
+- close cambia Publicada a Cerrada.
+- DELETE marca DeletedAt y excluye la licitacion de listados activos.
+- version via ActualizarLicitacionRequest y xmin de PostgreSQL detectan concurrencia.
+- Una Publicada vencida se devuelve con estadoEfectivo Cerrada.
+
+### Evidencia Iteracion 2
+- Rama: feature/iteracion-02-licitaciones.
+- Historias: HU-12 a HU-19.
+- Pruebas: ejecutadas localmente; resultado global 64/64.
+- PR: Pendiente.
+- CI remoto: Pendiente.
+- Merge: Pendiente.
