@@ -1,4 +1,5 @@
 using Licitaciones.Application.Proveedores;
+using Licitaciones.Application.Ofertas;
 using Licitaciones.Web.Models.Proveedores;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,12 @@ namespace Licitaciones.Web.Controllers;
 public sealed class ProveedoresController : Controller
 {
     private readonly IProveedorService _service;
+    private readonly IOfertaService _ofertas;
 
-    public ProveedoresController(IProveedorService service)
+    public ProveedoresController(IProveedorService service, IOfertaService ofertas)
     {
         _service = service;
+        _ofertas = ofertas;
     }
 
     public async Task<IActionResult> Index(
@@ -42,7 +45,8 @@ public sealed class ProveedoresController : Controller
             return NotFound();
         }
 
-        return View(result.Value);
+        var ofertas = await _ofertas.ListAsync(new OfertaQuery(PageSize: 100, ProveedorId: id), cancellationToken);
+        return View(new ProveedorDetailsViewModel(result.Value!, ofertas.Value!.Items));
     }
 
     public IActionResult Create()

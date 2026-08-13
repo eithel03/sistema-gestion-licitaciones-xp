@@ -1,0 +1,3 @@
+@model Licitaciones.Application.Aprobaciones.NivelAprobacionResponse
+@{ ViewData["Title"] = "Eliminar nivel de aprobacion"; }
+<section class="page-header"><div><p class="eyebrow">Aprobaciones</p><h1>Confirmar eliminacion</h1></div></section><div class="alert alert-warning">Se eliminara el nivel asignado a @Model.Aprobador.</div><form method="post">@Html.AntiForgeryToken()<div class="action-list"><button type="submit" class="btn btn-danger">Eliminar</button><a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancelar</a></div></form>

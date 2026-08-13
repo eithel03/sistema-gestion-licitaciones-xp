@@ -63,3 +63,15 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Intervencion humana: el equipo define alcance, revisa decisiones, conserva PR/commits pendientes para ejecucion manual y valida que no se adelanten entidades ni historias futuras.
 - Limitaciones: no se realizaron commits, push, merge ni Pull Request; no se creo migracion inicial porque no hay modelo persistente real; CI remoto queda pendiente.
 - Resultado: Fase 4 preparada y validada localmente con 13 pruebas aprobadas y PostgreSQL 16 saludable en Docker Compose.
+
+### Registro 006 - Iteracion 3
+
+- Fecha: 12 de agosto de 2026.
+- Herramienta: OpenAI Codex.
+- Participantes responsables: Chavala como Driver principal y Eithel como Navigator principal.
+- Finalidad: apoyo en analisis del repositorio, asistencia en la implementacion de Iteracion 3, generacion y revision de pruebas, documentacion e identificacion de problemas.
+- Modulos asistidos: Ofertas, Niveles de aprobacion, persistencia, API, MVC, pruebas y documentacion.
+- Validaciones realizadas por los estudiantes: revision del codigo; build manual; 76 pruebas unitarias; 22 pruebas de integracion; 13 pruebas funcionales; revision de la migracion; revision de `EvaluadorOfertas`; revision de restricciones PostgreSQL.
+- Resultado: Iteracion 3 tecnicamente implementada y validada localmente con 111/111 pruebas aprobadas.
+- Responsabilidad: Codex se utilizo como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad del trabajo y deben comprender, revisar y defender el codigo.
+- Limitaciones de evidencia: revision formal del Navigator, Pull Request, CI remoto, merge y tag permanecen pendientes.

@@ -22,6 +22,56 @@ namespace Licitaciones.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Licitaciones.Domain.Aprobaciones.NivelAprobacion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Aprobador")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("MontoMaximoCrc")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("MontoMinimoCrc")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<uint>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MontoMaximoCrc")
+                        .IsUnique()
+                        .HasDatabaseName("IX_NivelesAprobacion_UnicoRangoAbierto")
+                        .HasFilter("\"MontoMaximoCrc\" IS NULL");
+
+                    NpgsqlIndexBuilderExtensions.AreNullsDistinct(b.HasIndex("MontoMaximoCrc"), false);
+
+                    b.HasIndex("MontoMinimoCrc")
+                        .HasDatabaseName("IX_NivelesAprobacion_MontoMinimoCrc");
+
+                    b.ToTable("NivelesAprobacion", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_NivelesAprobacion_MaximoValido", "\"MontoMaximoCrc\" IS NULL OR \"MontoMaximoCrc\" >= \"MontoMinimoCrc\"");
+
+                            t.HasCheckConstraint("CK_NivelesAprobacion_MinimoPositivo", "\"MontoMinimoCrc\" > 0");
+                        });
+                });
+
             modelBuilder.Entity("Licitaciones.Domain.Licitaciones.Licitacion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -88,6 +138,48 @@ namespace Licitaciones.Infrastructure.Persistence.Migrations
                     b.ToTable("Licitaciones", (string)null);
                 });
 
+            modelBuilder.Entity("Licitaciones.Domain.Ofertas.Oferta", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("FechaRegistro")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("LicitacionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("MontoOfertadoCrc")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<Guid>("ProveedorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<uint>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProveedorId")
+                        .HasDatabaseName("IX_Ofertas_ProveedorId");
+
+                    b.HasIndex("LicitacionId", "ProveedorId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Ofertas_LicitacionId_ProveedorId");
+
+                    b.ToTable("Ofertas", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Ofertas_MontoPositivo", "\"MontoOfertadoCrc\" > 0");
+                        });
+                });
+
             modelBuilder.Entity("Licitaciones.Domain.Proveedores.Proveedor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -124,6 +216,21 @@ namespace Licitaciones.Infrastructure.Persistence.Migrations
                         .HasFilter("\"DeletedAt\" IS NULL");
 
                     b.ToTable("Proveedores", (string)null);
+                });
+
+            modelBuilder.Entity("Licitaciones.Domain.Ofertas.Oferta", b =>
+                {
+                    b.HasOne("Licitaciones.Domain.Licitaciones.Licitacion", null)
+                        .WithMany()
+                        .HasForeignKey("LicitacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Licitaciones.Domain.Proveedores.Proveedor", null)
+                        .WithMany()
+                        .HasForeignKey("ProveedorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

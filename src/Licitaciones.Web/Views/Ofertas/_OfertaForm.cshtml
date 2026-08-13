@@ -1,0 +1,41 @@
+@model Licitaciones.Web.Models.Ofertas.OfertaFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input asp-for="Version" type="hidden" />
+
+@if (Model.Licitaciones.Count > 0)
+{
+    <div class="mb-3">
+        <label asp-for="LicitacionId" class="form-label"></label>
+        <select asp-for="LicitacionId" class="form-select">
+            <option value="">Seleccione una licitacion</option>
+            @foreach (var licitacion in Model.Licitaciones)
+            {
+                <option value="@licitacion.Id">@licitacion.Codigo - @licitacion.Titulo</option>
+            }
+        </select>
+        <span asp-validation-for="LicitacionId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ProveedorId" class="form-label"></label>
+        <select asp-for="ProveedorId" class="form-select">
+            <option value="">Seleccione un proveedor</option>
+            @foreach (var proveedor in Model.Proveedores)
+            {
+                <option value="@proveedor.Id">@proveedor.Nombre</option>
+            }
+        </select>
+        <span asp-validation-for="ProveedorId" class="text-danger"></span>
+    </div>
+}
+else
+{
+    <input asp-for="LicitacionId" type="hidden" />
+    <input asp-for="ProveedorId" type="hidden" />
+}
+
+<div class="mb-3">
+    <label asp-for="MontoOfertadoCrc" class="form-label"></label>
+    <input asp-for="MontoOfertadoCrc" class="form-control" type="number" min="0.01" step="0.01" />
+    <span asp-validation-for="MontoOfertadoCrc" class="text-danger"></span>
+</div>

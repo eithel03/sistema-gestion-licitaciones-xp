@@ -1,4 +1,4 @@
-# Matriz inicial de trazabilidad
+# Matriz de trazabilidad
 
 Esta matriz registra la trazabilidad prevista entre historias, criterios de aceptacion, pruebas, documentacion, Issues, ramas, commits, Pull Requests y liberaciones. Los campos sin evidencia real permanecen como `Pendiente`.
 
@@ -14,7 +14,7 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-08 | Iteracion 1 | Alta | 5 | Definidos en `historias-usuario.md` | `ProveedorTests.NormalizedNameIgnoresCaseAndRepeatedSpaces`, `ProveedorPersistenceTests.UniqueIndexRejectsEquivalentNormalizedName` | Proveedores, persistencia | Pendiente | `feature/iteracion-01-landing-proveedores` | `5696a0f` | `#9` | `iteracion-01.md`, `modulos/proveedores.md` | v0.1.0 |
 | HU-09 | Iteracion 1 | Media | 2 | Definidos en `historias-usuario.md` | `ProveedorTests.CreateAcceptsAllowedCharacters`, `ProveedorTests.CreateRejectsDisallowedCharacters` | Proveedores | Pendiente | `feature/iteracion-01-landing-proveedores` | `5696a0f` | `#9` | `iteracion-01.md`, `modulos/proveedores.md` | v0.1.0 |
 | HU-10 | Iteracion 1 | Alta | 5 | Definidos en `historias-usuario.md` | `ProveedorApiTests` | Proveedores, API REST | Pendiente | `feature/iteracion-01-landing-proveedores` | `5696a0f` | `#9` | `iteracion-01.md`, `modulos/proveedores.md`, `api.md` | v0.1.0 |
-| HU-11 | Iteracion 3 | Media | 2 | Definidos en `historias-usuario.md` | Funcional e integracion de ofertas relacionadas | Proveedores, ofertas | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
+| HU-11 | Iteracion 3 | Media | 2 | Definidos en `historias-usuario.md` | `Iteration3MvcTests`, `Iteration3PersistenceTests` | Proveedores, ofertas | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `7e6a317`, `29e727c`, `4faaf83`, `437cc37` | Pendiente | `iteracion-03.md`, `modulos/ofertas.md`, `integracion-modulos.md` | `v0.3.0` (Prevista) |
 | HU-12 | Iteración 2 | Alta | 5 | Definidos en `historias-usuario.md` | `LicitacionTests.CreateValidTenderStartsAsDraft`, `LicitacionApiTests.CreatePublishCloseAndRejectInvalidTransitionThroughApi` | Licitaciones | `#10` | `feature/iteracion-02-licitaciones` | `cce95ad`, `812b59c`, `ed89c5a` | `#12` | `iteracion-02.md`, `modulos/licitaciones.md`, `pruebas.md`, `bitacora-xp.md` | v0.2.0 |
 | HU-13 | Iteración 2 | Alta | 3 | Definidos en `historias-usuario.md` | `LicitacionPersistenceTests.SavesListsAndLogicallyDeletesLicitacion`, `LicitacionApiTests.CreatePublishCloseAndRejectInvalidTransitionThroughApi` | Licitaciones | `#10` | `feature/iteracion-02-licitaciones` | `cce95ad`, `812b59c`, `ed89c5a` | `#12` | `iteracion-02.md`, `modulos/licitaciones.md`, `api.md`, `pruebas.md` | v0.2.0 |
 | HU-14 | Iteración 2 | Alta | 3 | Definidos en `historias-usuario.md` | `LicitacionTests.InvalidTransitionsAndUpdatesAreRejected`, `LicitacionPersistenceTests.SavesListsAndLogicallyDeletesLicitacion` | Licitaciones | `#10` | `feature/iteracion-02-licitaciones` | `cce95ad`, `812b59c`, `ed89c5a` | `#12` | `iteracion-02.md`, `modulos/licitaciones.md`, `modelo-datos.md`, `pruebas.md` | v0.2.0 |
@@ -23,16 +23,16 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-17 | Iteración 2 | Alta | 5 | Definidos en `historias-usuario.md` | `LicitacionApiTests.CreatePublishCloseAndRejectInvalidTransitionThroughApi` | Licitaciones, API REST | `#10` | `feature/iteracion-02-licitaciones` | `cce95ad`, `812b59c`, `ed89c5a` | `#12` | `iteracion-02.md`, `modulos/licitaciones.md`, `api.md`, `pruebas.md` | v0.2.0 |
 | HU-18 | Iteración 2 | Alta | 5 | Definidos en `historias-usuario.md` | `LicitacionPersistenceTests.SavesListsAndLogicallyDeletesLicitacion`, migración `20260812002104_CreateLicitaciones` | Persistencia | `#10` | `feature/iteracion-02-licitaciones` | `cce95ad`, `812b59c`, `ed89c5a` | `#12` | `iteracion-02.md`, `modulos/licitaciones.md`, `modelo-datos.md`, `pruebas.md` | v0.2.0 |
 | HU-19 | Iteración 2 | Alta | 5 | Definidos en `historias-usuario.md` | `LicitacionPersistenceTests.ConcurrentUpdatesDetectStaleVersion`, manejo controlado de concurrencia en Application/API | Persistencia, API REST | `#10` | `feature/iteracion-02-licitaciones` | `cce95ad`, `812b59c`, `ed89c5a` | `#12` | `iteracion-02.md`, `modulos/licitaciones.md`, `api.md`, `modelo-datos.md`, `pruebas.md`, `bitacora-xp.md` | v0.2.0 |
-| HU-20 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | Unitarias e integracion | Ofertas | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-21 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | Filtros e integracion | Ofertas, API REST | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-22 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | Permisos e integracion | Ofertas, licitaciones | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-23 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | Duplicidad y vencimiento | Ofertas, licitaciones | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-24 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | Limite presupuestario | Ofertas, licitaciones | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-25 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | Mejor oferta y desempate | Ofertas, licitaciones | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-26 | Iteracion 3 | Media | 3 | Definidos en `historias-usuario.md` | Calculo de ahorro | Ofertas, licitaciones | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-27 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | CRUD niveles de aprobacion | Niveles de aprobacion | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-28 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | Rangos y aprobador | Niveles de aprobacion, ofertas | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
-| HU-29 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | Endpoints de ofertas y aprobaciones | Ofertas, aprobaciones, API REST | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-03.md` | v0.3.0 |
+| HU-20 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests` | Ofertas | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37` | Pendiente | `iteracion-03.md`, `modulos/ofertas.md`, `api.md`, `modelo-datos.md` | `v0.3.0` (Prevista) |
+| HU-21 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests` | Ofertas, API REST | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37` | Pendiente | `modulos/ofertas.md`, `api.md`, `iteracion-03.md` | `v0.3.0` (Prevista) |
+| HU-22 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `OfertaTests`, `OfertaServiceTests`, `Iteration3MvcTests` | Ofertas, licitaciones | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37` | Pendiente | `modulos/ofertas.md`, `iteracion-03.md`, `pruebas.md` | `v0.3.0` (Prevista) |
+| HU-23 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests` | Ofertas, licitaciones | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `437cc37` | Pendiente | `modulos/ofertas.md`, `modelo-datos.md`, `pruebas.md` | `v0.3.0` (Prevista) |
+| HU-24 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `OfertaTests`, `Iteration3ApiTests` | Ofertas, licitaciones | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `37bcb55`, `437cc37` | Pendiente | `modulos/ofertas.md`, `api.md`, `pruebas.md` | `v0.3.0` (Prevista) |
+| HU-25 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `EvaluadorOfertasTests`, `Iteration3ApiTests` | Ofertas, licitaciones | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `37bcb55`, `437cc37` | Pendiente | `modulos/ofertas.md`, `api.md`, `iteracion-03.md` | `v0.3.0` (Prevista) |
+| HU-26 | Iteracion 3 | Media | 3 | Definidos en `historias-usuario.md` | `EvaluadorOfertasTests`, `Iteration3ApiTests` | Ofertas, licitaciones | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `37bcb55`, `437cc37` | Pendiente | `modulos/ofertas.md`, `api.md`, `pruebas.md` | `v0.3.0` (Prevista) |
+| HU-27 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `NivelAprobacionServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests` | Niveles de aprobacion | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37` | Pendiente | `modulos/niveles-aprobacion.md`, `api.md`, `iteracion-03.md` | `v0.3.0` (Prevista) |
+| HU-28 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests` | Niveles de aprobacion, ofertas | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `a20eb19`, `29e727c`, `37bcb55`, `437cc37` | Pendiente | `modulos/niveles-aprobacion.md`, `modelo-datos.md`, `integracion-modulos.md` | `v0.3.0` (Prevista) |
+| HU-29 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `Iteration3ApiTests` | Ofertas, aprobaciones, API REST | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `437cc37` | Pendiente | `api.md`, `iteracion-03.md`, `modulos/ofertas.md`, `modulos/niveles-aprobacion.md` | `v0.3.0` (Prevista) |
 | HU-30 | Iteracion 4 | Media | 5 | Definidos en `historias-usuario.md` | CRUD tipos de cambio | Tipos de cambio | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
 | HU-31 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | Activacion unica | Tipos de cambio | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
 | HU-32 | Iteracion 4 | Media | 3 | Definidos en `historias-usuario.md` | Conversion visual | Tipos de cambio, interfaz | Pendiente | Pendiente | Pendiente | Pendiente | `historias-usuario.md`, `iteracion-04.md` | v1.0.0-rc |
@@ -54,6 +54,17 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | Iteracion 3 | 38 |
 | Iteracion 4 | 32 |
 | Total | 136 |
+
+## Evidencia comun de Iteracion 3
+
+- Base: `fafcc66`.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
+- Historias: HU-11 y HU-20 a HU-29.
+- Commits: `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
+- Pruebas: UnitTests 76/76, IntegrationTests 22/22 y FunctionalTests 13/13; total 111/111.
+- Documentacion: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `modulos/niveles-aprobacion.md`, `api.md`, `modelo-datos.md`, `pruebas.md`, `integracion-modulos.md` y `bitacora-xp.md`.
+- Version: `v0.3.0` prevista; tag pendiente.
+- Estado formal: Issue, revision formal del Navigator, Pull Request, CI remoto, merge y tag pendientes.
 
 ## Actualizacion Iteracion 2 - HU-12 a HU-19.
 

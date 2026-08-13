@@ -1,87 +1,119 @@
 # Iteracion 3 - Ofertas, mejor oferta y aprobaciones
 
-- Objetivo: entregar gestion de ofertas con reglas de registro, mejor oferta, desempate, clasificacion del ahorro, niveles de aprobacion y API relacionada.
-- Duracion uniforme propuesta: Pendiente de completar por el equipo.
-- Fecha prevista: Pendiente de completar por el equipo.
-- Driver principal: Chavala.
-- Navigator principal: Eithel.
-- Version prevista: v0.3.0.
+- Objetivo: entregar gestion de ofertas, evaluacion economica y niveles de aprobacion parametrizables.
+- Driver: Chavala.
+- Navigator: Eithel.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
+- Version prevista: `v0.3.0`.
+- Base: `fafcc66` (`Merge pull request #12 from eithel03/feature/iteracion-02-licitaciones`).
 - Puntos planificados: 38.
+- Historias: HU-11 y HU-20 a HU-29.
 
-## Historias seleccionadas
+## Modalidad XP
 
-| Historia | Puntos | Proposito |
-| --- | ---: | --- |
-| HU-11 | 2 | Consultar ofertas relacionadas con proveedor |
-| HU-20 | 5 | Crear ofertas |
-| HU-21 | 3 | Listar, consultar y filtrar ofertas |
-| HU-22 | 3 | Editar y eliminar ofertas cuando este permitido |
-| HU-23 | 5 | Rechazar duplicadas, vencidas o no publicadas |
-| HU-24 | 3 | Validar ofertas contra presupuesto |
-| HU-25 | 3 | Determinar mejor oferta y resolver empates |
-| HU-26 | 3 | Calcular clasificacion del ahorro |
-| HU-27 | 3 | Administrar niveles de aprobacion |
-| HU-28 | 5 | Evitar traslapes y determinar aprobador |
-| HU-29 | 3 | API REST de ofertas y aprobaciones |
+Trabajo en pareja. Chavala actuo como Driver principal: ejecuto la implementacion con asistencia de Codex, reviso cambios, ejecuto comandos y pruebas, preparo los commits y actualizo evidencias. Eithel actuo como Navigator principal: reviso las reglas, criterios de aceptacion, estrategia TDD y posibles defectos. La revision formal del Navigator permanece pendiente.
 
-## Dependencias
+## Alcance implementado
 
-- HU-20 depende de proveedores y licitaciones publicadas.
-- HU-11 depende de HU-06, HU-20 y HU-21.
-- HU-21 y HU-22 dependen de HU-20.
-- HU-23 y HU-24 dependen de las reglas de estado y presupuesto.
-- HU-25 y HU-26 preparan HU-27 y HU-28.
-- HU-29 depende de ofertas, mejor oferta y aprobaciones.
+- CRUD MVC y API de ofertas con filtros por licitacion y proveedor.
+- Monto positivo, limite presupuestario, licitacion publicada y vigente, proveedor existente y una oferta por proveedor/licitacion.
+- Edicion y eliminacion solo mientras la licitacion recibe ofertas.
+- Mejor oferta por menor monto; desempate por `FechaRegistro` y luego por `Id` ascendente.
+- Ahorro y clasificacion usando `decimal`: `Oferta conveniente`, `Oferta aceptable`, `Oferta valida sin ahorro` o `Sin ofertas validas`.
+- CRUD MVC y API de niveles de aprobacion.
+- Aprobador resuelto desde rangos persistidos, sin cargos codificados en una cadena de decisiones.
+- Consulta de ofertas asociadas desde el detalle de proveedor.
+- Persistencia PostgreSQL y migracion `20260813011055_Iteration03OfertasAprobacion`.
+- Contratos, resultados, validaciones, servicios, repositorios abstractos y excepciones controladas en `Licitaciones.Application.Ofertas` y `Licitaciones.Application.Aprobaciones`.
+- Configuraciones `OfertaConfiguration` y `NivelAprobacionConfiguration`, repositorios EF Core, `LicitacionesDbContext` e inyeccion de dependencias actualizados en Infrastructure.
 
-## Criterios de aceptacion principales
+## Decisiones
 
-- Solo se aceptan ofertas validas para licitaciones publicadas y no vencidas.
-- Se rechazan ofertas duplicadas y superiores al presupuesto.
-- Una oferta igual al presupuesto es permitida si cumple las demas reglas.
-- No se permiten cambios en ofertas cerradas.
-- La mejor oferta se determina por menor monto y empate por fecha de registro.
-- El detalle de proveedor permite consultar sus ofertas relacionadas y muestra un estado vacio cuando no existen.
-- Los rangos de aprobacion evitan traslapes y permiten un solo rango abierto.
+- `Oferta` delega el estado funcional y vencimiento a `Licitacion.GetEstadoEfectivo(utcNow)`.
+- `FechaRegistro` y `UpdatedAt` usan `DateTimeOffset` UTC obtenido mediante `IClock` en Application.
+- Los montos son `decimal` y se persisten como `numeric(18,2)`.
+- Si dos ofertas empatan tambien en fecha, el menor `Guid` de `Id` gana; esto hace el resultado determinista sin introducir otro dato de negocio.
+- Los limites de aprobacion son inclusivos. Por tanto, compartir un limite constituye traslape.
+- PostgreSQL refuerza rangos con `CHECK`, indice parcial para un rango abierto y exclusion GiST sobre `numrange`.
+- Los endpoints y controladores MVC consumen servicios de Application; las reglas centrales no se implementan en los controladores.
 
-## Pruebas previstas
+## Ciclos TDD ejecutados
 
-- Pruebas unitarias de reglas de oferta, presupuesto, duplicidad y vencimiento.
-- Pruebas unitarias de mejor oferta, desempate, ahorro y aprobador.
-- Pruebas de integracion de CRUD de ofertas y aprobaciones.
-- Pruebas funcionales de filtros y consulta de mejor oferta.
-- Prueba funcional e integracion de consulta de ofertas relacionadas desde el proveedor.
+### Oferta y evaluacion
 
-## Riesgos
+- ROJO: pruebas no compilaban porque no existian `Oferta`, errores, clasificacion ni evaluador.
+- VERDE: reglas monetarias, estado efectivo, vencimiento, mutaciones, mejor oferta, desempate y clasificacion.
+- REFACTOR: evaluacion economica separada en `EvaluadorOfertas` y orden estable monto/fecha/Id.
 
-- Interacciones complejas entre estado de licitacion, vencimiento y edicion de ofertas.
-- Rangos de aprobacion con limites abiertos pueden generar casos borde.
-- La consulta de mejor oferta debe permanecer consistente con concurrencia.
+### Application
 
-## Resultado demostrable esperado
+- ROJO: faltaban contratos, repositorio y servicio de ofertas.
+- VERDE: duplicidad, relaciones, reloj, filtros, CRUD y resultado vacio controlado.
+- REFACTOR: resultados estandarizados y controladores delgados.
 
-Tercera pequena liberacion con ofertas registrables, consulta de ofertas por proveedor, reglas economicas verificables, mejor oferta calculada, aprobador determinado y API relacionada.
+### Niveles de aprobacion
 
-## Velocidad observada
+- ROJO: faltaban entidad y servicio de rangos.
+- VERDE: limites, rango abierto, traslape, CRUD y busqueda de aprobador.
+- REFACTOR: comparacion de rangos en Domain y consultas persistidas en repositorio.
 
-Pendiente de completar por el equipo.
+### PostgreSQL, API y MVC
 
-## Retroalimentacion del cliente
+- ROJO: no existian `DbSet`, tablas, rutas ni vistas.
+- VERDE: configuraciones EF, repositorios, migracion, endpoints, controladores y vistas.
+- REFACTOR: restricciones de exclusion para concurrencia, aislamiento de pruebas funcionales y validacion decimal compatible con `es-CR`.
 
-Pendiente de completar por el equipo.
+## Pruebas locales ejecutadas durante el desarrollo
 
-## Ajustes
+- Unitarias focalizadas de Domain Ofertas: 15 aprobadas.
+- Unitarias focalizadas de Application Ofertas: 6 aprobadas.
+- Unitarias focalizadas de Domain Aprobaciones: 7 aprobadas.
+- Unitarias focalizadas de Application Aprobaciones: 5 aprobadas.
+- Suite unitaria completa intermedia: 76 aprobadas.
+- Integracion focalizada de Iteracion 3: 9 aprobadas con PostgreSQL 16/Testcontainers.
+- Funcionales API focalizadas: 3 aprobadas con PostgreSQL 16/Testcontainers.
+- Funcionales MVC focalizadas: 2 aprobadas con PostgreSQL 16/Testcontainers.
 
-Pendiente de completar por el equipo.
+Resultados finales: build con 0 errores y 0 advertencias; UnitTests 76/76, IntegrationTests 22/22 y FunctionalTests 13/13. Total 111/111. El detalle, incluido el primer fallo TLS de restore en sandbox y su repeticion exitosa, esta en `docs/pruebas.md`.
 
-## Ciclos TDD
+## Commits reales
 
-Pendiente de completar por el equipo.
+- `d6d6009` - `feat(ofertas): implementar reglas y evaluacion de ofertas`.
+- `7e6a317` - `feat(ofertas): implementar casos de uso de ofertas`.
+- `a20eb19` - `feat(aprobacion): implementar niveles y validacion de rangos`.
+- `29e727c` - `feat(persistencia): agregar ofertas y niveles de aprobacion`.
+- `37bcb55` - `feat(api): exponer ofertas y niveles de aprobacion`.
+- `4faaf83` - `feat(web): agregar gestion MVC de ofertas y aprobacion`.
+- `437cc37` - `docs(xp): documentar resultados de la iteracion 3`.
 
-## Refactorizaciones
+Los commits fueron organizados posteriormente por responsabilidad tecnica. La evidencia TDD se encuentra en las pruebas y ejecuciones registradas; no se afirma que cada paso ROJO tuviera un commit independiente.
 
-Pendiente de completar por el equipo.
+## Prueba manual local
 
-## Commits y Pull Requests
+Ejecutada el 2026-08-12 contra PostgreSQL 16 y API local con datos unicos generados para la ejecucion.
 
-- Commits: Pendiente.
+- Licitacion futura creada y publicada; estado publicado confirmado.
+- Primera oferta CRC 900000 creada.
+- Duplicada rechazada con HTTP 409.
+- Segundo proveedor creado; oferta CRC 1000000.01 rechazada con HTTP 400.
+- Segunda oferta CRC 800000 creada; listado devolvio 2 ofertas.
+- Mejor oferta: CRC 800000, ahorro 20 %, `Oferta conveniente`.
+- Nivel abierto creado, listado, consultado y editado a `Gerencia Manual Actualizada`.
+- Mejor oferta devolvio ese aprobador persistido.
+- Rango traslapado rechazado con HTTP 409.
+- Nivel eliminado con HTTP 204.
+
+El servidor MVC independiente no pudo dejarse disponible en este host: el perfil local encontro claves Data Protection/DPAPI no descifrables, acceso denegado al Event Log y un certificado HTTPS ausente o vencido. La cobertura MVC se ejecuto correctamente mediante `WebApplicationFactory` en la suite funcional (13/13 global, 2 flujos focalizados de Iteracion 3).
+
+## Estado y pendientes
+
+Iteracion 3 tecnicamente implementada y validada localmente.
+
+- Issue: Pendiente.
+- Commits: registrados en esta rama.
 - Pull Request: Pendiente.
+- CI remoto: Pendiente.
+- Revision formal del Navigator: Pendiente.
+- Merge: Pendiente.
+- Tag `v0.3.0`: Pendiente.
+- Velocidad tecnica: 38 puntos implementados; cierre formal y retroalimentacion del cliente pendientes.

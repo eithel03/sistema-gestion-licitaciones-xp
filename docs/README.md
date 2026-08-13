@@ -19,21 +19,23 @@ Indice oficial de la documentacion del Sistema de Gestion de Licitaciones.
 - [Iteracion 3](iteraciones/iteracion-03.md).
 - [Iteracion 4](iteraciones/iteracion-04.md).
 
-## Documentacion tecnica prevista
-
-Estos documentos pertenecen a fases posteriores. Los enlaces quedan registrados para mantener navegacion y trazabilidad, pero su contenido no se inventa en la Fase 1.
+## Documentacion tecnica
 
 - [Arquitectura general](arquitectura-general.md) - documentada inicialmente en la Fase 2.
 - [Dominio y estrategia TDD](dominio-tdd.md) - documentada inicialmente en la Fase 3.
-- [Modelo de datos](modelo-datos.md) - iniciado en la Fase 4 y ampliado en Iteracion 1 con proveedores.
-- [API REST](api.md) - documenta endpoints de proveedores implementados en Iteracion 1.
+- [Modelo de datos](modelo-datos.md) - incluye proveedores, licitaciones, ofertas y niveles de aprobacion.
+- [API REST](api.md) - documenta proveedores, licitaciones, ofertas y niveles de aprobacion.
 - [Pruebas](pruebas.md) - iniciada en la Fase 3.
 - [Docker](docker.md) - pendiente como documento completo; PostgreSQL local queda preparado en Fase 4 mediante `compose.yaml`.
 - [Kubernetes](kubernetes.md) - pendiente de una fase posterior.
-- [Integracion de modulos](integracion-modulos.md) - pendiente de una fase posterior.
-- [Documentacion por modulos](modulos/README.md) - incluye el modulo de proveedores implementado en Iteracion 1.
+- [Integracion de modulos](integracion-modulos.md) - documenta relaciones de ofertas en Iteracion 3.
+- [Documentacion por modulos](modulos/README.md) - indice de modulos implementados.
 
 ## Registros existentes
 
 - [Flujo Git y GitHub](flujo-git.md).
 - [Uso de inteligencia artificial](uso-ia.md).
+
+## Estado Iteracion 3
+
+La Iteracion 3 esta tecnicamente implementada y validada localmente en `feature/iteracion-03-ofertas-aprobacion`. La revision formal del Navigator, Pull Request, CI remoto, merge a `main` y tag previsto `v0.3.0` permanecen pendientes.

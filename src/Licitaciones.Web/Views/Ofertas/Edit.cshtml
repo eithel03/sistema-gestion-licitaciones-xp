@@ -1,0 +1,9 @@
+@model Licitaciones.Web.Models.Ofertas.OfertaFormViewModel
+@{ ViewData["Title"] = "Editar oferta"; }
+<section class="page-header"><div><p class="eyebrow">Ofertas</p><h1>Editar oferta</h1></div></section>
+<form method="post" class="form-panel">
+    @Html.AntiForgeryToken()
+    <partial name="_OfertaForm" model="Model" />
+    <div class="action-list"><button type="submit" class="btn btn-primary">Guardar</button><a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a></div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

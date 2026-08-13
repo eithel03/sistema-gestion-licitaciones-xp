@@ -38,6 +38,8 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 
 app.MapProveedorEndpoints();
 app.MapLicitacionEndpoints();
+app.MapOfertaEndpoints();
+app.MapNivelAprobacionEndpoints();
 
 app.Run();
 

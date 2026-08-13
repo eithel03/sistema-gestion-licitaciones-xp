@@ -628,3 +628,56 @@ El navigator propuso corregir la coherencia del formato decimal de PresupuestoCr
 - CI remoto: aprobado correctamente.
 - Merge: pendiente.
 - Tag `v0.2.0`: pendiente.
+
+## Iteracion 3 - Ofertas, mejor oferta y aprobaciones
+
+- Modalidad: programacion en pareja mediante Extreme Programming.
+- Driver principal: Chavala.
+- Navigator principal: Eithel.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
+- Base: `fafcc66`, integracion de Iteracion 2 en `main`.
+- Historias: HU-11 y HU-20 a HU-29. Version prevista: `v0.3.0`.
+- Responsabilidad del Driver: ejecucion asistida de la implementacion, revision de cambios, comandos y pruebas, preparacion de commits, evidencias y Pull Request.
+- Responsabilidad del Navigator: revision de reglas, criterios de aceptacion, TDD, defectos y resultados; revision formal de la iteracion y del Pull Request pendiente.
+
+### Ciclos TDD
+
+- Oferta/evaluacion: ROJO por tipos y reglas inexistentes; VERDE con monto, estado efectivo, vencimiento, mutaciones, mejor oferta y clasificacion; REFACTOR hacia `EvaluadorOfertas` y orden estable por monto, fecha e `Id`.
+- Casos de uso: ROJO por contratos, repositorio y servicio inexistentes; VERDE con CRUD, filtros, duplicidad, relaciones y reloj; REFACTOR con resultados controlados y consumidores delgados.
+- Aprobaciones: ROJO por entidad y servicio inexistentes; VERDE con limites, traslapes, rango abierto, CRUD y busqueda; REFACTOR separando comparacion de Domain y consultas persistidas.
+- Persistencia/API/MVC: ROJO por tablas, rutas y vistas ausentes; VERDE con configuraciones, repositorios, migracion, endpoints y vistas; REFACTOR con restricciones PostgreSQL, aislamiento funcional y entrada decimal `es-CR`.
+
+Estos ciclos se respaldan con las pruebas y ejecuciones registradas. Los commits se organizaron posteriormente por responsabilidad tecnica; no se atribuye un commit separado a cada paso ROJO.
+
+### Decisiones y refactorizaciones
+
+- Reutilizar `Licitacion.GetEstadoEfectivo(IClock.UtcNow)` para no duplicar reglas de estado y vencimiento.
+- Usar `decimal` y `numeric(18,2)` para dinero.
+- Resolver empates por menor monto, fecha mas temprana y finalmente `Id` como criterio determinista.
+- Resolver el aprobador desde rangos persistidos, sin una cadena fija de cargos.
+- Mantener Domain libre de EF Core, MVC y API, y traducir errores mediante Application.
+- Reforzar integridad con FKs restrictivas, indice unico de oferta, checks, un rango abierto, exclusion GiST de traslapes y concurrencia `xmin`.
+
+### Pruebas y resultado
+
+- Build: correcto, 0 errores y 0 advertencias.
+- UnitTests: 76 ejecutadas, 76 aprobadas, 0 fallidas, 0 omitidas.
+- IntegrationTests: 22 ejecutadas, 22 aprobadas, 0 fallidas, 0 omitidas; PostgreSQL 16 mediante Testcontainers.
+- FunctionalTests: 13 ejecutadas, 13 aprobadas, 0 fallidas, 0 omitidas.
+- Total: 111/111 aprobadas.
+- Prueba manual API: duplicidad 409, presupuesto excedido 400, recuperacion de ofertas, mejor oferta, 20 % de ahorro, clasificacion conveniente, aprobador persistido/editado, traslape 409 y eliminacion 204.
+- Limitacion manual MVC: DPAPI, Event Log y certificado HTTPS del host impidieron sostener el proceso independiente; los flujos MVC automatizados mediante `WebApplicationFactory` fueron satisfactorios.
+
+### Commits
+
+- `d6d6009` - `feat(ofertas): implementar reglas y evaluacion de ofertas`.
+- `7e6a317` - `feat(ofertas): implementar casos de uso de ofertas`.
+- `a20eb19` - `feat(aprobacion): implementar niveles y validacion de rangos`.
+- `29e727c` - `feat(persistencia): agregar ofertas y niveles de aprobacion`.
+- `37bcb55` - `feat(api): exponer ofertas y niveles de aprobacion`.
+- `4faaf83` - `feat(web): agregar gestion MVC de ofertas y aprobacion`.
+- `437cc37` - `docs(xp): documentar resultados de la iteracion 3`.
+
+### Resultado y pendientes
+
+Iteracion 3 tecnicamente implementada y validada localmente. Velocidad tecnica: 38 puntos. Issue, revision formal del Navigator, Pull Request, CI remoto, merge a `main`, tag `v0.3.0` y retroalimentacion de cierre: Pendientes.
