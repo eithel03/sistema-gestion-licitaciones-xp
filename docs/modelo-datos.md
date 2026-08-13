@@ -12,8 +12,10 @@ Actualmente existen las tablas:
 
 - `Proveedores`
 - `Licitaciones`
+- `Ofertas`
+- `NivelesAprobacion`
 
-Aun no existen tablas de ofertas, niveles de aprobacion ni tipos de cambio, ya que corresponden a iteraciones posteriores.
+Aun no existe una tabla de tipos de cambio, ya que corresponde a Iteracion 4.
 
 ## Motor
 
@@ -78,7 +80,7 @@ Los valores son ejemplos de desarrollo y deben reemplazarse localmente. No se de
 
 La estrategia preparada ubica migraciones versionadas dentro de `Licitaciones.Infrastructure`.
 
-Comando previsto para la primera migracion real:
+Comando utilizado como patron para agregar nuevas migraciones:
 
 ```bash
 dotnet ef migrations add NombreMigracion --project src/Licitaciones.Infrastructure --startup-project src/Licitaciones.Api --output-dir Persistence/Migrations
@@ -95,6 +97,7 @@ Migracion real existente:
 - `20260810092133_CreateProveedores`
 - `20260811234653_MakeProveedorNameUniqueIndexPartial`
 - `20260812002104_CreateLicitaciones`
+- `20260813011055_Iteration03OfertasAprobacion`
 
 
 ## Tabla `Proveedores`
@@ -201,8 +204,8 @@ Estos campos permiten mantener evidencia del ciclo de vida de cada licitación.
 
 ### Relaciones
 
-* La Iteración 2 todavía no agrega relaciones con ofertas.
-* Las relaciones entre licitaciones, proveedores y ofertas se incorporarán en las iteraciones correspondientes.
+* Iteracion 3 agrega relaciones desde `Ofertas` hacia `Licitaciones` y `Proveedores`.
+* Las eliminaciones relacionadas usan `RESTRICT` para conservar la integridad de la evidencia.
 
 ## Ampliacion progresiva
 
@@ -221,6 +224,14 @@ Estos campos permiten mantener evidencia del ciclo de vida de cada licitación.
 
 `IX_Ofertas_LicitacionId_ProveedorId` es unico y refuerza una oferta por proveedor/licitacion. `IX_Ofertas_ProveedorId` soporta la consulta de ofertas relacionadas.
 
+Restricciones verificadas:
+
+- `PK_Ofertas` sobre `Id`.
+- `FK_Ofertas_Licitaciones_LicitacionId` y `FK_Ofertas_Proveedores_ProveedorId`, ambas con eliminacion `RESTRICT`.
+- `CK_Ofertas_MontoPositivo` exige monto mayor que cero.
+- `IX_Ofertas_LicitacionId_ProveedorId` es un indice compuesto unico.
+- `xmin` actua como token de concurrencia optimista.
+
 ### `NivelesAprobacion`
 
 | Campo | PostgreSQL | Regla |
@@ -234,7 +245,52 @@ Estos campos permiten mantener evidencia del ciclo de vida de cada licitación.
 
 El indice parcial `IX_NivelesAprobacion_UnicoRangoAbierto` usa `NULLS NOT DISTINCT`. `EX_NivelesAprobacion_SinTraslapes` usa exclusion GiST con `numrange(..., '[]') WITH &&`. Ambas tablas se crean en `20260813011055_Iteration03OfertasAprobacion`.
 
+Restricciones verificadas:
+
+- `PK_NivelesAprobacion` sobre `Id`.
+- `CK_NivelesAprobacion_MinimoPositivo` exige minimo mayor que cero.
+- `CK_NivelesAprobacion_MaximoValido` permite maximo nulo o mayor/igual al minimo.
+- El indice parcial unico admite un solo registro con `MontoMaximoCrc IS NULL`.
+- La exclusion GiST compara intervalos cerrados `numrange` y rechaza rangos que se traslapen, incluso ante escrituras concurrentes que alcancen PostgreSQL.
+- `xmin` actua como token de concurrencia optimista.
+
+### Relaciones de Iteracion 3
+
+```mermaid
+erDiagram
+    PROVEEDORES ||--o{ OFERTAS : presenta
+    LICITACIONES ||--o{ OFERTAS : recibe
+
+    PROVEEDORES {
+        uuid Id PK
+    }
+    LICITACIONES {
+        uuid Id PK
+        numeric PresupuestoCrc
+        timestamptz FechaCierreUtc
+        string Estado
+    }
+    OFERTAS {
+        uuid Id PK
+        uuid LicitacionId FK
+        uuid ProveedorId FK
+        numeric MontoOfertadoCrc
+        timestamptz FechaRegistro
+        timestamptz UpdatedAt
+        xid xmin
+    }
+    NIVELES_APROBACION {
+        uuid Id PK
+        numeric MontoMinimoCrc
+        numeric MontoMaximoCrc
+        string Aprobador
+        timestamptz CreatedAt
+        timestamptz UpdatedAt
+        xid xmin
+    }
+```
+
 - Proveedores: implementado en Iteracion 1.
 - Licitaciones, auditoria y concurrencia: implementado en Iteracion 2.
-- Ofertas y niveles de aprobacion: previsto para Iteracion 3.
+- Ofertas y niveles de aprobacion: implementados en Iteracion 3.
 - Tipos de cambio: previsto para Iteracion 4.

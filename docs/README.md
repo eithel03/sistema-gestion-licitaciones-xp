@@ -19,9 +19,7 @@ Indice oficial de la documentacion del Sistema de Gestion de Licitaciones.
 - [Iteracion 3](iteraciones/iteracion-03.md).
 - [Iteracion 4](iteraciones/iteracion-04.md).
 
-## Documentacion tecnica prevista
-
-Estos documentos pertenecen a fases posteriores. Los enlaces quedan registrados para mantener navegacion y trazabilidad, pero su contenido no se inventa en la Fase 1.
+## Documentacion tecnica
 
 - [Arquitectura general](arquitectura-general.md) - documentada inicialmente en la Fase 2.
 - [Dominio y estrategia TDD](dominio-tdd.md) - documentada inicialmente en la Fase 3.
@@ -37,3 +35,7 @@ Estos documentos pertenecen a fases posteriores. Los enlaces quedan registrados 
 
 - [Flujo Git y GitHub](flujo-git.md).
 - [Uso de inteligencia artificial](uso-ia.md).
+
+## Estado Iteracion 3
+
+La Iteracion 3 esta tecnicamente implementada y validada localmente en `feature/iteracion-03-ofertas-aprobacion`. La revision formal del Navigator, Pull Request, CI remoto, merge a `main` y tag previsto `v0.3.0` permanecen pendientes.

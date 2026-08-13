@@ -108,16 +108,36 @@ Publicacion, cierre, borrado logico y concurrencia:
 
 ## Ofertas y niveles de aprobacion - Iteracion 3
 
-| Metodo | Ruta | Resultado principal |
-| --- | --- | --- |
-| GET/POST | `/api/v1/ofertas` | Lista filtrable o crea oferta. |
-| GET/PUT/DELETE | `/api/v1/ofertas/{id}` | Detalle, actualizacion o eliminacion permitida. |
-| GET/POST | `/api/v1/licitaciones/{id}/ofertas` | Lista o registra en una licitacion. |
-| GET | `/api/v1/licitaciones/{id}/mejor-oferta` | Ganadora, ahorro, porcentaje, clasificacion y aprobador persistido. |
-| GET/POST | `/api/v1/niveles-aprobacion` | Lista o crea nivel. |
-| GET/PUT/DELETE | `/api/v1/niveles-aprobacion/{id}` | CRUD por identificador. |
-| GET | `/api/v1/niveles-aprobacion/aprobador?montoCrc=...` | Busca aprobador por monto. |
+### Ofertas
 
-Filtros de ofertas: `licitacionId`, `proveedorId`, `page`, `pageSize` y `sort`. Se usan DTO de Application y errores 400/404/409 controlados. No se implemento el manejo global de `ProblemDetails` previsto para Iteracion 4.
+| Metodo | Ruta | Parametros o contrato | Respuesta observable |
+| --- | --- | --- | --- |
+| GET | `/api/v1/ofertas` | Query `page`, `pageSize`, `licitacionId`, `proveedorId`, `sort` | `200 OK` con `OfertaPage`. |
+| GET | `/api/v1/ofertas/{id}` | `id` UUID | `200 OK` con `OfertaResponse` o `404 Not Found`. |
+| POST | `/api/v1/ofertas` | `CrearOfertaRequest` | `201 Created`; `400 Bad Request`, `404 Not Found` o `409 Conflict`. |
+| PUT | `/api/v1/ofertas/{id}` | `ActualizarOfertaRequest` | `200 OK`; `400`, `404` o `409`. |
+| DELETE | `/api/v1/ofertas/{id}` | `id` UUID | `204 No Content`; `400`, `404` o `409`. |
+| GET | `/api/v1/licitaciones/{id}/ofertas` | `id` UUID; query `page`, `pageSize` | `200 OK` con `OfertaPage`. |
+| POST | `/api/v1/licitaciones/{id}/ofertas` | `CrearOfertaLicitacionRequest` | `201 Created`; `400`, `404` o `409`. |
+| GET | `/api/v1/licitaciones/{id}/mejor-oferta` | `id` UUID | `200 OK` con `MejorOfertaResponse` o error controlado. |
 
-Evidencia local: `Iteration3ApiTests`. PR, CI remoto, merge y tag: Pendientes.
+`CrearOfertaRequest` contiene `licitacionId`, `proveedorId` y `montoOfertadoCrc`. La variante anidada recibe `proveedorId` y `montoOfertadoCrc`; el identificador de licitacion proviene de la ruta. `ActualizarOfertaRequest` contiene `montoOfertadoCrc` y `version` opcional.
+
+`OfertaResponse` expone `id`, `licitacionId`, `proveedorId`, `montoOfertadoCrc`, `fechaRegistro`, `updatedAt` y `version`. `MejorOfertaResponse` incluye `tieneOferta`, la mejor oferta opcional, ahorro CRC, porcentaje, clasificacion, descripcion y aprobador opcional. Sin ofertas devuelve `200 OK` con `tieneOferta = false` y descripcion `Sin ofertas validas`.
+
+### Niveles de aprobacion
+
+| Metodo | Ruta | Parametros o contrato | Respuesta observable |
+| --- | --- | --- | --- |
+| GET | `/api/v1/niveles-aprobacion` | Query `page`, `pageSize` | `200 OK` con `NivelAprobacionPage`. |
+| GET | `/api/v1/niveles-aprobacion/{id}` | `id` UUID | `200 OK` con `NivelAprobacionResponse` o `404 Not Found`. |
+| POST | `/api/v1/niveles-aprobacion` | `CrearNivelAprobacionRequest` | `201 Created`; `400 Bad Request` o `409 Conflict`. |
+| PUT | `/api/v1/niveles-aprobacion/{id}` | `ActualizarNivelAprobacionRequest` | `200 OK`; `400`, `404` o `409`. |
+| DELETE | `/api/v1/niveles-aprobacion/{id}` | `id` UUID | `204 No Content`; `404` o `409`. |
+| GET | `/api/v1/niveles-aprobacion/aprobador?montoCrc=...` | Query decimal `montoCrc` | `200 OK` con `AprobadorResponse`; `400` o `404`. |
+
+Los contratos de alta y actualizacion contienen `montoMinimoCrc`, `montoMaximoCrc` nullable y `aprobador`; la actualizacion agrega `version` opcional. La seleccion del aprobador consulta los rangos persistidos.
+
+Los endpoints consumen servicios y DTO de Application. Los errores se traducen localmente a `ProblemDetails` con extension `code` y estados 400/404/409; no se incorporo el manejo global de `ProblemDetails` previsto para Iteracion 4.
+
+Evidencia: rama `feature/iteracion-03-ofertas-aprobacion`, commit API `37bcb55` y `Iteration3ApiTests`. Pull Request, CI remoto, merge y tag `v0.3.0`: Pendientes.

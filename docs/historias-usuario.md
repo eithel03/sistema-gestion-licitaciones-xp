@@ -216,10 +216,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Prueba funcional e integracion de consulta de ofertas relacionadas desde el proveedor.
 - Modulos relacionados: Proveedores, ofertas.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `7e6a317`, `29e727c`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `Iteration3MvcTests`, `Iteration3PersistenceTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `integracion-modulos.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-12 - Crear licitaciones
 
@@ -387,10 +389,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de reglas de registro y pruebas de integracion de creacion.
 - Modulos relacionados: Ofertas, proveedores, licitaciones.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `api.md`, `modelo-datos.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-21 - Listar, consultar y filtrar ofertas
 
@@ -406,10 +410,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas funcionales de filtros y pruebas de integracion de consulta.
 - Modulos relacionados: Ofertas, API REST.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `iteraciones/iteracion-03.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-22 - Editar y eliminar ofertas cuando este permitido
 
@@ -425,10 +431,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de permisos y pruebas de integracion.
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3MvcTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/ofertas.md`, `iteraciones/iteracion-03.md`, `pruebas.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-23 - Rechazar ofertas duplicadas, vencidas o no publicadas
 
@@ -444,10 +452,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de duplicidad, vencimiento y estado; pruebas de integracion.
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/ofertas.md`, `modelo-datos.md`, `pruebas.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-24 - Validar ofertas contra presupuesto
 
@@ -463,10 +473,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de limite presupuestario y pruebas de integracion.
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `Iteration3ApiTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `pruebas.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-25 - Determinar mejor oferta y resolver empates
 
@@ -482,10 +494,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de seleccion y desempate; prueba de integracion de consulta.
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `iteraciones/iteracion-03.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-26 - Calcular clasificacion del ahorro
 
@@ -501,14 +515,16 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de calculo y prueba funcional de visualizacion.
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `pruebas.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-27 - Administrar niveles de aprobacion
 
-- Historia: Como usuario administrativo, quiero crear, listar, consultar, editar y eliminar niveles de aprobacion, para parametrizar quien aprueba segun el ahorro o monto definido.
+- Historia: Como usuario administrativo, quiero crear, listar, consultar, editar y eliminar niveles de aprobacion, para parametrizar quien aprueba segun el monto definido.
 - Descripcion: Gestiona niveles de aprobacion con aprobador asociado sin definir todavia una estrategia tecnica de eliminacion.
 - Prioridad: Alta.
 - Estimacion: 3 puntos.
@@ -521,10 +537,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas de integracion de CRUD y validaciones basicas.
 - Modulos relacionados: Niveles de aprobacion.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `NivelAprobacionServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/niveles-aprobacion.md`, `api.md`, `iteraciones/iteracion-03.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-28 - Evitar traslapes y determinar aprobador
 
@@ -540,10 +558,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas unitarias de rangos, rango abierto y seleccion de aprobador.
 - Modulos relacionados: Niveles de aprobacion, ofertas.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `a20eb19`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `modulos/niveles-aprobacion.md`, `modelo-datos.md`, `integracion-modulos.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-29 - Exponer API REST de ofertas y aprobaciones
 
@@ -559,10 +579,12 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pruebas previstas: Pruebas de integracion de endpoints y casos de error.
 - Modulos relacionados: Ofertas, niveles de aprobacion, API REST.
 - Issue: Pendiente.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
 - Pull Request: Pendiente.
-- Commits: Pendiente.
+- Commits: `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `Iteration3ApiTests`.
-- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
+- Documentacion relacionada: `api.md`, `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `modulos/niveles-aprobacion.md`.
+- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
 
 ### HU-30 - Administrar tipos de cambio
 

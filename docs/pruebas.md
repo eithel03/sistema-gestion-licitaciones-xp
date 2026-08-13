@@ -194,6 +194,7 @@ Base de endpoints:
 
 ```text
 /api/v1/licitaciones
+```
 
 ## Validacion manual de Iteracion 2
 
@@ -231,6 +232,7 @@ Total:     64
 Aprobadas: 64
 Fallidas:   0
 Omitidas:   0
+```
 
 ## Pruebas de Iteracion 3
 
@@ -246,11 +248,11 @@ Validacion final exacta del 2026-08-12:
 
 - `dotnet restore Licitaciones.sln`: primer intento en sandbox fallo con `NU1301` por autenticacion TLS de NuGet; repeticion exacta fuera del sandbox exitosa para 8 proyectos.
 - `dotnet build Licitaciones.sln --no-restore`: exitoso, 0 errores y 0 advertencias.
-- UnitTests: 76 aprobadas, 0 fallidas, 0 omitidas.
-- IntegrationTests: 22 aprobadas, 0 fallidas, 0 omitidas, PostgreSQL 16/Testcontainers.
-- FunctionalTests: 13 aprobadas, 0 fallidas, 0 omitidas, PostgreSQL 16/Testcontainers.
-- Total: 111 aprobadas, 0 fallidas, 0 omitidas.
+- `dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --no-restore`: total 76, aprobadas 76, fallidas 0, omitidas 0.
+- `dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --no-restore`: total 22, aprobadas 22, fallidas 0, omitidas 0; PostgreSQL 16 mediante Testcontainers.
+- `dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --no-restore`: total 13, aprobadas 13, fallidas 0, omitidas 0.
+- Total: 111/111 aprobadas, 0 fallidas, 0 omitidas.
 
 Prueba manual local de Iteracion 3: completada contra PostgreSQL 16 y API local. Se observaron 409 para duplicidad, 400 para presupuesto excedido, mejor oferta CRC 800000 con 20 % y clasificacion conveniente, aprobador persistido/editado, 409 para traslape y 204 al eliminar el nivel. Identificadores y flujo completo: `docs/iteraciones/iteracion-03.md`.
 
-Limitacion del host manual MVC: claves DPAPI no descifrables, Event Log sin permisos y certificado HTTPS local ausente o vencido impidieron mantener un servidor MVC independiente. Las pruebas MVC con `WebApplicationFactory` y PostgreSQL real si fueron exitosas.
+Limitacion del entorno de ejecucion manual MVC: claves DPAPI no descifrables, Event Log sin permisos y certificado HTTPS local ausente o vencido impidieron mantener un servidor MVC independiente. Esto no representa una falla funcional de Iteracion 3: las pruebas MVC automatizadas con `WebApplicationFactory` y PostgreSQL real fueron satisfactorias.
