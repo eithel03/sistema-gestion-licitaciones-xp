@@ -1,87 +1,97 @@
 # Iteracion 3 - Ofertas, mejor oferta y aprobaciones
 
-- Objetivo: entregar gestion de ofertas con reglas de registro, mejor oferta, desempate, clasificacion del ahorro, niveles de aprobacion y API relacionada.
-- Duracion uniforme propuesta: Pendiente de completar por el equipo.
-- Fecha prevista: Pendiente de completar por el equipo.
-- Driver principal: Chavala.
-- Navigator principal: Eithel.
-- Version prevista: v0.3.0.
+- Objetivo: entregar gestion de ofertas, evaluacion economica y niveles de aprobacion parametrizables.
+- Driver: Chavala.
+- Navigator: Eithel.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
+- Version prevista: `v0.3.0`.
 - Puntos planificados: 38.
+- Historias: HU-11 y HU-20 a HU-29.
 
-## Historias seleccionadas
+## Alcance implementado
 
-| Historia | Puntos | Proposito |
-| --- | ---: | --- |
-| HU-11 | 2 | Consultar ofertas relacionadas con proveedor |
-| HU-20 | 5 | Crear ofertas |
-| HU-21 | 3 | Listar, consultar y filtrar ofertas |
-| HU-22 | 3 | Editar y eliminar ofertas cuando este permitido |
-| HU-23 | 5 | Rechazar duplicadas, vencidas o no publicadas |
-| HU-24 | 3 | Validar ofertas contra presupuesto |
-| HU-25 | 3 | Determinar mejor oferta y resolver empates |
-| HU-26 | 3 | Calcular clasificacion del ahorro |
-| HU-27 | 3 | Administrar niveles de aprobacion |
-| HU-28 | 5 | Evitar traslapes y determinar aprobador |
-| HU-29 | 3 | API REST de ofertas y aprobaciones |
+- CRUD MVC y API de ofertas con filtros por licitacion y proveedor.
+- Monto positivo, limite presupuestario, licitacion publicada y vigente, proveedor existente y una oferta por proveedor/licitacion.
+- Edicion y eliminacion solo mientras la licitacion recibe ofertas.
+- Mejor oferta por menor monto; desempate por `FechaRegistro` y luego por `Id` ascendente.
+- Ahorro y clasificacion usando `decimal`.
+- CRUD MVC y API de niveles de aprobacion.
+- Aprobador resuelto desde rangos persistidos, sin cargos codificados en una cadena de decisiones.
+- Consulta de ofertas asociadas desde el detalle de proveedor.
+- Persistencia PostgreSQL y migracion `20260813011055_Iteration03OfertasAprobacion`.
 
-## Dependencias
+## Decisiones
 
-- HU-20 depende de proveedores y licitaciones publicadas.
-- HU-11 depende de HU-06, HU-20 y HU-21.
-- HU-21 y HU-22 dependen de HU-20.
-- HU-23 y HU-24 dependen de las reglas de estado y presupuesto.
-- HU-25 y HU-26 preparan HU-27 y HU-28.
-- HU-29 depende de ofertas, mejor oferta y aprobaciones.
+- `Oferta` delega el estado funcional y vencimiento a `Licitacion.GetEstadoEfectivo(utcNow)`.
+- `FechaRegistro` y `UpdatedAt` usan `DateTimeOffset` UTC obtenido mediante `IClock` en Application.
+- Los montos son `decimal` y se persisten como `numeric(18,2)`.
+- Si dos ofertas empatan tambien en fecha, el menor `Guid` de `Id` gana; esto hace el resultado determinista sin introducir otro dato de negocio.
+- Los limites de aprobacion son inclusivos. Por tanto, compartir un limite constituye traslape.
+- PostgreSQL refuerza rangos con `CHECK`, indice parcial para un rango abierto y exclusion GiST sobre `numrange`.
 
-## Criterios de aceptacion principales
+## Ciclos TDD ejecutados
 
-- Solo se aceptan ofertas validas para licitaciones publicadas y no vencidas.
-- Se rechazan ofertas duplicadas y superiores al presupuesto.
-- Una oferta igual al presupuesto es permitida si cumple las demas reglas.
-- No se permiten cambios en ofertas cerradas.
-- La mejor oferta se determina por menor monto y empate por fecha de registro.
-- El detalle de proveedor permite consultar sus ofertas relacionadas y muestra un estado vacio cuando no existen.
-- Los rangos de aprobacion evitan traslapes y permiten un solo rango abierto.
+### Oferta y evaluacion
 
-## Pruebas previstas
+- ROJO: pruebas no compilaban porque no existian `Oferta`, errores, clasificacion ni evaluador.
+- VERDE: reglas monetarias, estado efectivo, vencimiento, mutaciones, mejor oferta, desempate y clasificacion.
+- REFACTOR: evaluacion economica separada en `EvaluadorOfertas` y orden estable monto/fecha/Id.
 
-- Pruebas unitarias de reglas de oferta, presupuesto, duplicidad y vencimiento.
-- Pruebas unitarias de mejor oferta, desempate, ahorro y aprobador.
-- Pruebas de integracion de CRUD de ofertas y aprobaciones.
-- Pruebas funcionales de filtros y consulta de mejor oferta.
-- Prueba funcional e integracion de consulta de ofertas relacionadas desde el proveedor.
+### Application
 
-## Riesgos
+- ROJO: faltaban contratos, repositorio y servicio de ofertas.
+- VERDE: duplicidad, relaciones, reloj, filtros, CRUD y resultado vacio controlado.
+- REFACTOR: resultados estandarizados y controladores delgados.
 
-- Interacciones complejas entre estado de licitacion, vencimiento y edicion de ofertas.
-- Rangos de aprobacion con limites abiertos pueden generar casos borde.
-- La consulta de mejor oferta debe permanecer consistente con concurrencia.
+### Niveles de aprobacion
 
-## Resultado demostrable esperado
+- ROJO: faltaban entidad y servicio de rangos.
+- VERDE: limites, rango abierto, traslape, CRUD y busqueda de aprobador.
+- REFACTOR: comparacion de rangos en Domain y consultas persistidas en repositorio.
 
-Tercera pequena liberacion con ofertas registrables, consulta de ofertas por proveedor, reglas economicas verificables, mejor oferta calculada, aprobador determinado y API relacionada.
+### PostgreSQL, API y MVC
 
-## Velocidad observada
+- ROJO: no existian `DbSet`, tablas, rutas ni vistas.
+- VERDE: configuraciones EF, repositorios, migracion, endpoints, controladores y vistas.
+- REFACTOR: restricciones de exclusion para concurrencia, aislamiento de pruebas funcionales y validacion decimal compatible con `es-CR`.
 
-Pendiente de completar por el equipo.
+## Pruebas locales ejecutadas durante el desarrollo
 
-## Retroalimentacion del cliente
+- Unitarias focalizadas de Domain Ofertas: 15 aprobadas.
+- Unitarias focalizadas de Application Ofertas: 6 aprobadas.
+- Unitarias focalizadas de Domain Aprobaciones: 7 aprobadas.
+- Unitarias focalizadas de Application Aprobaciones: 5 aprobadas.
+- Suite unitaria completa intermedia: 76 aprobadas.
+- Integracion focalizada de Iteracion 3: 9 aprobadas con PostgreSQL 16/Testcontainers.
+- Funcionales API focalizadas: 3 aprobadas con PostgreSQL 16/Testcontainers.
+- Funcionales MVC focalizadas: 2 aprobadas con PostgreSQL 16/Testcontainers.
 
-Pendiente de completar por el equipo.
+Resultados finales: build con 0 errores y 0 advertencias; UnitTests 76/76, IntegrationTests 22/22 y FunctionalTests 13/13. Total 111/111. El detalle, incluido el primer fallo TLS de restore en sandbox y su repeticion exitosa, esta en `docs/pruebas.md`.
 
-## Ajustes
+## Evidencia pendiente
 
-Pendiente de completar por el equipo.
+## Prueba manual local
 
-## Ciclos TDD
+Ejecutada el 2026-08-12 contra PostgreSQL 16 y API local con datos unicos generados para la ejecucion.
 
-Pendiente de completar por el equipo.
+- Licitacion futura creada y publicada; estado publicado confirmado.
+- Primera oferta CRC 900000 creada.
+- Duplicada rechazada con HTTP 409.
+- Segundo proveedor creado; oferta CRC 1000000.01 rechazada con HTTP 400.
+- Segunda oferta CRC 800000 creada; listado devolvio 2 ofertas.
+- Mejor oferta: CRC 800000, ahorro 20 %, `Oferta conveniente`.
+- Nivel abierto creado, listado, consultado y editado a `Gerencia Manual Actualizada`.
+- Mejor oferta devolvio ese aprobador persistido.
+- Rango traslapado rechazado con HTTP 409.
+- Nivel eliminado con HTTP 204.
 
-## Refactorizaciones
+El servidor MVC independiente no pudo dejarse disponible en este host: el perfil local encontro claves Data Protection/DPAPI no descifrables, acceso denegado al Event Log y un certificado HTTPS ausente o vencido. La cobertura MVC se ejecuto correctamente mediante `WebApplicationFactory` en la suite funcional (13/13 global, 2 flujos focalizados de Iteracion 3).
 
-Pendiente de completar por el equipo.
-
-## Commits y Pull Requests
-
-- Commits: Pendiente.
+- Issue: Pendiente.
+- Commits: Pendiente; Codex no realizo commits.
 - Pull Request: Pendiente.
+- CI remoto: Pendiente.
+- Revision/aprobacion del Navigator: Pendiente.
+- Merge: Pendiente.
+- Tag `v0.3.0`: Pendiente.
+- Velocidad observada y retroalimentacion del cliente: Pendientes de cierre por el equipo.

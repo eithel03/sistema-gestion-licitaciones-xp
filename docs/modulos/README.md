@@ -2,6 +2,8 @@
 
 - [Proveedores](proveedores.md): catalogo inicial implementado en la Iteracion 1.
 - [Licitaciones](licitaciones.md): gestion de licitaciones, estados, persistencia y API implementada en la Iteracion 2.
+- [Ofertas](ofertas.md): CRUD, reglas, mejor oferta y clasificacion implementados en Iteracion 3.
+- [Niveles de aprobacion](niveles-aprobacion.md): rangos y aprobador persistido implementados en Iteracion 3.
 
 ## Evidencia Iteracion 1
 
@@ -24,3 +26,11 @@
 - CI remoto: Aprobado.
 - Merge: Pendiente.
 - Liberacion prevista: `v0.2.0`.
+
+## Evidencia Iteracion 3
+
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
+- Driver: Chavala. Navigator: Eithel.
+- Historias: HU-11 y HU-20 a HU-29.
+- Commits, Pull Request, CI remoto, merge y tag: Pendientes.
+- Liberacion prevista: `v0.3.0`.

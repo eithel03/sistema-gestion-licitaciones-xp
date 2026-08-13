@@ -105,3 +105,19 @@ Publicacion, cierre, borrado logico y concurrencia:
 - PR: Pendiente.
 - CI remoto: Pendiente.
 - Merge: Pendiente.
+
+## Ofertas y niveles de aprobacion - Iteracion 3
+
+| Metodo | Ruta | Resultado principal |
+| --- | --- | --- |
+| GET/POST | `/api/v1/ofertas` | Lista filtrable o crea oferta. |
+| GET/PUT/DELETE | `/api/v1/ofertas/{id}` | Detalle, actualizacion o eliminacion permitida. |
+| GET/POST | `/api/v1/licitaciones/{id}/ofertas` | Lista o registra en una licitacion. |
+| GET | `/api/v1/licitaciones/{id}/mejor-oferta` | Ganadora, ahorro, porcentaje, clasificacion y aprobador persistido. |
+| GET/POST | `/api/v1/niveles-aprobacion` | Lista o crea nivel. |
+| GET/PUT/DELETE | `/api/v1/niveles-aprobacion/{id}` | CRUD por identificador. |
+| GET | `/api/v1/niveles-aprobacion/aprobador?montoCrc=...` | Busca aprobador por monto. |
+
+Filtros de ofertas: `licitacionId`, `proveedorId`, `page`, `pageSize` y `sort`. Se usan DTO de Application y errores 400/404/409 controlados. No se implemento el manejo global de `ProblemDetails` previsto para Iteracion 4.
+
+Evidencia local: `Iteration3ApiTests`. PR, CI remoto, merge y tag: Pendientes.

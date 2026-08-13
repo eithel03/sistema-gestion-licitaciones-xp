@@ -628,3 +628,14 @@ El navigator propuso corregir la coherencia del formato decimal de PresupuestoCr
 - CI remoto: aprobado correctamente.
 - Merge: pendiente.
 - Tag `v0.2.0`: pendiente.
+
+## Iteracion 3 - Ofertas, mejor oferta y aprobaciones
+
+- Driver: Chavala. Navigator: Eithel.
+- Rama: `feature/iteracion-03-ofertas-aprobacion`.
+- Historias: HU-11 y HU-20 a HU-29. Version prevista: `v0.3.0`.
+- Resultado tecnico local: Domain, Application, PostgreSQL, API y MVC implementados mediante ciclos rojo-verde-refactor.
+- Decisiones: reutilizar estado efectivo de Licitacion, usar `IClock`, desempatar por fecha/Id y resolver aprobador desde rangos persistidos.
+- Persistencia: migracion `20260813011055_Iteration03OfertasAprobacion`, FKs restrictivas, indices, checks, exclusion de traslapes y `xmin`.
+- Pruebas focalizadas reales: 9 de integracion, 3 funcionales API y 2 funcionales MVC aprobadas con PostgreSQL 16/Testcontainers.
+- Revision del Navigator, Issue, commits, PR, CI remoto, merge y tag: Pendientes.

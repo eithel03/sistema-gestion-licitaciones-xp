@@ -25,13 +25,13 @@ Estos documentos pertenecen a fases posteriores. Los enlaces quedan registrados 
 
 - [Arquitectura general](arquitectura-general.md) - documentada inicialmente en la Fase 2.
 - [Dominio y estrategia TDD](dominio-tdd.md) - documentada inicialmente en la Fase 3.
-- [Modelo de datos](modelo-datos.md) - iniciado en la Fase 4 y ampliado en Iteracion 1 con proveedores.
-- [API REST](api.md) - documenta endpoints de proveedores implementados en Iteracion 1.
+- [Modelo de datos](modelo-datos.md) - incluye proveedores, licitaciones, ofertas y niveles de aprobacion.
+- [API REST](api.md) - documenta proveedores, licitaciones, ofertas y niveles de aprobacion.
 - [Pruebas](pruebas.md) - iniciada en la Fase 3.
 - [Docker](docker.md) - pendiente como documento completo; PostgreSQL local queda preparado en Fase 4 mediante `compose.yaml`.
 - [Kubernetes](kubernetes.md) - pendiente de una fase posterior.
-- [Integracion de modulos](integracion-modulos.md) - pendiente de una fase posterior.
-- [Documentacion por modulos](modulos/README.md) - incluye el modulo de proveedores implementado en Iteracion 1.
+- [Integracion de modulos](integracion-modulos.md) - documenta relaciones de ofertas en Iteracion 3.
+- [Documentacion por modulos](modulos/README.md) - indice de modulos implementados.
 
 ## Registros existentes
 

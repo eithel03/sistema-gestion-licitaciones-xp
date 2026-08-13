@@ -206,6 +206,34 @@ Estos campos permiten mantener evidencia del ciclo de vida de cada licitación.
 
 ## Ampliacion progresiva
 
+## Tablas de Iteracion 3
+
+### `Ofertas`
+
+| Campo | PostgreSQL | Regla |
+| --- | --- | --- |
+| `Id` | `uuid` | PK. |
+| `LicitacionId` | `uuid` | FK restrictiva a `Licitaciones`. |
+| `ProveedorId` | `uuid` | FK restrictiva a `Proveedores`. |
+| `MontoOfertadoCrc` | `numeric(18,2)` | Requerido y `CHECK` mayor que cero. |
+| `FechaRegistro`, `UpdatedAt` | `timestamp with time zone` | Auditoria UTC. |
+| `xmin` | `xid` | Concurrencia optimista. |
+
+`IX_Ofertas_LicitacionId_ProveedorId` es unico y refuerza una oferta por proveedor/licitacion. `IX_Ofertas_ProveedorId` soporta la consulta de ofertas relacionadas.
+
+### `NivelesAprobacion`
+
+| Campo | PostgreSQL | Regla |
+| --- | --- | --- |
+| `Id` | `uuid` | PK. |
+| `MontoMinimoCrc` | `numeric(18,2)` | Mayor que cero. |
+| `MontoMaximoCrc` | `numeric(18,2)` nullable | Nulo o mayor/igual al minimo. |
+| `Aprobador` | `character varying(200)` | Requerido. |
+| `CreatedAt`, `UpdatedAt` | `timestamp with time zone` | Auditoria UTC. |
+| `xmin` | `xid` | Concurrencia optimista. |
+
+El indice parcial `IX_NivelesAprobacion_UnicoRangoAbierto` usa `NULLS NOT DISTINCT`. `EX_NivelesAprobacion_SinTraslapes` usa exclusion GiST con `numrange(..., '[]') WITH &&`. Ambas tablas se crean en `20260813011055_Iteration03OfertasAprobacion`.
+
 - Proveedores: implementado en Iteracion 1.
 - Licitaciones, auditoria y concurrencia: implementado en Iteracion 2.
 - Ofertas y niveles de aprobacion: previsto para Iteracion 3.

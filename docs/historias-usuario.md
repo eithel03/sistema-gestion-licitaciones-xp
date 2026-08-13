@@ -218,8 +218,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `Iteration3MvcTests`, `Iteration3PersistenceTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-12 - Crear licitaciones
 
@@ -389,8 +389,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-21 - Listar, consultar y filtrar ofertas
 
@@ -408,8 +408,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-22 - Editar y eliminar ofertas cuando este permitido
 
@@ -427,8 +427,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3MvcTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-23 - Rechazar ofertas duplicadas, vencidas o no publicadas
 
@@ -446,8 +446,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-24 - Validar ofertas contra presupuesto
 
@@ -465,8 +465,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `OfertaTests`, `Iteration3ApiTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-25 - Determinar mejor oferta y resolver empates
 
@@ -484,8 +484,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-26 - Calcular clasificacion del ahorro
 
@@ -503,8 +503,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-27 - Administrar niveles de aprobacion
 
@@ -523,8 +523,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `NivelAprobacionServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-28 - Evitar traslapes y determinar aprobador
 
@@ -542,8 +542,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-29 - Exponer API REST de ofertas y aprobaciones
 
@@ -561,8 +561,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Issue: Pendiente.
 - Pull Request: Pendiente.
 - Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Pruebas ejecutadas: `Iteration3ApiTests`.
+- Estado: Implementada localmente en Iteracion 3; commit, PR y CI pendientes.
 
 ### HU-30 - Administrar tipos de cambio
 
