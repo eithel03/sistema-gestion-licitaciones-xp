@@ -1,0 +1,4 @@
+@model Licitaciones.Web.Models.Aprobaciones.NivelAprobacionFormViewModel
+@{ ViewData["Title"] = "Editar nivel de aprobacion"; }
+<section class="page-header"><div><p class="eyebrow">Aprobaciones</p><h1>Editar nivel de aprobacion</h1></div></section><form method="post" class="form-panel">@Html.AntiForgeryToken()<partial name="_NivelForm" model="Model" /><div class="action-list"><button class="btn btn-primary" type="submit">Guardar</button><a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a></div></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

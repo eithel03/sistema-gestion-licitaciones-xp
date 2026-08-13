@@ -1,0 +1,5 @@
+@model Licitaciones.Application.Aprobaciones.NivelAprobacionResponse
+@{ ViewData["Title"] = "Detalle de nivel de aprobacion"; }
+<section class="page-header"><div><p class="eyebrow">Aprobaciones</p><h1>@Model.Aprobador</h1></div><div class="action-list"><a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Eliminar</a></div></section>
+@if (TempData["SuccessMessage"] is string message) { <div class="alert alert-success">@message</div> }
+<dl class="detail-list"><dt>Monto minimo CRC</dt><dd>@Model.MontoMinimoCrc.ToString("N2")</dd><dt>Monto maximo CRC</dt><dd>@(Model.MontoMaximoCrc?.ToString("N2") ?? "Sin limite")</dd><dt>Aprobador</dt><dd>@Model.Aprobador</dd><dt>Version</dt><dd>@Model.Version</dd></dl><a class="btn btn-outline-secondary" asp-action="Index">Volver al listado</a>

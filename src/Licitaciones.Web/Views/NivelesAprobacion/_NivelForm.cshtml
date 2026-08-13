@@ -1,0 +1,5 @@
+@model Licitaciones.Web.Models.Aprobaciones.NivelAprobacionFormViewModel
+<div asp-validation-summary="ModelOnly" class="text-danger"></div><input asp-for="Version" type="hidden" />
+<div class="mb-3"><label asp-for="MontoMinimoCrc" class="form-label"></label><input asp-for="MontoMinimoCrc" class="form-control" type="number" min="0.01" step="0.01" /><span asp-validation-for="MontoMinimoCrc" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="MontoMaximoCrc" class="form-label"></label><input asp-for="MontoMaximoCrc" class="form-control" type="number" min="0.01" step="0.01" /><span asp-validation-for="MontoMaximoCrc" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="Aprobador" class="form-label"></label><input asp-for="Aprobador" class="form-control" /><span asp-validation-for="Aprobador" class="text-danger"></span></div>

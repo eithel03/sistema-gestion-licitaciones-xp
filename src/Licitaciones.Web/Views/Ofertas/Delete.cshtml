@@ -1,0 +1,5 @@
+@model Licitaciones.Application.Ofertas.OfertaResponse
+@{ ViewData["Title"] = "Eliminar oferta"; }
+<section class="page-header"><div><p class="eyebrow">Ofertas</p><h1>Confirmar eliminacion</h1></div></section>
+<div class="alert alert-warning">La oferta por CRC @Model.MontoOfertadoCrc.ToString("N2") sera eliminada. Esta accion solo se permite mientras la licitacion recibe ofertas.</div>
+<form method="post">@Html.AntiForgeryToken()<div class="action-list"><button type="submit" class="btn btn-danger">Eliminar</button><a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancelar</a></div></form>
