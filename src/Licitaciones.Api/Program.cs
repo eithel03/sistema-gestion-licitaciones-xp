@@ -9,6 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = context =>
+    {
+        if (context.HttpContext.Items.TryGetValue(CorrelationIdMiddleware.HeaderName, out var correlationId))
+        {
+            context.ProblemDetails.Extensions["correlationId"] = correlationId;
+        }
+    };
+});
 var healthChecks = builder.Services.AddHealthChecks();
 
 if (!builder.Environment.IsEnvironment("Testing"))
@@ -17,6 +27,18 @@ if (!builder.Environment.IsEnvironment("Testing"))
 }
 
 var app = builder.Build();
+
+app.UseMiddleware<CorrelationIdMiddleware>();
+
+app.UseExceptionHandler(exceptionApp =>
+{
+    exceptionApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/problem+json";
+        await Results.Problem(statusCode: StatusCodes.Status500InternalServerError, title: "Ocurrio un error inesperado.").ExecuteAsync(context);
+    });
+});
 
 if (!app.Environment.IsEnvironment("Testing"))
 {
@@ -27,6 +49,7 @@ if (!app.Environment.IsEnvironment("Testing"))
     dbContext.Database.Migrate();
 }
 
+app.MapOpenApiEndpoints();
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = async (context, report) =>
@@ -36,10 +59,18 @@ app.MapHealthChecks("/health", new HealthCheckOptions
     }
 });
 
+app.UseSwaggerUI(options =>
+{
+    options.RoutePrefix = "swagger";
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema de Gestion de Licitaciones API v1");
+    options.DocumentTitle = "Sistema de Gestion de Licitaciones API";
+});
+
 app.MapProveedorEndpoints();
 app.MapLicitacionEndpoints();
 app.MapOfertaEndpoints();
 app.MapNivelAprobacionEndpoints();
+app.MapTipoCambioEndpoints();
 
 app.Run();
 

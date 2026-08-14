@@ -42,50 +42,51 @@ public static class OfertaEndpoints
         return Results.Ok(result.Value!);
     }
 
-    private static async Task<IResult> GetByIdAsync(Guid id, IOfertaService service, CancellationToken cancellationToken)
+    private static async Task<IResult> GetByIdAsync(Guid id, IOfertaService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.GetByIdAsync(id, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
 
-    private static async Task<IResult> CreateAsync(CrearOfertaRequest request, IOfertaService service, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateAsync(CrearOfertaRequest request, IOfertaService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.CreateAsync(request, cancellationToken);
         return result.Succeeded
             ? Results.Created($"/api/v1/ofertas/{result.Value!.Id}", result.Value)
-            : ToError(result);
+            : ToError(result, context);
     }
 
-    private static Task<IResult> CreateForLicitacionAsync(Guid id, CrearOfertaLicitacionRequest request, IOfertaService service, CancellationToken cancellationToken) =>
-        CreateAsync(new CrearOfertaRequest(id, request.ProveedorId, request.MontoOfertadoCrc), service, cancellationToken);
+    private static Task<IResult> CreateForLicitacionAsync(Guid id, CrearOfertaLicitacionRequest request, IOfertaService service, HttpContext context, CancellationToken cancellationToken) =>
+        CreateAsync(new CrearOfertaRequest(id, request.ProveedorId, request.MontoOfertadoCrc), service, context, cancellationToken);
 
-    private static async Task<IResult> UpdateAsync(Guid id, ActualizarOfertaRequest request, IOfertaService service, CancellationToken cancellationToken)
+    private static async Task<IResult> UpdateAsync(Guid id, ActualizarOfertaRequest request, IOfertaService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.UpdateAsync(id, request, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
 
-    private static async Task<IResult> DeleteAsync(Guid id, IOfertaService service, CancellationToken cancellationToken)
+    private static async Task<IResult> DeleteAsync(Guid id, IOfertaService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.DeleteAsync(id, cancellationToken);
-        return result.Succeeded ? Results.NoContent() : ToError(result);
+        return result.Succeeded ? Results.NoContent() : ToError(result, context);
     }
 
     private static async Task<IResult> GetBestAsync(
         Guid id,
         IOfertaService ofertas,
         INivelAprobacionService niveles,
+        HttpContext context,
         CancellationToken cancellationToken)
     {
         var result = await ofertas.GetBestAsync(id, cancellationToken);
-        if (!result.Succeeded) return ToError(result);
+        if (!result.Succeeded) return ToError(result, context);
         var best = result.Value!;
         if (!best.TieneOferta) return Results.Ok(best);
         var approver = await niveles.FindApproverAsync(best.MejorOferta!.MontoOfertadoCrc, cancellationToken);
         return Results.Ok(best with { Aprobador = approver.Succeeded ? approver.Value!.Aprobador : null });
     }
 
-    private static IResult ToError<T>(OfertaResult<T> result)
+    private static IResult ToError<T>(OfertaResult<T> result, HttpContext context)
     {
         var status = result.Status switch
         {
@@ -93,13 +94,6 @@ public static class OfertaEndpoints
             OfertaResultStatus.Conflict or OfertaResultStatus.ConcurrencyConflict => 409,
             _ => 400
         };
-        var problem = new ProblemDetails { Status = status, Title = result.ErrorMessage, Detail = result.ErrorMessage };
-        problem.Extensions["code"] = result.ErrorCode ?? "Oferta.Error";
-        return status switch
-        {
-            404 => Results.NotFound(problem),
-            409 => Results.Conflict(problem),
-            _ => Results.BadRequest(problem)
-        };
+        return ApiProblemResults.Problem(context, status, result.ErrorMessage, result.ErrorMessage, result.ErrorCode ?? "Oferta.Error");
     }
 }

@@ -80,14 +80,36 @@ public sealed class Licitacion
 
     public void Close(DateTimeOffset closedAt)
     {
-        if (Estado != LicitacionEstado.Publicada || IsDeleted)
+        if (Estado is not (LicitacionEstado.Borrador or LicitacionEstado.Publicada) || IsDeleted)
         {
-            throw InvalidTransition("Solo una licitacion publicada puede cerrarse.");
+            throw InvalidTransition("Solo una licitacion en borrador o publicada puede cerrarse.");
         }
 
         Estado = LicitacionEstado.Cerrada;
         ClosedAt = closedAt;
         UpdatedAt = closedAt;
+    }
+
+    public void ChangeEstado(LicitacionEstado estado, DateTimeOffset changedAt)
+    {
+        if (estado == Estado)
+        {
+            return;
+        }
+
+        switch (estado)
+        {
+            case LicitacionEstado.Borrador:
+                throw InvalidTransition("No se puede regresar una licitacion a borrador.");
+            case LicitacionEstado.Publicada:
+                Publish(changedAt);
+                break;
+            case LicitacionEstado.Cerrada:
+                Close(changedAt);
+                break;
+            default:
+                throw InvalidTransition("El estado solicitado no es valido.");
+        }
     }
 
     public LicitacionEstado GetEstadoEfectivo(DateTimeOffset utcNow)

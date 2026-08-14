@@ -1,5 +1,4 @@
 using Licitaciones.Application.Proveedores;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Licitaciones.Api;
@@ -20,7 +19,7 @@ public static class ProveedorEndpoints
         return group;
     }
 
-    private static async Task<Ok<ProveedorPage>> ListAsync(
+    private static async Task<IResult> ListAsync(
         IProveedorService service,
         int page = 1,
         int pageSize = 10,
@@ -30,82 +29,76 @@ public static class ProveedorEndpoints
     {
         var result = await service.ListAsync(new ProveedorQuery(page, pageSize, search, sort), cancellationToken);
 
-        return TypedResults.Ok(result.Value!);
+        return Results.Ok(result.Value!);
     }
 
-    private static async Task<Results<Ok<ProveedorResponse>, NotFound<ProblemDetails>>> GetByIdAsync(
+    private static async Task<IResult> GetByIdAsync(
         Guid id,
         IProveedorService service,
+        HttpContext context,
         CancellationToken cancellationToken)
     {
         var result = await service.GetByIdAsync(id, cancellationToken);
 
         return result.Succeeded
-            ? TypedResults.Ok(result.Value!)
-            : TypedResults.NotFound(CreateProblem(StatusCodes.Status404NotFound, result));
+            ? Results.Ok(result.Value!)
+            : ToError(result, context);
     }
 
-    private static async Task<Results<Created<ProveedorResponse>, BadRequest<ProblemDetails>, Conflict<ProblemDetails>>> CreateAsync(
+    private static async Task<IResult> CreateAsync(
         CrearProveedorRequest request,
         IProveedorService service,
+        HttpContext context,
         CancellationToken cancellationToken)
     {
         var result = await service.CreateAsync(request, cancellationToken);
 
         if (result.Succeeded)
         {
-            return TypedResults.Created($"/api/v1/proveedores/{result.Value!.Id}", result.Value);
+            return Results.Created($"/api/v1/proveedores/{result.Value!.Id}", result.Value);
         }
 
-        return result.Status == ProveedorResultStatus.Conflict
-            ? TypedResults.Conflict(CreateProblem(StatusCodes.Status409Conflict, result))
-            : TypedResults.BadRequest(CreateProblem(StatusCodes.Status400BadRequest, result));
+        return ToError(result, context);
     }
 
-    private static async Task<Results<Ok<ProveedorResponse>, BadRequest<ProblemDetails>, NotFound<ProblemDetails>, Conflict<ProblemDetails>>> UpdateAsync(
+    private static async Task<IResult> UpdateAsync(
         Guid id,
         ActualizarProveedorRequest request,
         IProveedorService service,
+        HttpContext context,
         CancellationToken cancellationToken)
     {
         var result = await service.UpdateAsync(id, request, cancellationToken);
 
         if (result.Succeeded)
         {
-            return TypedResults.Ok(result.Value!);
+            return Results.Ok(result.Value!);
         }
 
-        return result.Status switch
-        {
-            ProveedorResultStatus.NotFound => TypedResults.NotFound(CreateProblem(StatusCodes.Status404NotFound, result)),
-            ProveedorResultStatus.Conflict => TypedResults.Conflict(CreateProblem(StatusCodes.Status409Conflict, result)),
-            _ => TypedResults.BadRequest(CreateProblem(StatusCodes.Status400BadRequest, result))
-        };
+        return ToError(result, context);
     }
 
-    private static async Task<Results<NoContent, NotFound<ProblemDetails>>> DeleteAsync(
+    private static async Task<IResult> DeleteAsync(
         Guid id,
         IProveedorService service,
+        HttpContext context,
         CancellationToken cancellationToken)
     {
         var result = await service.DeleteAsync(id, cancellationToken);
 
         return result.Succeeded
-            ? TypedResults.NoContent()
-            : TypedResults.NotFound(CreateProblem(StatusCodes.Status404NotFound, result));
+            ? Results.NoContent()
+            : ToError(result, context);
     }
 
-    private static ProblemDetails CreateProblem<T>(int statusCode, ProveedorResult<T> result)
+    private static IResult ToError<T>(ProveedorResult<T> result, HttpContext context)
     {
-        return new ProblemDetails
+        var status = result.Status switch
         {
-            Status = statusCode,
-            Title = result.ErrorMessage,
-            Detail = result.ErrorMessage,
-            Extensions =
-            {
-                ["code"] = result.ErrorCode ?? "Proveedor.Error"
-            }
+            ProveedorResultStatus.NotFound => 404,
+            ProveedorResultStatus.Conflict => 409,
+            _ => 400
         };
+        return ApiProblemResults.Problem(context, status, result.ErrorMessage, result.ErrorMessage, result.ErrorCode ?? "Proveedor.Error");
     }
 }

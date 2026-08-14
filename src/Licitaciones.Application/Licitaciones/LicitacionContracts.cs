@@ -4,6 +4,7 @@ namespace Licitaciones.Application.Licitaciones;
 
 public sealed record CrearLicitacionRequest(string? Codigo, string? Titulo, decimal PresupuestoCrc, DateTimeOffset FechaCierreUtc);
 public sealed record ActualizarLicitacionRequest(string? Codigo, string? Titulo, decimal PresupuestoCrc, DateTimeOffset FechaCierreUtc, uint? Version = null);
+public sealed record CambiarEstadoLicitacionRequest(string? Estado);
 
 public sealed record LicitacionResponse(
     Guid Id,
