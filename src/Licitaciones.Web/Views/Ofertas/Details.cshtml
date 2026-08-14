@@ -3,5 +3,5 @@
 <section class="page-header"><div><p class="eyebrow">Ofertas</p><h1>Detalle de oferta</h1></div><div class="action-list"><a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Oferta.Id">Editar</a><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Oferta.Id">Eliminar</a></div></section>
 @if (TempData["SuccessMessage"] is string message) { <div class="alert alert-success">@message</div> }
 @if (TempData["ErrorMessage"] is string error) { <div class="alert alert-danger">@error</div> }
-<dl class="detail-list"><dt>Licitacion</dt><dd>@Model.Licitacion?.Codigo</dd><dt>Proveedor</dt><dd>@Model.Proveedor?.Nombre</dd><dt>Monto ofertado CRC</dt><dd>@Model.Oferta.MontoOfertadoCrc.ToString("N2")</dd><dt>Fecha de registro UTC</dt><dd>@Model.Oferta.FechaRegistro.ToString("yyyy-MM-dd HH:mm")</dd><dt>Version</dt><dd>@Model.Oferta.Version</dd></dl>
+<dl class="detail-list"><dt>Licitacion</dt><dd>@Model.Licitacion?.Codigo</dd><dt>Proveedor</dt><dd>@Model.Proveedor?.Nombre</dd><dt>Monto ofertado CRC</dt><dd><partial name="_MoneyDisplay" model="@Model.Oferta.MontoOfertadoCrc" /></dd><dt>Fecha de registro UTC</dt><dd>@Model.Oferta.FechaRegistro.ToString("yyyy-MM-dd HH:mm")</dd><dt>Version</dt><dd>@Model.Oferta.Version</dd></dl>
 <a class="btn btn-outline-secondary" asp-action="Index">Volver al listado</a>

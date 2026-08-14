@@ -1,5 +1,9 @@
+@{
+    var selectedTheme = string.Equals(Context.Request.Cookies["licitaciones.theme"], "dark", StringComparison.OrdinalIgnoreCase) ? "dark" : "light";
+    var selectedCurrency = string.Equals(Context.Request.Cookies["licitaciones.currency"], "USD", StringComparison.OrdinalIgnoreCase) ? "USD" : "CRC";
+}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="@selectedTheme">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +15,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom app-navbar">
+        <nav class="navbar navbar-expand-lg border-bottom app-navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Licitaciones XP</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Alternar navegacion">
@@ -24,9 +28,25 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Proveedores" asp-action="Index">Proveedores</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Ofertas" asp-action="Index">Ofertas</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="NivelesAprobacion" asp-action="Index">Niveles de aprobacion</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="TipoCambio">Tipo de cambio</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="TiposCambio" asp-action="Index">Tipos de cambio</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Planificados" asp-action="ApiSwagger">API / Swagger</a></li>
                     </ul>
+                    <form class="nav-preference" asp-controller="Preferencias" asp-action="Moneda" method="post">
+                        <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+                        <label class="visually-hidden" for="currencyPreference">Moneda</label>
+                        <select id="currencyPreference" name="moneda" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="CRC" selected="@(selectedCurrency == "CRC")">CRC</option>
+                            <option value="USD" selected="@(selectedCurrency == "USD")">USD</option>
+                        </select>
+                    </form>
+                    <form class="nav-preference" asp-controller="Preferencias" asp-action="Tema" method="post">
+                        <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+                        <label class="visually-hidden" for="themePreference">Tema</label>
+                        <select id="themePreference" name="tema" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="light" selected="@(selectedTheme == "light")">Claro</option>
+                            <option value="dark" selected="@(selectedTheme == "dark")">Oscuro</option>
+                        </select>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -44,7 +64,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

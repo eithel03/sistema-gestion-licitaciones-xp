@@ -1,0 +1,14 @@
+@model Licitaciones.Web.Models.TiposCambio.TipoCambioFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="mb-3">
+    <label asp-for="Fecha" class="form-label"></label>
+    <input asp-for="Fecha" class="form-control" type="date" />
+    <span asp-validation-for="Fecha" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="CrcPorUsd" class="form-label"></label>
+    <input asp-for="CrcPorUsd" asp-format="{0:0.00}" class="form-control" type="text" inputmode="decimal" data-val-number="El campo CRC por USD debe ser un numero valido." />
+    <span asp-validation-for="CrcPorUsd" class="text-danger"></span>
+</div>
+<input asp-for="Version" type="hidden" />

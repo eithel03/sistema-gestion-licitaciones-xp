@@ -1,0 +1,9 @@
+@model Licitaciones.Application.TiposCambio.TipoCambioResponse
+@{ ViewData["Title"] = "Eliminar tipo de cambio"; }
+<section class="page-header"><div><p class="eyebrow">Moneda</p><h1>Confirmar eliminacion</h1></div></section>
+<div class="planned-panel"><p>Se eliminara el tipo de cambio del @Model.Fecha.ToString("yyyy-MM-dd") por @Model.CrcPorUsd.ToString("N2") CRC/USD.</p></div>
+<form asp-action="Delete" method="post" class="form-actions mt-3">
+    @Html.AntiForgeryToken()
+    <button class="btn btn-danger" type="submit">Eliminar</button>
+    <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancelar</a>
+</form>

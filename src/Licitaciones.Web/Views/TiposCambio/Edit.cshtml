@@ -1,0 +1,9 @@
+@model Licitaciones.Web.Models.TiposCambio.TipoCambioFormViewModel
+@{ ViewData["Title"] = "Editar tipo de cambio"; }
+<section class="page-header"><div><p class="eyebrow">Moneda</p><h1>Editar tipo de cambio</h1></div></section>
+<form asp-action="Edit" method="post" class="form-panel">
+    @Html.AntiForgeryToken()
+    <partial name="_TipoCambioForm" model="Model" />
+    <div class="form-actions"><button class="btn btn-primary" type="submit">Guardar</button><a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a></div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
