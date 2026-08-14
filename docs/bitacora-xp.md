@@ -779,12 +779,28 @@ Los mensajes de conexión posteriores a `DROP DATABASE ... WITH (FORCE)` corresp
 
 32 puntos implementados y validados localmente. El sistema queda técnicamente preparado para la versión candidata prevista `v1.0.0-rc`, sujeta al cierre formal del flujo Git/GitHub.
 
-### Evidencia formal pendiente
+### Evidencia Git/GitHub
 
-- Issue: Pendiente.
-- Commits finales: Pendiente.
-- Pull Request: Pendiente.
-- CI remoto posterior al push: Pendiente.
+- Issue: `#15 - ITER-04: Moneda, UX y consolidación técnica`.
+- Pull Request: `#16`.
+- Rama origen: `feature/iteracion-04-moneda-ux`.
+- Rama destino: `main`.
+- La rama fue publicada mediante `git push -u origin feature/iteracion-04-moneda-ux` y quedó vinculada a `origin/feature/iteracion-04-moneda-ux`.
+
+### Commits
+
+- `40c4f5d` - `feat(moneda): implementar tipos de cambio y persistencia`.
+- `38c5bf5` - `feat(api): consolidar contratos y manejo de errores`.
+- `5cba6c2` - `feat(web): agregar moneda visual y preferencias de interfaz`.
+- `9b0fa75` - `test(iteracion-04): consolidar pruebas y cobertura`.
+- `8103b12` - `chore(deploy): preparar Docker y Kubernetes`.
+- `2e710d2` - `docs(xp): documentar cierre tecnico de iteracion 4`.
+
+El workflow de CI está preparado dentro de `9b0fa75`, pero su ejecución remota para el Pull Request permanece pendiente de evidencia confirmada. Esta actualización documental posterior todavía no tiene commit.
+
+### Pendientes formales
+
+- CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación de cierre: Pendiente.
 - Merge a `main`: Pendiente.

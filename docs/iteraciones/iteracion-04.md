@@ -91,18 +91,31 @@ Los mensajes de conexión de EF Core inmediatamente posteriores a `DROP DATABASE
 
 ## Velocidad técnica
 
-32 puntos implementados y validados localmente. El cierre formal depende todavía de Pull Request, CI remoto y merge.
+32 puntos implementados y validados localmente. El cierre formal depende todavía de CI remoto, revisión formal del Navigator y merge.
 
 ## Resultado demostrable
 
 El sistema funciona localmente con proveedores, licitaciones, ofertas, evaluación económica, niveles de aprobación, tipos de cambio, presentación CRC/USD, temas visuales, API consolidada, PostgreSQL, pruebas automatizadas, Docker e infraestructura Kubernetes preparada. La versión candidata `v1.0.0-rc` está prevista, pero el tag y la GitHub Release no existen todavía.
 
-## Evidencia formal pendiente
+## Evidencia Git/GitHub y pendientes formales
 
-- Issue de Iteración 4: Pendiente.
-- Commits finales: Pendiente.
-- Pull Request: Pendiente.
-- CI remoto posterior al push: Pendiente.
+- Issue: `#15 - ITER-04: Moneda, UX y consolidación técnica`.
+- Pull Request: `#16`, desde `feature/iteracion-04-moneda-ux` hacia `main`.
+- Rama publicada mediante `git push -u origin feature/iteracion-04-moneda-ux` y vinculada a `origin/feature/iteracion-04-moneda-ux`.
+- Commits registrados:
+
+- `40c4f5d` - `feat(moneda): implementar tipos de cambio y persistencia`.
+- `38c5bf5` - `feat(api): consolidar contratos y manejo de errores`.
+- `5cba6c2` - `feat(web): agregar moneda visual y preferencias de interfaz`.
+- `9b0fa75` - `test(iteracion-04): consolidar pruebas y cobertura`.
+- `8103b12` - `chore(deploy): preparar Docker y Kubernetes`.
+- `2e710d2` - `docs(xp): documentar cierre tecnico de iteracion 4`.
+
+Antes de esta actualización documental, `git status` indicó `nothing to commit, working tree clean` y `git diff --check` terminó sin errores.
+
+Permanecen pendientes:
+
+- CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación formal de cierre: Pendiente.
 - Merge a `main`: Pendiente.

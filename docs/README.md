@@ -44,4 +44,4 @@
 
 Las historias HU-30 a HU-37 están implementadas y validadas localmente en `feature/iteracion-04-moneda-ux`. La suite final aprobó 174/174 pruebas y Docker fue validado con persistencia. Los manifiestos Kubernetes están preparados y renderizan correctamente; su despliegue real permanece pendiente de un clúster activo.
 
-Issue de Iteración 4, commits finales, Pull Request, CI remoto posterior al push, revisión formal final del Navigator, merge, tag `v1.0.0-rc` y GitHub Release: Pendientes.
+Issue `#15`, Pull Request `#16` y los commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` están registrados. CI remoto, revisión formal final del Navigator, merge, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
