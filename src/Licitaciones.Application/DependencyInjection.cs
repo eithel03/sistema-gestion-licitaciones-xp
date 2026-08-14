@@ -3,6 +3,7 @@ using Licitaciones.Application.Proveedores;
 using Licitaciones.Application.Licitaciones;
 using Licitaciones.Application.Ofertas;
 using Licitaciones.Application.Aprobaciones;
+using Licitaciones.Application.TiposCambio;
 
 namespace Licitaciones.Application;
 
@@ -16,6 +17,8 @@ public static class DependencyInjection
         services.AddScoped<ILicitacionService, LicitacionService>();
         services.AddScoped<IOfertaService, OfertaService>();
         services.AddScoped<INivelAprobacionService, NivelAprobacionService>();
+        services.AddScoped<ITipoCambioService, TipoCambioService>();
+        services.AddScoped<IMonedaConversionService, MonedaConversionService>();
 
         return services;
     }

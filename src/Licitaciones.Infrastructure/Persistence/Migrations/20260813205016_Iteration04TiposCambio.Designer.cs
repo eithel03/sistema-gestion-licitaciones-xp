@@ -3,6 +3,7 @@ using System;
 using Licitaciones.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Licitaciones.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(LicitacionesDbContext))]
-    partial class LicitacionesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260813205016_Iteration04TiposCambio")]
+    partial class Iteration04TiposCambio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,6 +256,7 @@ namespace Licitaciones.Infrastructure.Persistence.Migrations
                         .HasFilter("\"Activo\" = TRUE");
 
                     b.HasIndex("Fecha")
+                        .IsUnique()
                         .HasDatabaseName("IX_TiposCambio_Fecha");
 
                     b.ToTable("TiposCambio", null, t =>
