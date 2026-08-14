@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/TestResults/
+.git/
+.github/
+docs/
+tests/
+README.md
+Plan_Implementacion_XP_Actualizado_Con_Historias.md

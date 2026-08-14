@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: licitaciones-api
+  namespace: licitaciones
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: licitaciones-api
+  template:
+    metadata:
+      labels:
+        app: licitaciones-api
+    spec:
+      containers:
+        - name: api
+          image: licitaciones-api:v1.0.0-rc
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: licitaciones-config
+            - secretRef:
+                name: licitaciones-secret
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: licitaciones-api
+  namespace: licitaciones
+spec:
+  selector:
+    app: licitaciones-api
+  ports:
+    - port: 8080
+      targetPort: 8080

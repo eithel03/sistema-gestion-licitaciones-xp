@@ -17,5 +17,36 @@ services:
       retries: 5
       start_period: 10s
 
+  api:
+    build:
+      context: .
+      dockerfile: src/Licitaciones.Api/Dockerfile
+    image: licitaciones-api:v1.0.0-rc
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      ASPNETCORE_URLS: http://+:8080
+      HealthChecks__PostgreSQL__Enabled: "true"
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB:-licitaciones_dev};Username=${POSTGRES_USER:-licitaciones_app};Password=${POSTGRES_PASSWORD:-change_this_password}
+    ports:
+      - "${API_PORT:-8081}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: src/Licitaciones.Web/Dockerfile
+    image: licitaciones-web:v1.0.0-rc
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB:-licitaciones_dev};Username=${POSTGRES_USER:-licitaciones_app};Password=${POSTGRES_PASSWORD:-change_this_password}
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
