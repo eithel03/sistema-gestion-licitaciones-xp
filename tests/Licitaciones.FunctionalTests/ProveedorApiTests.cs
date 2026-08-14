@@ -73,6 +73,39 @@ public sealed class ProveedorApiTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task CreateProviderApiAcceptsUnicodeLettersAndRejectsDisallowedSymbols()
+    {
+        using var client = _factory!.CreateClient();
+        string[] validNames =
+        [
+            "Tecnología Empresarial CR",
+            "Compañía Nacional 2026",
+            "Empresa Ñandú",
+            "Servicios Técnicos, S.A.",
+            "Soluciones (Costa Rica)"
+        ];
+        string[] invalidNames =
+        [
+            "Empresa @ CR",
+            "Proveedor #1",
+            "Empresa / Servicios",
+            "Proveedor & Asociados"
+        ];
+
+        foreach (var name in validNames)
+        {
+            using var response = await client.PostAsJsonAsync("/api/v1/proveedores", new CrearProveedorRequest(name));
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        }
+
+        foreach (var name in invalidNames)
+        {
+            using var response = await client.PostAsJsonAsync("/api/v1/proveedores", new CrearProveedorRequest(name));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+    }
+
+    [Fact]
     public async Task CreateDuplicateProviderReturnsConflict()
     {
         using var client = _factory!.CreateClient();

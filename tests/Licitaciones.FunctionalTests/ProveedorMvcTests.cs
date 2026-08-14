@@ -120,6 +120,73 @@ public sealed partial class ProveedorMvcTests : IAsyncLifetime
         Assert.Contains("Ya existe un proveedor", duplicateContent);
     }
 
+    [Theory]
+    [InlineData("Tecnología Empresarial CR")]
+    [InlineData("Compañía Nacional 2026")]
+    [InlineData("Empresa Ñandú")]
+    [InlineData("Servicios Técnicos, S.A.")]
+    [InlineData("Soluciones (Costa Rica)")]
+    public async Task CreateProviderThroughMvcAcceptsUnicodeLetters(string nombre)
+    {
+        using var client = _factory!.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+        var createPage = await client.GetStringAsync("/Proveedores/Create");
+        var createToken = ExtractAntiForgeryToken(createPage);
+
+        using var createResponse = await client.PostAsync(
+            "/Proveedores/Create",
+            new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                ["__RequestVerificationToken"] = createToken,
+                ["Nombre"] = nombre
+            }));
+
+        Assert.Equal(HttpStatusCode.Redirect, createResponse.StatusCode);
+        var detail = await client.GetStringAsync(createResponse.Headers.Location!.ToString());
+        Assert.Contains(nombre, WebUtility.HtmlDecode(detail));
+    }
+
+    [Theory]
+    [InlineData("Empresa @ CR")]
+    [InlineData("Proveedor #1")]
+    [InlineData("Empresa / Servicios")]
+    [InlineData("Proveedor & Asociados")]
+    public async Task CreateProviderThroughMvcRejectsDisallowedSymbols(string nombre)
+    {
+        using var client = _factory!.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+        var createPage = await client.GetStringAsync("/Proveedores/Create");
+        var createToken = ExtractAntiForgeryToken(createPage);
+
+        using var createResponse = await client.PostAsync(
+            "/Proveedores/Create",
+            new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                ["__RequestVerificationToken"] = createToken,
+                ["Nombre"] = nombre
+            }));
+
+        Assert.Equal(HttpStatusCode.OK, createResponse.StatusCode);
+        var content = await createResponse.Content.ReadAsStringAsync();
+        Assert.Contains("solo puede contener letras", content);
+    }
+
+    [Fact]
+    public async Task CreateProviderFormUsesUnicodeSafeClientValidation()
+    {
+        using var client = _factory!.CreateClient();
+
+        var createPage = await client.GetStringAsync("/Proveedores/Create");
+        var input = ProviderNameInputRegex().Match(createPage).Value;
+
+        Assert.DoesNotContain("data-val-regex", input);
+        Assert.Contains("data-val-proveedornombre", input);
+    }
+
     private static string ExtractAntiForgeryToken(string html)
     {
         var match = AntiForgeryTokenRegex().Match(html);
@@ -130,6 +197,9 @@ public sealed partial class ProveedorMvcTests : IAsyncLifetime
 
     [GeneratedRegex("name=\"__RequestVerificationToken\" type=\"hidden\" value=\"(?<token>[^\"]+)\"")]
     private static partial Regex AntiForgeryTokenRegex();
+
+    [GeneratedRegex("<input[^>]*name=\"Nombre\"[^>]*>", RegexOptions.IgnoreCase)]
+    private static partial Regex ProviderNameInputRegex();
 }
 
 [CollectionDefinition(Name, DisableParallelization = true)]
