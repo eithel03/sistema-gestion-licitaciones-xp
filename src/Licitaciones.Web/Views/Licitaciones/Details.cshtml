@@ -44,7 +44,7 @@
     <dd>@Model.Titulo</dd>
 
     <dt>Presupuesto CRC</dt>
-    <dd>@Model.PresupuestoCrc.ToString("N2")</dd>
+    <dd><partial name="_MoneyDisplay" model="@Model.PresupuestoCrc" /></dd>
 
     <dt>Fecha de cierre UTC</dt>
     <dd>@Model.FechaCierreUtc.ToString("yyyy-MM-dd HH:mm")</dd>

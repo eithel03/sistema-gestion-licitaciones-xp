@@ -20,4 +20,5 @@ public interface ILicitacionService
     Task<LicitacionResult<bool>> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     Task<LicitacionResult<LicitacionResponse>> PublishAsync(Guid id, CancellationToken cancellationToken = default);
     Task<LicitacionResult<LicitacionResponse>> CloseAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<LicitacionResult<LicitacionResponse>> ChangeEstadoAsync(Guid id, CambiarEstadoLicitacionRequest request, CancellationToken cancellationToken = default);
 }

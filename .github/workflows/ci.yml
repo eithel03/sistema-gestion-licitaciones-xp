@@ -24,4 +24,10 @@ jobs:
         run: dotnet build Licitaciones.sln --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test Licitaciones.sln --configuration Release --no-build
+        run: dotnet test Licitaciones.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: Upload coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults

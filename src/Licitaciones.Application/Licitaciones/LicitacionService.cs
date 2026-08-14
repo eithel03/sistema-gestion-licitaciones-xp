@@ -79,6 +79,22 @@ public sealed class LicitacionService : ILicitacionService
         return await SaveAndReturnAsync(licitacion, cancellationToken);
     }
 
+    public async Task<LicitacionResult<LicitacionResponse>> ChangeEstadoAsync(Guid id, CambiarEstadoLicitacionRequest request, CancellationToken cancellationToken = default)
+    {
+        var licitacion = await _repository.GetByIdAsync(id, cancellationToken);
+        if (licitacion is null || licitacion.DeletedAt is not null) return NotFound<LicitacionResponse>();
+        if (!Enum.TryParse<LicitacionEstado>(request.Estado, ignoreCase: true, out var estado))
+        {
+            return LicitacionResult.Failure<LicitacionResponse>(
+                LicitacionResultStatus.ValidationError,
+                LicitacionErrors.TransicionInvalida,
+                "El estado solicitado no es valido.");
+        }
+        try { licitacion.ChangeEstado(estado, _clock.UtcNow); }
+        catch (LicitacionValidationException ex) { return ValidationFailure<LicitacionResponse>(ex); }
+        return await SaveAndReturnAsync(licitacion, cancellationToken);
+    }
+
     private LicitacionResult<Licitacion> CreateLicitacion(CrearLicitacionRequest request)
     {
         try { return LicitacionResult.Success(Licitacion.Create(request.Codigo, request.Titulo, request.PresupuestoCrc, request.FechaCierreUtc, _clock.UtcNow)); }

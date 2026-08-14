@@ -217,11 +217,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Proveedores, ofertas.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `7e6a317`, `29e727c`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `Iteration3MvcTests`, `Iteration3PersistenceTests`.
 - Documentacion relacionada: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `integracion-modulos.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-12 - Crear licitaciones
 
@@ -236,11 +236,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. Una licitacion incompleta o invalida es rechazada con mensajes verificables.
 - Pruebas previstas: Pruebas unitarias de reglas base y pruebas de integracion de creacion.
 - Modulos relacionados: Licitaciones.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-13 - Listar y consultar licitaciones
 
@@ -255,11 +257,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. El detalle informa una licitacion existente o devuelve una respuesta controlada si no existe.
 - Pruebas previstas: Pruebas funcionales y pruebas de integracion de consulta.
 - Modulos relacionados: Licitaciones, API REST.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-14 - Editar y aplicar borrado logico de licitaciones
 
@@ -274,11 +278,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. Una licitacion retirada deja de participar en operaciones activas sin perder trazabilidad.
 - Pruebas previstas: Pruebas unitarias de permisos de edicion y pruebas de integracion.
 - Modulos relacionados: Licitaciones, persistencia.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-15 - Validar codigo unico, presupuesto y fecha de cierre
 
@@ -293,11 +299,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. La fecha y hora de cierre se seleccionan de forma verificable y el presupuesto debe ser valido.
 - Pruebas previstas: Pruebas unitarias de normalizacion, presupuesto y fechas; prueba funcional de selector de fecha y hora.
 - Modulos relacionados: Licitaciones, validaciones.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-16 - Publicar, cerrar y rechazar transiciones invalidas
 
@@ -312,11 +320,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. Una licitacion vencida se considera cerrada para nuevas ofertas aunque su cambio formal este pendiente.
 - Pruebas previstas: Pruebas unitarias de maquina de estados y pruebas de integracion de cambio de estado.
 - Modulos relacionados: Licitaciones, ofertas.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-17 - Exponer API REST de licitaciones y cambios de estado
 
@@ -331,11 +341,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. Las transiciones invalidas devuelven errores controlados sin datos sensibles.
 - Pruebas previstas: Pruebas de integracion de endpoints y casos de error.
 - Modulos relacionados: Licitaciones, API REST.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-18 - Preparar persistencia relacional base
 
@@ -350,11 +362,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. Los datos semilla minimos permiten ejecutar pruebas de integracion reproducibles.
 - Pruebas previstas: Pruebas de integracion con PostgreSQL real y verificacion de migraciones.
 - Modulos relacionados: Persistencia, proveedores, licitaciones.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-19 - Manejar auditoria, concurrencia y errores de persistencia
 
@@ -369,11 +383,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
   2. Los errores de persistencia se transforman en respuestas controladas sin detalles internos.
 - Pruebas previstas: Pruebas de integracion de concurrencia, transacciones y errores controlados.
 - Modulos relacionados: Persistencia, API REST.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#10`.
+- Rama: `feature/iteracion-02-licitaciones`.
+- Pull Request: `#12`.
+- Commits: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
+- Pruebas ejecutadas: Suite completa de Iteracion 2: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: `fafcc66`.
+- Estado: Implementada, validada e integrada a `main` en Iteracion 2.
 
 ### HU-20 - Crear ofertas
 
@@ -390,11 +406,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, proveedores, licitaciones.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `api.md`, `modelo-datos.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-21 - Listar, consultar y filtrar ofertas
 
@@ -411,11 +427,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, API REST.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `iteraciones/iteracion-03.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-22 - Editar y eliminar ofertas cuando este permitido
 
@@ -432,11 +448,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `iteraciones/iteracion-03.md`, `pruebas.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-23 - Rechazar ofertas duplicadas, vencidas o no publicadas
 
@@ -453,11 +469,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `modelo-datos.md`, `pruebas.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-24 - Validar ofertas contra presupuesto
 
@@ -474,11 +490,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `pruebas.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-25 - Determinar mejor oferta y resolver empates
 
@@ -495,11 +511,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `iteraciones/iteracion-03.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-26 - Calcular clasificacion del ahorro
 
@@ -516,11 +532,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, licitaciones.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `pruebas.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-27 - Administrar niveles de aprobacion
 
@@ -538,11 +554,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Niveles de aprobacion.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `NivelAprobacionServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `modulos/niveles-aprobacion.md`, `api.md`, `iteraciones/iteracion-03.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-28 - Evitar traslapes y determinar aprobador
 
@@ -559,11 +575,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Niveles de aprobacion, ofertas.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `a20eb19`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/niveles-aprobacion.md`, `modelo-datos.md`, `integracion-modulos.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-29 - Exponer API REST de ofertas y aprobaciones
 
@@ -580,11 +596,11 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Modulos relacionados: Ofertas, niveles de aprobacion, API REST.
 - Issue: Pendiente.
 - Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - Commits: `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `Iteration3ApiTests`.
 - Documentacion relacionada: `api.md`, `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `modulos/niveles-aprobacion.md`.
-- Estado: Implementada y validada localmente en Iteracion 3; revision formal del Navigator, PR, CI, merge y tag pendientes.
+- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-30 - Administrar tipos de cambio
 
@@ -597,13 +613,14 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Criterios de aceptacion:
   1. El sistema permite CRUD de tipos de cambio con fecha y valor.
   2. El modulo funciona con datos administrados localmente sin requerir Internet.
-- Pruebas previstas: Pruebas de integracion de CRUD y pruebas unitarias de validacion.
+  3. Se permiten varios tipos de cambio con la misma fecha.
 - Modulos relacionados: Tipos de cambio.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2`.
+- Pruebas ejecutadas: `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests` e `Iteration4MvcTests`.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ### HU-31 - Activar un unico tipo de cambio
 
@@ -616,18 +633,19 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Criterios de aceptacion:
   1. Al activar un tipo de cambio, ningun otro queda activo.
   2. Si no hay tipo de cambio activo, el sistema informa la situacion de forma controlada.
-- Pruebas previstas: Pruebas unitarias de activacion unica y pruebas de integracion.
+  3. PostgreSQL refuerza la regla mediante `IX_TiposCambio_UnicoActivo`.
 - Modulos relacionados: Tipos de cambio, persistencia.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `40c4f5d`, `38c5bf5`, `9b0fa75`, `2e710d2`.
+- Pruebas ejecutadas: `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests` e `Iteration4ApiTests`.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ### HU-32 - Alternar visualmente entre CRC y USD
 
 - Historia: Como usuario, quiero alternar visualmente montos entre CRC y USD, para interpretar presupuestos y ofertas en ambas monedas.
-- Descripcion: CRC permanece como moneda persistida y fuente de verdad; USD es una representacion visual calculada con fecha del tipo de cambio.
+- Descripcion: CRC permanece como moneda persistida y fuente de verdad; USD es una representacion visual calculada con la fecha del tipo de cambio.
 - Prioridad: Media.
 - Estimacion: 3 puntos.
 - Dependencias: HU-30, HU-31.
@@ -635,18 +653,19 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Criterios de aceptacion:
   1. El usuario puede alternar montos visibles entre CRC y USD.
   2. La interfaz muestra la fecha del tipo de cambio usado y mantiene CRC como valor persistido.
-- Pruebas previstas: Pruebas unitarias de conversion y prueba funcional de alternancia visual.
+  3. La conversion aplica `USD = CRC / CrcPorUsd`.
 - Modulos relacionados: Tipos de cambio, interfaz, ofertas, licitaciones.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2`.
+- Pruebas ejecutadas: `TipoCambioServiceTests`, `Iteration4ApiTests` e `Iteration4MvcTests`; validacion manual de licitacion y oferta en CRC/USD.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ### HU-33 - Alternar modo claro y oscuro con preferencia persistida
 
 - Historia: Como usuario, quiero alternar entre modo claro y oscuro y conservar mi preferencia, para usar el sistema con comodidad visual.
-- Descripcion: La preferencia debe persistir entre visitas sin alterar la informacion de negocio.
+- Descripcion: La preferencia persiste entre visitas sin alterar la informacion de negocio.
 - Prioridad: Media.
 - Estimacion: 3 puntos.
 - Dependencias: HU-01, HU-02.
@@ -654,13 +673,13 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Criterios de aceptacion:
   1. El usuario puede cambiar entre modo claro y modo oscuro desde la interfaz.
   2. La preferencia seleccionada se conserva al recargar o volver a entrar al sistema.
-- Pruebas previstas: Prueba funcional de alternancia y persistencia local de preferencia.
 - Modulos relacionados: Interfaz.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `5cba6c2`, `9b0fa75`, `2e710d2`.
+- Pruebas ejecutadas: `Iteration4MvcTests` y validacion manual, incluida la conservacion de preferencia despues de reiniciar contenedores.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ### HU-34 - Documentar y endurecer la API REST
 
@@ -671,72 +690,74 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Dependencias: HU-10, HU-17, HU-29.
 - Iteracion asignada: Iteracion 4.
 - Criterios de aceptacion:
-  1. Swagger/OpenAPI documenta endpoints versionados y DTO principales.
-  2. Los errores usan ProblemDetails, codigos HTTP correctos, correlacion y omiten datos sensibles.
-- Pruebas previstas: Pruebas de integracion de contrato, errores y correlacion.
+  1. Swagger UI y OpenAPI documentan endpoints versionados, DTO principales y solo verbos HTTP reales.
+  2. Los errores usan `application/problem+json`, codigos HTTP correctos, correlacion y omiten datos sensibles.
+  3. El `correlationId` del cuerpo coincide con `X-Correlation-ID`.
 - Modulos relacionados: API REST.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `38c5bf5`, `9b0fa75`, `2e710d2`.
+- Pruebas ejecutadas: `ApiHardeningTests`, `Iteration4ApiTests` y `LicitacionApiTests`; Swagger UI y ProblemDetails validados manualmente.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ### HU-35 - Automatizar pruebas, cobertura e integracion continua
 
-- Historia: Como programador, quiero ejecutar pruebas unitarias, integracion con PostgreSQL real, funcionales E2E y cobertura minima en integracion continua, para sostener TDD y calidad verificable.
-- Descripcion: Incluye evidencia rojo-verde-refactorizacion, umbral de cobertura acordado, validacion de dependencias y vulnerabilidades.
+- Historia: Como programador, quiero ejecutar pruebas unitarias, integracion con PostgreSQL real, funcionales y cobertura minima en integracion continua, para sostener TDD y calidad verificable.
+- Descripcion: Incluye evidencia rojo-verde-refactorizacion, umbrales de cobertura y ejecucion reproducible.
 - Prioridad: Alta.
 - Estimacion: 5 puntos.
 - Dependencias: HU-18, HU-19, HU-34.
 - Iteracion asignada: Iteracion 4.
 - Criterios de aceptacion:
-  1. La integracion continua ejecuta pruebas unitarias, integracion y E2E iniciales con resultado visible.
-  2. La evidencia de TDD, cobertura y revision de dependencias queda registrada en la documentacion correspondiente.
-- Pruebas previstas: Ejecucion automatizada de suites de prueba y reporte de cobertura.
+  1. Las suites unitarias, de integracion y funcionales se ejecutan reproduciblemente.
+  2. La evidencia de TDD y cobertura queda registrada.
+  3. Se cumplen los umbrales global >= 70%, Domain >= 80% y Application >= 80%.
 - Modulos relacionados: Pruebas, integracion continua.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `9b0fa75`, `2e710d2`.
+- Pruebas ejecutadas: UnitTests 96/96, IntegrationTests 27/27 y FunctionalTests 51/51; total 174/174. Cobertura limpia global 87.3%, Domain 91.4% y Application 83.8%.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ### HU-36 - Preparar infraestructura de despliegue
 
 - Historia: Como programador, quiero preparar Dockerfile multi-stage, Docker Compose, PostgreSQL persistente, health checks y manifiestos Kubernetes, para entregar una version candidata ejecutable.
-- Descripcion: Incluye ConfigMap, Secret, probes, PVC, limites, solicitudes de recursos, variables de entorno y manejo de secretos.
+- Descripcion: Incluye ConfigMap, Secret de ejemplo, probes, PVC, limites, solicitudes de recursos, variables de entorno y manejo de secretos.
 - Prioridad: Media.
 - Estimacion: 5 puntos.
 - Dependencias: HU-18, HU-35.
 - Iteracion asignada: Iteracion 4.
 - Criterios de aceptacion:
-  1. La aplicacion puede ejecutarse con contenedores y PostgreSQL persistente usando variables de entorno.
-  2. Los manifiestos de Kubernetes incluyen configuracion, secretos, probes, volumen persistente y recursos definidos.
-- Pruebas previstas: Prueba de arranque con contenedores, health checks y validacion de manifiestos.
+  1. La aplicacion se ejecuta en contenedores con PostgreSQL persistente y variables de entorno.
+  2. Los manifiestos Kubernetes incluyen configuracion, secretos, probes, volumen persistente y recursos.
 - Modulos relacionados: Infraestructura, persistencia.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `8103b12`, `2e710d2`.
+- Pruebas ejecutadas: `docker compose config`, build, arranque, health checks y persistencia; `kubectl kustomize k8s` exitoso. Despliegue real en Kubernetes pendiente de cluster activo.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge, tag y despliegue real de Kubernetes pendientes.
 
 ### HU-37 - Mantener documentacion XP, trazabilidad y preparacion de defensa
 
 - Historia: Como equipo, quiero mantener documentacion modular, bitacora XP, evidencias de pareja, trazabilidad, uso de inteligencia artificial y preparacion de entrega, para defender las decisiones del proyecto.
-- Descripcion: Consolida documentos de planificacion, arquitectura futura, API, pruebas, infraestructura, integracion de modulos y defensa oral.
+- Descripcion: Consolida documentos de iteracion, API, pruebas, infraestructura, trazabilidad y uso de IA.
 - Prioridad: Alta.
 - Estimacion: 3 puntos.
 - Dependencias: Ninguna.
 - Iteracion asignada: Iteracion 4.
 - Criterios de aceptacion:
-  1. La documentacion permite navegar historias, planes, bitacora, trazabilidad y documentos tecnicos previstos.
-  2. Las evidencias reales se registran sin inventar Issues, Pull Requests, commits ni pruebas.
-- Pruebas previstas: Revision documental de enlaces, trazabilidad y consistencia metodologica XP.
+  1. La documentacion permite navegar historias, bitacora, trazabilidad y documentos tecnicos.
+  2. Las evidencias reales se registran sin inventar Issues, Pull Requests, commits, CI o liberaciones.
 - Modulos relacionados: Documentacion, XP.
-- Issue: Pendiente.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- Pruebas ejecutadas: Pendiente.
-- Estado: Planificada.
+- Issue: `#15`.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Pull Request: `#16`.
+- Commits: `2e710d2`.
+- Pruebas ejecutadas: revision documental, comprobacion de enlaces y `git diff --check`.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
 
 ## Resumen de puntos
 

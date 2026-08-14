@@ -218,6 +218,49 @@ namespace Licitaciones.Infrastructure.Persistence.Migrations
                     b.ToTable("Proveedores", (string)null);
                 });
 
+            modelBuilder.Entity("Licitaciones.Domain.TiposCambio.TipoCambio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("CrcPorUsd")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<uint>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Activo")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TiposCambio_UnicoActivo")
+                        .HasFilter("\"Activo\" = TRUE");
+
+                    b.HasIndex("Fecha")
+                        .HasDatabaseName("IX_TiposCambio_Fecha");
+
+                    b.ToTable("TiposCambio", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_TiposCambio_CrcPorUsdPositivo", "\"CrcPorUsd\" > 0");
+                        });
+                });
+
             modelBuilder.Entity("Licitaciones.Domain.Ofertas.Oferta", b =>
                 {
                     b.HasOne("Licitaciones.Domain.Licitaciones.Licitacion", null)

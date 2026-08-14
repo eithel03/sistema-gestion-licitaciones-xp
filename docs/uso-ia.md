@@ -75,3 +75,16 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Resultado: Iteracion 3 tecnicamente implementada y validada localmente con 111/111 pruebas aprobadas.
 - Responsabilidad: Codex se utilizo como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad del trabajo y deben comprender, revisar y defender el codigo.
 - Limitaciones de evidencia: revision formal del Navigator, Pull Request, CI remoto, merge y tag permanecen pendientes.
+
+### Registro 007 - Iteración 4
+
+- Fecha: Pendiente de completar por el equipo.
+- Herramienta: OpenAI Codex.
+- Participantes responsables: Eithel como Driver y Chavala como Navigator.
+- Finalidad: asistencia en la implementación y consolidación de tipos de cambio, presentación monetaria, UX, API, pruebas, infraestructura y documentación de Iteración 4.
+- Componentes asistidos: tipos de cambio, conversión CRC/USD, tema claro/oscuro, Swagger/OpenAPI, ProblemDetails, correlación, pruebas automatizadas, cobertura, Docker, Kubernetes, corrección de defectos y documentación.
+- Correcciones asistidas: fecha duplicada de tipo de cambio, entrada decimal con punto o coma, acción Activar redundante, validación cliente Unicode de proveedores, activación API por PATCH, verbos OpenAPI exactos y PATCH de estado de licitación.
+- Validaciones realizadas por los estudiantes: revisión del código; suite automatizada 174/174; pruebas manuales de CRUD, moneda, tema, Swagger y API; cobertura limpia; build; Docker, health checks y persistencia; renderizado de manifiestos Kubernetes.
+- Resultado: Iteración 4 implementada y validada localmente, con cobertura global de líneas de 87.3% y Docker operativo. El despliegue real en Kubernetes y el cierre Git/GitHub permanecen pendientes.
+- Responsabilidad: Codex se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad final de comprender, revisar, validar y defender el trabajo.
+- Evidencia Git/GitHub: Issue `#15`, Pull Request `#16` y commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` registrados. CI remoto, revisión formal final del Navigator, merge, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.

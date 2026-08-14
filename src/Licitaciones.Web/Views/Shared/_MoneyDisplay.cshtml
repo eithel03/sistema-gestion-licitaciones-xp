@@ -1,0 +1,23 @@
+@model decimal
+@using Licitaciones.Application.TiposCambio
+@inject IMonedaConversionService ConversionService
+@{
+    var selected = string.Equals(Context.Request.Cookies["licitaciones.currency"], "USD", StringComparison.OrdinalIgnoreCase)
+        ? MonedaVisualizacion.USD
+        : MonedaVisualizacion.CRC;
+    var result = await ConversionService.ConvertFromCrcAsync(Model, selected);
+}
+@if (result.Succeeded)
+{
+    <span class="money-display" title="Monto original CRC @Model.ToString("N2")">
+        @result.Value!.Moneda @result.Value.MontoVisualizado.ToString("N2")
+        @if (result.Value.Moneda == MonedaVisualizacion.USD)
+        {
+            <small class="text-muted">(TC @result.Value.FechaTipoCambio?.ToString("yyyy-MM-dd"))</small>
+        }
+    </span>
+}
+else
+{
+    <span class="money-display" title="@result.ErrorMessage">CRC @Model.ToString("N2") <small class="text-warning">sin tipo activo</small></span>
+}

@@ -199,3 +199,87 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.nav-preference {
+  display: flex;
+  align-items: center;
+  margin-left: .5rem;
+}
+
+.nav-preference .form-select {
+  min-width: 86px;
+}
+
+.money-display small {
+  margin-left: .25rem;
+}
+
+[data-bs-theme="light"] body {
+  background: #f5f7fa;
+  color: #1f2937;
+}
+
+[data-bs-theme="light"] .app-navbar,
+[data-bs-theme="light"] .landing-summary > div,
+[data-bs-theme="light"] .form-panel,
+[data-bs-theme="light"] .planned-panel,
+[data-bs-theme="light"] .empty-related,
+[data-bs-theme="light"] .info-grid article,
+[data-bs-theme="light"] .toolbar,
+[data-bs-theme="light"] .detail-list {
+  background: #ffffff;
+  border-color: #d9e2ec;
+}
+
+[data-bs-theme="dark"] body {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+[data-bs-theme="dark"] .app-navbar,
+[data-bs-theme="dark"] .landing-summary > div,
+[data-bs-theme="dark"] .form-panel,
+[data-bs-theme="dark"] .planned-panel,
+[data-bs-theme="dark"] .empty-related,
+[data-bs-theme="dark"] .info-grid article,
+[data-bs-theme="dark"] .toolbar,
+[data-bs-theme="dark"] .detail-list {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+[data-bs-theme="dark"] .landing-hero {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+[data-bs-theme="dark"] .landing-copy h1,
+[data-bs-theme="dark"] .page-header h1,
+[data-bs-theme="dark"] .info-grid h2,
+[data-bs-theme="dark"] .empty-related h2 {
+  color: #f9fafb;
+}
+
+[data-bs-theme="dark"] .landing-copy p,
+[data-bs-theme="dark"] .detail-list dt,
+[data-bs-theme="dark"] .text-muted {
+  color: #cbd5e1 !important;
+}
+
+[data-bs-theme="dark"] .table {
+  --bs-table-color: #e5e7eb;
+  --bs-table-bg: transparent;
+  --bs-table-hover-color: #f9fafb;
+  --bs-table-hover-bg: #253244;
+}
+
+[data-bs-theme="dark"] .footer {
+  color: #cbd5e1 !important;
+}
+
+@media (max-width: 991px) {
+  .nav-preference {
+    margin: .5rem 0 0;
+  }
+}

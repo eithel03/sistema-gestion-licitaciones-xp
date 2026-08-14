@@ -75,6 +75,17 @@ public sealed class ProveedorTests
         Assert.Equal(first, second);
     }
 
+    [Theory]
+    [InlineData("Tecnología Empresarial CR")]
+    [InlineData("Compañía Nacional 2026")]
+    [InlineData("Empresa Ñandú")]
+    [InlineData("Servicios Técnicos, S.A.")]
+    [InlineData("Soluciones (Costa Rica)")]
+    public void CreateAcceptsUnicodeLetters(string nombre)
+    {
+        Assert.Equal(nombre, Proveedor.Create(nombre, Now).Nombre);
+    }
+
     [Fact]
     public void NormalizedNameUsesUnicodeNormalization()
     {
@@ -100,6 +111,10 @@ public sealed class ProveedorTests
     [InlineData("Empresa-Central")]
     [InlineData("Empresa/Central")]
     [InlineData("Empresa @ Central")]
+    [InlineData("Empresa @ CR")]
+    [InlineData("Proveedor #1")]
+    [InlineData("Empresa / Servicios")]
+    [InlineData("Proveedor & Asociados")]
     [InlineData("Empresa Central!")]
     public void CreateRejectsDisallowedCharacters(string nombre)
     {

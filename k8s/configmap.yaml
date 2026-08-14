@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: licitaciones-config
+  namespace: licitaciones
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  HealthChecks__PostgreSQL__Enabled: "true"
+  POSTGRES_DB: "licitaciones"
+  POSTGRES_USER: "licitaciones_app"

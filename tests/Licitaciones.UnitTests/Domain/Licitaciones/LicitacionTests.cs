@@ -59,18 +59,40 @@ public sealed class LicitacionTests
     }
 
     [Fact]
+    public void DraftTenderCanBeClosed()
+    {
+        var draft = Licitacion.Create("LIC-2026-001", "Compra", 1000m, FutureClose, Now);
+
+        draft.Close(Now.AddHours(1));
+
+        Assert.Equal(LicitacionEstado.Cerrada, draft.Estado);
+    }
+
+    [Fact]
     public void InvalidTransitionsAndUpdatesAreRejected()
     {
         var draft = Licitacion.Create("LIC-2026-001", "Compra", 1000m, FutureClose, Now);
-        Assert.Contains(Assert.Throws<LicitacionValidationException>(() => draft.Close(Now.AddHours(1))).Errors,
-            e => e.Code == LicitacionErrors.TransicionInvalida);
-
         draft.Publish(Now.AddHours(1));
         Assert.Contains(Assert.Throws<LicitacionValidationException>(() =>
             draft.Update("LIC-2026-002", "Compra actualizada", 2000m, FutureClose.AddDays(1), Now.AddHours(2))).Errors,
             e => e.Code == LicitacionErrors.EdicionNoPermitida);
     }
 
+    [Fact]
+    public void ChangeEstadoRejectsReturningToDraft()
+    {
+        var published = Licitacion.Create("LIC-2026-001", "Compra", 1000m, FutureClose, Now);
+        published.Publish(Now.AddHours(1));
+        Assert.Contains(Assert.Throws<LicitacionValidationException>(() =>
+            published.ChangeEstado(LicitacionEstado.Borrador, Now.AddHours(2))).Errors,
+            e => e.Code == LicitacionErrors.TransicionInvalida);
+
+        var closed = Licitacion.Create("LIC-2026-002", "Compra", 1000m, FutureClose, Now);
+        closed.Close(Now.AddHours(1));
+        Assert.Contains(Assert.Throws<LicitacionValidationException>(() =>
+            closed.ChangeEstado(LicitacionEstado.Borrador, Now.AddHours(2))).Errors,
+            e => e.Code == LicitacionErrors.TransicionInvalida);
+    }
     [Fact]
     public void PublishedExpiredTenderIsEffectivelyClosed()
     {

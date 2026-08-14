@@ -15,6 +15,7 @@ public static class LicitacionEndpoints
         group.MapDelete("/{id:guid}", DeleteAsync);
         group.MapPost("/{id:guid}/publish", PublishAsync);
         group.MapPost("/{id:guid}/close", CloseAsync);
+        group.MapPatch("/{id:guid}/estado", ChangeEstadoAsync);
         return group;
     }
 
@@ -24,49 +25,54 @@ public static class LicitacionEndpoints
         return Results.Ok(result.Value!);
     }
 
-    private static async Task<IResult> GetByIdAsync(Guid id, ILicitacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> GetByIdAsync(Guid id, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.GetByIdAsync(id, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : Results.NotFound(CreateProblem(404, result));
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
 
-    private static async Task<IResult> CreateAsync(CrearLicitacionRequest request, ILicitacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateAsync(CrearLicitacionRequest request, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.CreateAsync(request, cancellationToken);
         if (result.Succeeded) return Results.Created("/api/v1/licitaciones/" + result.Value!.Id, result.Value);
-        return ToError(result);
+        return ToError(result, context);
     }
 
-    private static async Task<IResult> UpdateAsync(Guid id, ActualizarLicitacionRequest request, ILicitacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> UpdateAsync(Guid id, ActualizarLicitacionRequest request, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.UpdateAsync(id, request, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
-    private static async Task<IResult> DeleteAsync(Guid id, ILicitacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> DeleteAsync(Guid id, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.DeleteAsync(id, cancellationToken);
-        return result.Succeeded ? Results.NoContent() : ToError(result);
+        return result.Succeeded ? Results.NoContent() : ToError(result, context);
     }
-    private static async Task<IResult> PublishAsync(Guid id, ILicitacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> PublishAsync(Guid id, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.PublishAsync(id, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
-    private static async Task<IResult> CloseAsync(Guid id, ILicitacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> CloseAsync(Guid id, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.CloseAsync(id, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
-    private static IResult ToError(dynamic result)
+
+    private static async Task<IResult> ChangeEstadoAsync(Guid id, CambiarEstadoLicitacionRequest request, ILicitacionService service, HttpContext context, CancellationToken cancellationToken)
     {
-        int status = result.Status == LicitacionResultStatus.NotFound ? 404 : result.Status == LicitacionResultStatus.Conflict || result.Status == LicitacionResultStatus.ConcurrencyConflict ? 409 : 400;
-        var problem = CreateProblem(status, result);
-        return status == 404 ? Results.NotFound(problem) : status == 409 ? Results.Conflict(problem) : Results.BadRequest(problem);
+        var result = await service.ChangeEstadoAsync(id, request, cancellationToken);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
-    private static ProblemDetails CreateProblem(int status, dynamic result)
+
+    private static IResult ToError<T>(LicitacionResult<T> result, HttpContext context)
     {
-        var problem = new ProblemDetails { Status = status, Title = result.ErrorMessage, Detail = result.ErrorMessage };
-        problem.Extensions["code"] = result.ErrorCode ?? "Licitacion.Error";
-        return problem;
+        var status = result.Status switch
+        {
+            LicitacionResultStatus.NotFound => 404,
+            LicitacionResultStatus.Conflict or LicitacionResultStatus.ConcurrencyConflict => 409,
+            _ => 400
+        };
+        return ApiProblemResults.Problem(context, status, result.ErrorMessage, result.ErrorMessage, result.ErrorCode ?? "Licitacion.Error");
     }
 }

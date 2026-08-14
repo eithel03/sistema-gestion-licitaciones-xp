@@ -1,0 +1,17 @@
+@model Licitaciones.Application.TiposCambio.TipoCambioResponse
+@{ ViewData["Title"] = "Detalle de tipo de cambio"; }
+<section class="page-header"><div><p class="eyebrow">Moneda</p><h1>Tipo de cambio</h1></div><div class="action-list"><a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Eliminar</a></div></section>
+@if (TempData["SuccessMessage"] is string message) { <div class="alert alert-success" role="alert">@message</div> }
+@if (TempData["ErrorMessage"] is string error) { <div class="alert alert-danger" role="alert">@error</div> }
+<dl class="detail-list"><dt>Fecha</dt><dd>@Model.Fecha.ToString("yyyy-MM-dd")</dd><dt>CRC por USD</dt><dd>@Model.CrcPorUsd.ToString("N2")</dd><dt>Activo</dt><dd>@(Model.Activo ? "Si" : "No")</dd><dt>Version</dt><dd>@Model.Version</dd></dl>
+<div class="action-list mt-3">
+    @if (!Model.Activo)
+    {
+        <form asp-action="Activate" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+            <input name="Version" type="hidden" value="@Model.Version" />
+            <button class="btn btn-outline-success" type="submit">Activar</button>
+        </form>
+    }
+    <a class="btn btn-outline-secondary" asp-action="Index">Volver al listado</a>
+</div>

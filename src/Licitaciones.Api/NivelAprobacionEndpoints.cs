@@ -23,39 +23,39 @@ public static class NivelAprobacionEndpoints
         return Results.Ok(result.Value!);
     }
 
-    private static async Task<IResult> GetByIdAsync(Guid id, INivelAprobacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> GetByIdAsync(Guid id, INivelAprobacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.GetByIdAsync(id, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
 
-    private static async Task<IResult> CreateAsync(CrearNivelAprobacionRequest request, INivelAprobacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> CreateAsync(CrearNivelAprobacionRequest request, INivelAprobacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.CreateAsync(request, cancellationToken);
         return result.Succeeded
             ? Results.Created($"/api/v1/niveles-aprobacion/{result.Value!.Id}", result.Value)
-            : ToError(result);
+            : ToError(result, context);
     }
 
-    private static async Task<IResult> UpdateAsync(Guid id, ActualizarNivelAprobacionRequest request, INivelAprobacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> UpdateAsync(Guid id, ActualizarNivelAprobacionRequest request, INivelAprobacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.UpdateAsync(id, request, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
 
-    private static async Task<IResult> DeleteAsync(Guid id, INivelAprobacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> DeleteAsync(Guid id, INivelAprobacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.DeleteAsync(id, cancellationToken);
-        return result.Succeeded ? Results.NoContent() : ToError(result);
+        return result.Succeeded ? Results.NoContent() : ToError(result, context);
     }
 
-    private static async Task<IResult> FindApproverAsync(decimal montoCrc, INivelAprobacionService service, CancellationToken cancellationToken)
+    private static async Task<IResult> FindApproverAsync(decimal montoCrc, INivelAprobacionService service, HttpContext context, CancellationToken cancellationToken)
     {
         var result = await service.FindApproverAsync(montoCrc, cancellationToken);
-        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result);
+        return result.Succeeded ? Results.Ok(result.Value!) : ToError(result, context);
     }
 
-    private static IResult ToError<T>(NivelAprobacionResult<T> result)
+    private static IResult ToError<T>(NivelAprobacionResult<T> result, HttpContext context)
     {
         var status = result.Status switch
         {
@@ -63,13 +63,6 @@ public static class NivelAprobacionEndpoints
             NivelAprobacionResultStatus.Conflict or NivelAprobacionResultStatus.ConcurrencyConflict => 409,
             _ => 400
         };
-        var problem = new ProblemDetails { Status = status, Title = result.ErrorMessage, Detail = result.ErrorMessage };
-        problem.Extensions["code"] = result.ErrorCode ?? "NivelAprobacion.Error";
-        return status switch
-        {
-            404 => Results.NotFound(problem),
-            409 => Results.Conflict(problem),
-            _ => Results.BadRequest(problem)
-        };
+        return ApiProblemResults.Problem(context, status, result.ErrorMessage, result.ErrorMessage, result.ErrorCode ?? "NivelAprobacion.Error");
     }
 }

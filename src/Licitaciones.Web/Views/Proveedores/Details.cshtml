@@ -42,7 +42,7 @@
         <div class="table-responsive"><table class="table table-hover"><thead><tr><th>Licitacion</th><th>Monto CRC</th><th>Registro UTC</th><th></th></tr></thead><tbody>
         @foreach (var oferta in Model.Ofertas)
         {
-            <tr><td>@oferta.LicitacionId</td><td>@oferta.MontoOfertadoCrc.ToString("N2")</td><td>@oferta.FechaRegistro.ToString("yyyy-MM-dd HH:mm")</td><td><a asp-controller="Ofertas" asp-action="Details" asp-route-id="@oferta.Id">Ver</a></td></tr>
+            <tr><td>@oferta.LicitacionId</td><td><partial name="_MoneyDisplay" model="@oferta.MontoOfertadoCrc" /></td><td>@oferta.FechaRegistro.ToString("yyyy-MM-dd HH:mm")</td><td><a asp-controller="Ofertas" asp-action="Details" asp-route-id="@oferta.Id">Ver</a></td></tr>
         }
         </tbody></table></div>
     }
