@@ -552,7 +552,7 @@ La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convencion
 - Rama: feature/iteracion-02-licitaciones.
 - Historias: HU-12 a HU-19.
 - Puntos: 36.
-- Version prevista: v0.2.0.
+- Versión prevista: `v0.2.0`; tag pendiente.
 
 ### Objetivo
 
@@ -616,18 +616,18 @@ El navigator propuso corregir la coherencia del formato decimal de PresupuestoCr
 
 ### Velocidad
 
-36 puntos implementados y validados localmente. El cierre formal depende de revision final, commits, PR, CI y merge.
+36 puntos implementados, validados e integrados a `main` en la Iteración 2.
 
-### Commits y PR
+### Cierre formal
 
 - Issue: `#10`.
-- Commit de implementacion: `cce95ad`.
-- Commit de pruebas: `812b59c`.
-- Commit documental: `ed89c5a`.
+- Commits asociados: `cce95ad`, `812b59c`, `ed89c5a`, `c77343b`.
 - Pull Request: `#12 - feat: completar Iteración 2 - Licitaciones y persistencia base`.
-- CI remoto: aprobado correctamente.
-- Merge: pendiente.
-- Tag `v0.2.0`: pendiente.
+- Pruebas: 64/64 aprobadas, 0 fallidas y 0 omitidas.
+- Merge a `main`: realizado.
+- Commit de merge/base resultante: `fafcc66`.
+- CI remoto: Pendiente de evidencia confirmada.
+- Tag `v0.2.0`: Pendiente.
 
 ## Iteracion 3 - Ofertas, mejor oferta y aprobaciones
 
@@ -638,7 +638,7 @@ El navigator propuso corregir la coherencia del formato decimal de PresupuestoCr
 - Base: `fafcc66`, integracion de Iteracion 2 en `main`.
 - Historias: HU-11 y HU-20 a HU-29. Version prevista: `v0.3.0`.
 - Responsabilidad del Driver: ejecucion asistida de la implementacion, revision de cambios, comandos y pruebas, preparacion de commits, evidencias y Pull Request.
-- Responsabilidad del Navigator: revision de reglas, criterios de aceptacion, TDD, defectos y resultados; revision formal de la iteracion y del Pull Request pendiente.
+- Responsabilidad del Navigator: revision de reglas, criterios de aceptacion, TDD, defectos y resultados.
 
 ### Ciclos TDD
 
@@ -677,7 +677,116 @@ Estos ciclos se respaldan con las pruebas y ejecuciones registradas. Los commits
 - `37bcb55` - `feat(api): exponer ofertas y niveles de aprobacion`.
 - `4faaf83` - `feat(web): agregar gestion MVC de ofertas y aprobacion`.
 - `437cc37` - `docs(xp): documentar resultados de la iteracion 3`.
+- `d349ccc` - commit asociado al cierre de la Iteración 3.
 
-### Resultado y pendientes
+### Resultado y cierre formal
 
-Iteracion 3 tecnicamente implementada y validada localmente. Velocidad tecnica: 38 puntos. Issue, revision formal del Navigator, Pull Request, CI remoto, merge a `main`, tag `v0.3.0` y retroalimentacion de cierre: Pendientes.
+Iteración 3 implementada, validada e integrada a `main`. Velocidad técnica: 38 puntos.
+
+- Issue: Pendiente.
+- Pull Request: `#14`.
+- Merge a `main`: realizado mediante `fe5317c`.
+- CI remoto: Pendiente de evidencia confirmada.
+- Revisión formal final del Navigator: Pendiente.
+- Tag `v0.3.0`: Pendiente.
+- Retroalimentación de cierre: Pendiente.
+
+## Iteración 4 - Moneda, UX y consolidación técnica
+
+- Modalidad: programación en pareja mediante Extreme Programming.
+- Driver principal: Eithel.
+- Navigator principal: Chavala.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Historias: HU-30 a HU-37.
+- Puntos planificados: 32.
+- Versión candidata prevista: `v1.0.0-rc`.
+- Duración: Pendiente de completar por el equipo.
+
+### Objetivo
+
+Completar la administración local de tipos de cambio, la presentación CRC/USD, las preferencias visuales, el endurecimiento de API, la suite automatizada y la infraestructura reproducible, cerrando la trazabilidad documental sin inventar evidencia Git/GitHub.
+
+### Actividades realizadas
+
+- Implementación y validación del CRUD de tipos de cambio.
+- Activación de un único registro con respaldo de PostgreSQL.
+- Conversión visual CRC/USD sin modificar montos CRC persistidos.
+- Tema claro y oscuro con preferencia persistida.
+- Swagger UI interactivo, OpenAPI v1, ProblemDetails y correlación.
+- Endpoint oficial `PATCH /api/v1/tipos-cambio/{id}/activar`.
+- Endpoint `PATCH /api/v1/licitaciones/{id}/estado` con reglas de dominio.
+- Consolidación de pruebas, cobertura, Docker y manifiestos Kubernetes.
+- Actualización de documentación, evidencia, trazabilidad y uso de IA.
+
+### Ciclos TDD
+
+- Tipos de cambio: ROJO por entidad y servicios ausentes; VERDE con validaciones, CRUD, activación y conversión; REFACTOR con contratos reutilizables.
+- Persistencia: ROJO por modelo y migración ausentes; VERDE con EF Core, repositorio e índices; REFACTOR con activación consistente y garantía parcial única.
+- Fechas duplicadas: ROJO por índice único; VERDE con `20260814014136_AllowDuplicateTipoCambioDates`; REFACTOR dejando `IX_TiposCambio_Fecha` normal.
+- MVC monetario: ROJO para coma decimal y acción redundante; VERDE con entrada decimal flexible y visibilidad condicional; REFACTOR de normalización.
+- Proveedores: ROJO por regresión cliente con Unicode; VERDE con patrón compatible; REFACTOR conservando la regla de dominio existente.
+- API: ROJO por verbo de activación, Swagger UI, contrato OpenAPI y correlación incompletos; VERDE con PATCH, UI interactiva y ProblemDetails estándar; REFACTOR centralizado.
+- Licitaciones: ROJO por ausencia del PATCH de estado; VERDE reutilizando transiciones existentes; REFACTOR manteniendo `publish` y `close` por compatibilidad.
+
+### Decisiones técnicas
+
+- CRC permanece como fuente de verdad y USD se calcula con `USD = CRC / CrcPorUsd`.
+- Se permiten varias tasas con la misma fecha; solo la activación es única.
+- `IX_TiposCambio_UnicoActivo` permanece como índice parcial único.
+- Swagger documenta exclusivamente los métodos HTTP reales.
+- ProblemDetails se produce de forma común y segura para los módulos API.
+- PostgreSQL 16 real se conserva en pruebas mediante Testcontainers.
+- Docker usa el puerto host 55432 para PostgreSQL y conserva el volumen.
+- Kubernetes se mantuvo básico, reproducible y sin afirmar un despliegue no realizado.
+
+### Defectos y ajustes encontrados
+
+- Se eliminó la unicidad accidental de fecha mediante una migración real.
+- Se corrigió la entrada MVC para aceptar punto y coma decimal.
+- Se ocultó el botón Activar cuando el registro ya está activo.
+- Se corrigió la validación cliente de nombres Unicode de proveedores.
+- Se cambió la activación API de POST a PATCH.
+- Se agregó `correlationId` al cuerpo ProblemDetails y se ajustó `application/problem+json`.
+- Se agregó Swagger UI y se eliminaron verbos falsos del documento.
+- Se agregó el PATCH oficial de estado de licitación.
+- Un intento fallido del PATCH con cuerpo mal escapado se identificó como quoting de PowerShell, no como defecto de API.
+
+### Pruebas y cobertura
+
+- Build Release: 0 errores y 0 advertencias.
+- UnitTests: 96/96.
+- IntegrationTests: 27/27 con PostgreSQL real.
+- FunctionalTests: 51/51.
+- Total: 174/174, 0 fallidas y 0 omitidas.
+- Cobertura limpia: `Parser: MultiReport (3x Cobertura)`.
+- Líneas: global 87.3%, Domain 91.4%, Application 83.8%, API 88.4%, Infrastructure 95.1% y Web 61.6%.
+- Branch coverage: 59%.
+- Method coverage: 84%.
+- Umbrales global, Domain y Application: cumplidos.
+
+Los mensajes de conexión posteriores a `DROP DATABASE ... WITH (FORCE)` corresponden al reinicio intencional de bases temporales de Testcontainers y no son fallos de prueba.
+
+### Docker y Kubernetes
+
+- Docker Compose: configuración, build, arranque, health checks, Web 8080, API 8081 y PostgreSQL 55432 validados.
+- Persistencia Docker: proveedores, licitaciones, ofertas y tipos de cambio permanecieron después de reiniciar contenedores.
+- `docker compose down -v`: no ejecutado.
+- `kubectl kustomize k8s`: exitoso.
+- El dry-run no completó la consulta porque el API server local no estaba disponible en `kubernetes.docker.internal:6443`.
+- Despliegue, pods, logs y persistencia real en Kubernetes: Pendientes.
+
+### Resultado
+
+32 puntos implementados y validados localmente. El sistema queda técnicamente preparado para la versión candidata prevista `v1.0.0-rc`, sujeta al cierre formal del flujo Git/GitHub.
+
+### Evidencia formal pendiente
+
+- Issue: Pendiente.
+- Commits finales: Pendiente.
+- Pull Request: Pendiente.
+- CI remoto posterior al push: Pendiente.
+- Revisión formal final del Navigator: Pendiente.
+- Retroalimentación de cierre: Pendiente.
+- Merge a `main`: Pendiente.
+- Tag `v1.0.0-rc`: Pendiente.
+- GitHub Release: Pendiente.

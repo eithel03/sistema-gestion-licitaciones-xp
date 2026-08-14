@@ -1,84 +1,110 @@
-# Iteracion 4 - Tipos de cambio, API endurecida e infraestructura
+# Iteración 4 - Moneda, UX y consolidación técnica
 
-- Objetivo: entregar tipos de cambio, visualizacion CRC/USD, modo claro y oscuro, contrato API completo, pruebas E2E iniciales, automatizacion e infraestructura de version candidata.
-- Duracion uniforme propuesta: Pendiente de completar por el equipo.
-- Fecha prevista: Pendiente de completar por el equipo.
+- Objetivo: completar tipos de cambio, visualización CRC/USD, modo claro y oscuro, consolidación de API, pruebas e infraestructura para una versión candidata reproducible.
+- Duración: Pendiente de completar por el equipo.
+- Fecha: Pendiente de completar por el equipo.
 - Driver principal: Eithel.
 - Navigator principal: Chavala.
-- Version prevista: v1.0.0-rc.
+- Rama: `feature/iteracion-04-moneda-ux`.
+- Versión candidata prevista: `v1.0.0-rc`.
 - Puntos planificados: 32.
 
 ## Historias seleccionadas
 
-| Historia | Puntos | Proposito |
+| Historia | Puntos | Resultado local |
 | --- | ---: | --- |
-| HU-30 | 5 | Administrar tipos de cambio |
-| HU-31 | 3 | Activar un unico tipo de cambio |
-| HU-32 | 3 | Alternar visualmente entre CRC y USD |
-| HU-33 | 3 | Modo claro y oscuro con preferencia persistida |
-| HU-34 | 5 | Swagger/OpenAPI, versionado y errores controlados |
-| HU-35 | 5 | Pruebas, cobertura e integracion continua |
-| HU-36 | 5 | Infraestructura de despliegue |
-| HU-37 | 3 | Documentacion XP, trazabilidad y defensa |
+| HU-30 | 5 | CRUD local de tipos de cambio implementado y validado |
+| HU-31 | 3 | Activación de un único tipo de cambio implementada y validada |
+| HU-32 | 3 | Alternancia visual CRC/USD implementada y validada |
+| HU-33 | 3 | Modo claro y oscuro con preferencia persistida implementado y validado |
+| HU-34 | 5 | Swagger UI, OpenAPI, versionado, ProblemDetails y correlación implementados y validados |
+| HU-35 | 5 | Suite y cobertura consolidadas localmente; workflow de CI preparado y ejecución remota de la Iteración 4 pendiente |
+| HU-36 | 5 | Docker validado y manifiestos Kubernetes preparados y renderizados |
+| HU-37 | 3 | Documentación y trazabilidad actualizadas localmente; cierre formal pendiente |
 
-## Dependencias
+## Resultado funcional
 
-- HU-30 precede a HU-31 y HU-32.
-- HU-33 depende de la interfaz base adaptable.
-- HU-34 depende de las APIs de proveedores, licitaciones, ofertas y aprobaciones.
-- HU-35 depende de persistencia, API y reglas principales.
-- HU-36 depende de persistencia y pruebas automatizadas.
-- HU-37 se actualiza con evidencias reales de todas las iteraciones.
+- El CRUD de tipos de cambio funciona con datos locales y sin servicios externos.
+- `Fecha` es requerida y admite varios registros para una misma fecha.
+- `CrcPorUsd` debe ser mayor que cero y permanece en `numeric(18,2)`.
+- Solo existe un tipo de cambio activo; al activar otro, el anterior queda inactivo.
+- La activación oficial usa `PATCH /api/v1/tipos-cambio/{id}/activar`.
+- CRC permanece como fuente de verdad persistida; USD se calcula solo para presentación con `USD = CRC / CrcPorUsd`.
+- La interfaz muestra la fecha del tipo de cambio aplicado.
+- Se validó la conversión de CRC 1,000,000 a USD 2,000.00 y de CRC 750,000 a USD 1,500.00 con un tipo de cambio de 500.
+- El modo claro y oscuro puede alternarse y su preferencia persiste, incluso después de reiniciar los contenedores.
 
-## Criterios de aceptacion principales
+## API consolidada
 
-- Solo existe un tipo de cambio activo.
-- CRC permanece como moneda persistida y USD como visualizacion calculada.
-- La fecha del tipo de cambio se muestra al usuario.
-- La preferencia de modo claro u oscuro persiste.
-- La API esta documentada, versionada y usa ProblemDetails con correlacion.
-- La integracion continua ejecuta pruebas y validaciones de dependencias.
-- La infraestructura incluye contenedores, health checks y manifiestos Kubernetes.
-
-## Pruebas previstas
-
-- Pruebas unitarias de conversion y activacion de tipo de cambio.
-- Pruebas funcionales de alternancia CRC/USD y modo visual.
-- Pruebas de integracion de contrato API, ProblemDetails y correlacion.
-- Pruebas E2E iniciales.
-- Validacion de contenedores, health checks y manifiestos.
-
-## Riesgos
-
-- Endurecer API al final puede revelar inconsistencias de contratos anteriores.
-- Pruebas E2E e infraestructura pueden requerir ajustes del entorno local.
-- La documentacion final depende de registrar evidencias reales durante las iteraciones previas.
-
-## Resultado demostrable esperado
-
-Version candidata con tipos de cambio, preferencias visuales, API documentada, pruebas automatizadas iniciales e infraestructura lista para demostracion.
-
-## Velocidad observada
-
-Pendiente de completar por el equipo.
-
-## Retroalimentacion del cliente
-
-Pendiente de completar por el equipo.
-
-## Ajustes
-
-Pendiente de completar por el equipo.
+- Swagger UI interactivo: `/swagger`.
+- Documento OpenAPI v1: `/swagger/v1/swagger.json`.
+- La documentación OpenAPI publica únicamente los verbos HTTP reales.
+- Cambio oficial de estado: `PATCH /api/v1/licitaciones/{id}/estado`.
+- Los endpoints `POST /api/v1/licitaciones/{id}/publish` y `POST /api/v1/licitaciones/{id}/close` se conservan por compatibilidad.
+- Los errores controlados usan `application/problem+json` e incluyen `title`, `status`, `detail`, `code` y `correlationId`.
+- El `correlationId` del cuerpo coincide con el encabezado `X-Correlation-ID`.
+- No se exponen trazas, rutas internas, consultas ni secretos.
 
 ## Ciclos TDD
 
-Pendiente de completar por el equipo.
+1. ROJO: pruebas de dominio y Application no compilaban por ausencia de tipos de cambio. VERDE: entidad, validaciones, servicios, activación y conversión. REFACTOR: contratos y resultados reutilizables en Application.
+2. ROJO: pruebas de persistencia fallaban porque el modelo y las migraciones no incluían tipos de cambio. VERDE: configuración EF Core, repositorio, restricciones e índice parcial único. REFACTOR: activación consistente dentro del repositorio.
+3. ROJO: pruebas API y MVC devolvían rutas ausentes. VERDE: CRUD, activación, conversión visual, vistas y preferencias. REFACTOR: parcial monetario reutilizable.
+4. ROJO: las pruebas de fecha duplicada reproducían la restricción incorrecta. VERDE: migración `20260814014136_AllowDuplicateTipoCambioDates`. REFACTOR: `IX_TiposCambio_Fecha` quedó como índice normal y se conservó `IX_TiposCambio_UnicoActivo`.
+5. ROJO: las entradas `500,00` y otros formatos equivalentes fallaban en el formulario MVC. VERDE: enlace decimal flexible y entrada localizada. REFACTOR: normalización compartida para punto y coma.
+6. ROJO: la validación cliente rechazaba nombres Unicode válidos de proveedores. VERDE: ajuste mínimo del patrón cliente. REFACTOR: se mantuvo intacta la regla Unicode correcta del dominio.
+7. ROJO: pruebas de endurecimiento detectaron Swagger UI ausente, verbos OpenAPI incorrectos y ProblemDetails incompleto. VERDE: UI interactiva, contrato exacto, correlación en cuerpo y media type estándar. REFACTOR: generación y traducción de errores centralizadas.
+8. ROJO: pruebas funcionales detectaron que faltaba `PATCH /api/v1/licitaciones/{id}/estado`. VERDE: endpoint y DTO con reutilización de transiciones de dominio. REFACTOR: se mantuvieron `publish` y `close` como rutas compatibles sin duplicar reglas.
 
-## Refactorizaciones
+## Ajustes y refactorizaciones
 
-Pendiente de completar por el equipo.
+- Se aceptan `500`, `500.00`, `500,00`, `520.50` y `520,50` como entradas equivalentes de tipo de cambio; se rechazan cero, negativos y texto.
+- Se corrigió una regresión de validación cliente para aceptar nombres como `Tecnología Empresarial CR` y continuar rechazando símbolos no permitidos como `@`.
+- Se ocultó la acción redundante de activación cuando el tipo de cambio ya está activo.
+- Se corrigió la documentación OpenAPI para no anunciar POST, PUT o DELETE en rutas que solo admiten GET.
+- Se centralizó la producción de ProblemDetails y correlación para los módulos API existentes.
 
-## Commits y Pull Requests
+## Pruebas y cobertura
 
-- Commits: Pendiente.
+- UnitTests: 96/96.
+- IntegrationTests: 27/27 con PostgreSQL real mediante Testcontainers.
+- FunctionalTests: 51/51 mediante `WebApplicationFactory`.
+- Total: 174/174, 0 fallidas y 0 omitidas.
+- Build Release: 0 errores y 0 advertencias.
+- Cobertura global de líneas: 87.3%.
+- Cobertura de líneas: Domain 91.4%, Application 83.8%, API 88.4%, Infrastructure 95.1% y Web 61.6%.
+- Branch coverage: 59%.
+- Method coverage: 84%.
+- Fuente definitiva: `Parser: MultiReport (3x Cobertura)`, sin resultados históricos mezclados.
+- Umbrales cumplidos: global >= 70%, Domain >= 80% y Application >= 80%.
+
+Los mensajes de conexión de EF Core inmediatamente posteriores a `DROP DATABASE ... WITH (FORCE)` corresponden al reinicio intencional de bases temporales de Testcontainers y no representan pruebas fallidas.
+
+## Infraestructura
+
+- Docker Compose fue validado mediante configuración, construcción de imágenes, arranque, health checks y acceso a Web, API y PostgreSQL 16.
+- Web quedó disponible en el puerto 8080, API en 8081 y PostgreSQL en el puerto host 55432.
+- La persistencia del volumen PostgreSQL se comprobó después de reiniciar contenedores; no se ejecutó `docker compose down -v`.
+- `kubectl kustomize k8s` renderizó correctamente Namespace, ConfigMap, Secret de ejemplo, PostgreSQL, PVC, Deployments, Services, probes y recursos.
+- `kubectl apply --dry-run=client --validate=false -k k8s` no completó la consulta al API server porque Kubernetes local no estaba disponible en `kubernetes.docker.internal:6443`.
+- El despliegue y la persistencia reales sobre un clúster Kubernetes activo permanecen pendientes.
+
+## Velocidad técnica
+
+32 puntos implementados y validados localmente. El cierre formal depende todavía de Pull Request, CI remoto y merge.
+
+## Resultado demostrable
+
+El sistema funciona localmente con proveedores, licitaciones, ofertas, evaluación económica, niveles de aprobación, tipos de cambio, presentación CRC/USD, temas visuales, API consolidada, PostgreSQL, pruebas automatizadas, Docker e infraestructura Kubernetes preparada. La versión candidata `v1.0.0-rc` está prevista, pero el tag y la GitHub Release no existen todavía.
+
+## Evidencia formal pendiente
+
+- Issue de Iteración 4: Pendiente.
+- Commits finales: Pendiente.
 - Pull Request: Pendiente.
+- CI remoto posterior al push: Pendiente.
+- Revisión formal final del Navigator: Pendiente.
+- Retroalimentación formal de cierre: Pendiente.
+- Merge a `main`: Pendiente.
+- Tag `v1.0.0-rc`: Pendiente.
+- GitHub Release: Pendiente.
