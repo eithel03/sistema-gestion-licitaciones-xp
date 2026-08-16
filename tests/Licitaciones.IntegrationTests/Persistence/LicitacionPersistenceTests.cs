@@ -1,6 +1,7 @@
 using Licitaciones.Domain.Licitaciones;
 using Licitaciones.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Licitaciones.IntegrationTests.Persistence;
 
@@ -48,6 +49,39 @@ public sealed class LicitacionPersistenceTests
         secondTender.Update("LIC-2026-CON", "Compra 2", 1300m, Now.AddDays(4), Now.AddHours(2));
 
         await Assert.ThrowsAsync<DbUpdateConcurrencyException>(() => second.SaveChangesAsync());
+    }
+
+    [Fact]
+    public async Task PersistsNormalizedCodeAndUniqueIndexRejectsEquivalentActiveCode()
+    {
+        await using (var firstContext = await CreateContextAsync())
+        {
+            firstContext.Licitaciones.Add(Licitacion.Create(
+                " LIC   2026-DB ",
+                "Compra inicial",
+                1000m,
+                Now.AddDays(3),
+                Now));
+            await firstContext.SaveChangesAsync();
+
+            var stored = await firstContext.Licitaciones.SingleAsync();
+            Assert.Equal("LIC 2026-DB", stored.Codigo);
+            Assert.Equal("LIC 2026-DB", stored.CodigoNormalizado);
+        }
+
+        await using var duplicateContext = CreateContext();
+        duplicateContext.Licitaciones.Add(Licitacion.Create(
+            "lic 2026-db",
+            "Compra duplicada",
+            2000m,
+            Now.AddDays(4),
+            Now.AddMinutes(1)));
+
+        var exception = await Assert.ThrowsAsync<DbUpdateException>(() => duplicateContext.SaveChangesAsync());
+
+        var postgres = Assert.IsType<PostgresException>(exception.InnerException);
+        Assert.Equal(PostgresErrorCodes.UniqueViolation, postgres.SqlState);
+        Assert.Equal("IX_Licitaciones_CodigoNormalizado", postgres.ConstraintName);
     }
 
     private async Task<LicitacionesDbContext> CreateContextAsync()
