@@ -620,7 +620,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests` e `Iteration4MvcTests`.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-31 - Activar un unico tipo de cambio
 
@@ -640,7 +640,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `40c4f5d`, `38c5bf5`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests` e `Iteration4ApiTests`.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-32 - Alternar visualmente entre CRC y USD
 
@@ -660,7 +660,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `TipoCambioServiceTests`, `Iteration4ApiTests` e `Iteration4MvcTests`; validacion manual de licitacion y oferta en CRC/USD.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-33 - Alternar modo claro y oscuro con preferencia persistida
 
@@ -679,7 +679,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `5cba6c2`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `Iteration4MvcTests` y validacion manual, incluida la conservacion de preferencia despues de reiniciar contenedores.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-34 - Documentar y endurecer la API REST
 
@@ -699,7 +699,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `38c5bf5`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `ApiHardeningTests`, `Iteration4ApiTests` y `LicitacionApiTests`; Swagger UI y ProblemDetails validados manualmente.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-35 - Automatizar pruebas, cobertura e integracion continua
 
@@ -719,7 +719,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: UnitTests 96/96, IntegrationTests 27/27 y FunctionalTests 51/51; total 174/174. Cobertura limpia global 87.3%, Domain 91.4% y Application 83.8%.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ### HU-36 - Preparar infraestructura de despliegue
 
@@ -738,7 +738,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `8103b12`, `2e710d2`.
 - Pruebas ejecutadas: `docker compose config`, build, arranque, health checks y persistencia; `kubectl kustomize k8s` exitoso. Despliegue real en Kubernetes pendiente de cluster activo.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge, tag y despliegue real de Kubernetes pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator, tag y despliegue real de Kubernetes pendientes.
 
 ### HU-37 - Mantener documentacion XP, trazabilidad y preparacion de defensa
 
@@ -757,7 +757,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `2e710d2`.
 - Pruebas ejecutadas: revision documental, comprobacion de enlaces y `git diff --check`.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; CI remoto, revision formal del Navigator, merge y tag pendientes.
+- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
 
 ## Resumen de puntos
 

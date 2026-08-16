@@ -17,6 +17,7 @@ namespace Licitaciones.FunctionalTests;
 [Collection(Iteration3MvcGroup.Name)]
 public sealed partial class Iteration3MvcTests : IAsyncLifetime
 {
+    private static readonly DateTimeOffset Now = new(2030, 8, 12, 16, 0, 0, TimeSpan.Zero);
     private readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:16")
         .WithDatabase("licitaciones_mvc_iteration3_tests")
         .WithUsername("iteration3_mvc")
@@ -40,10 +41,9 @@ public sealed partial class Iteration3MvcTests : IAsyncLifetime
         var context = scope.ServiceProvider.GetRequiredService<LicitacionesDbContext>();
         await context.Database.EnsureDeletedAsync();
         await context.Database.MigrateAsync();
-        var now = DateTimeOffset.UtcNow;
-        var licitacion = Licitacion.Create("LIC-MVC-OF", "Compra MVC", 1000m, now.AddDays(1), now.AddHours(-1));
-        licitacion.Publish(now.AddMinutes(-30));
-        var proveedor = Proveedor.Create("Proveedor MVC", now);
+        var licitacion = Licitacion.Create("LIC-MVC-OF", "Compra MVC", 1000m, Now.AddDays(1), Now.AddHours(-1));
+        licitacion.Publish(Now.AddMinutes(-30));
+        var proveedor = Proveedor.Create("Proveedor MVC", Now);
         context.AddRange(licitacion, proveedor);
         await context.SaveChangesAsync();
         _licitacionId = licitacion.Id;

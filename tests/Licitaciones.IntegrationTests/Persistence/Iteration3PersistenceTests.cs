@@ -1,8 +1,11 @@
+using Licitaciones.Application.Aprobaciones;
+using Licitaciones.Application.Ofertas;
 using Licitaciones.Domain.Aprobaciones;
 using Licitaciones.Domain.Licitaciones;
 using Licitaciones.Domain.Ofertas;
 using Licitaciones.Domain.Proveedores;
 using Licitaciones.Infrastructure.Persistence;
+using Licitaciones.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -147,6 +150,55 @@ public sealed class Iteration3PersistenceTests
 
         Assert.Empty(await context.Database.GetPendingMigrationsAsync());
         Assert.Contains((await context.Database.GetAppliedMigrationsAsync()), migration => migration.Contains("Iteration03"));
+    }
+
+    [Fact]
+    public async Task ConcurrentOfertaUpdatesReturnRepositoryConcurrencyConflict()
+    {
+        await using (var setup = await CreateCleanContextAsync())
+        {
+            var (licitacion, proveedor) = await SeedRelationsAsync(setup);
+            setup.Ofertas.Add(Oferta.Create(licitacion, proveedor.Id, 900m, Now));
+            await setup.SaveChangesAsync();
+        }
+
+        await using var firstContext = CreateContext();
+        await using var secondContext = CreateContext();
+        var firstRepository = new OfertaRepository(firstContext);
+        var secondRepository = new OfertaRepository(secondContext);
+        var first = await firstContext.Ofertas.SingleAsync();
+        var second = await secondContext.Ofertas.SingleAsync();
+        var firstTender = await firstContext.Licitaciones.SingleAsync();
+        var secondTender = await secondContext.Licitaciones.SingleAsync();
+
+        first.UpdateAmount(firstTender, 850m, Now.AddMinutes(1));
+        await firstRepository.SaveChangesAsync();
+        second.UpdateAmount(secondTender, 800m, Now.AddMinutes(2));
+
+        await Assert.ThrowsAsync<OfertaConcurrencyException>(() => secondRepository.SaveChangesAsync());
+    }
+
+    [Fact]
+    public async Task ConcurrentApprovalLevelUpdatesReturnRepositoryConcurrencyConflict()
+    {
+        await using (var setup = await CreateCleanContextAsync())
+        {
+            setup.NivelesAprobacion.Add(NivelAprobacion.Create(0.01m, 1000m, "Encargado", Now));
+            await setup.SaveChangesAsync();
+        }
+
+        await using var firstContext = CreateContext();
+        await using var secondContext = CreateContext();
+        var firstRepository = new NivelAprobacionRepository(firstContext);
+        var secondRepository = new NivelAprobacionRepository(secondContext);
+        var first = await firstContext.NivelesAprobacion.SingleAsync();
+        var second = await secondContext.NivelesAprobacion.SingleAsync();
+
+        first.Update(0.01m, 1100m, "Jefatura", Now.AddMinutes(1));
+        await firstRepository.SaveChangesAsync();
+        second.Update(0.01m, 1200m, "Gerencia", Now.AddMinutes(2));
+
+        await Assert.ThrowsAsync<NivelAprobacionConcurrencyException>(() => secondRepository.SaveChangesAsync());
     }
 
     private static async Task<(Licitacion Licitacion, Proveedor Proveedor)> SeedRelationsAsync(LicitacionesDbContext context)

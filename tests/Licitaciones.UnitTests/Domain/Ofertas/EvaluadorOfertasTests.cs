@@ -51,11 +51,17 @@ public sealed class EvaluadorOfertasTests
         Assert.Equal(expected.Id, result.MejorOferta!.Id);
     }
 
+    public static TheoryData<decimal, ClasificacionOferta, decimal> SavingsBoundaryCases => new()
+    {
+        { 900m, ClasificacionOferta.Conveniente, 10m },
+        { 900.01m, ClasificacionOferta.Aceptable, 9.999m },
+        { 899.99m, ClasificacionOferta.Conveniente, 10.001m },
+        { 950m, ClasificacionOferta.Aceptable, 5m },
+        { 1000m, ClasificacionOferta.ValidaSinAhorro, 0m }
+    };
+
     [Theory]
-    [InlineData(900, ClasificacionOferta.Conveniente, 10)]
-    [InlineData(899, ClasificacionOferta.Conveniente, 10.1)]
-    [InlineData(950, ClasificacionOferta.Aceptable, 5)]
-    [InlineData(1000, ClasificacionOferta.ValidaSinAhorro, 0)]
+    [MemberData(nameof(SavingsBoundaryCases))]
     public void EvaluateClassifiesSavings(decimal amount, ClasificacionOferta expected, decimal percentage)
     {
         var result = EvaluadorOfertas.Evaluar(1000m, [CreateOferta(amount, Now)]);

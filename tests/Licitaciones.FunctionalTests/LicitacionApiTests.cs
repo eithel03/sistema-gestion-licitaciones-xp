@@ -15,6 +15,7 @@ namespace Licitaciones.FunctionalTests;
 [Collection(LicitacionApiTestGroup.Name)]
 public sealed class LicitacionApiTests : IAsyncLifetime
 {
+    private static readonly DateTimeOffset Now = new(2026, 8, 16, 10, 0, 0, TimeSpan.Zero);
     private readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:16").WithDatabase("licitaciones_api_licitaciones_tests").WithUsername("licitaciones_api_licitaciones_tests").WithPassword("licitaciones_api_licitaciones_tests").Build();
     private WebApplicationFactory<Program>? _factory;
 
@@ -43,7 +44,7 @@ public sealed class LicitacionApiTests : IAsyncLifetime
     public async Task CreatePublishCloseAndRejectInvalidTransitionThroughApi()
     {
         using var client = _factory!.CreateClient();
-        var closeDate = DateTimeOffset.UtcNow.AddDays(5);
+        var closeDate = Now.AddDays(5);
 
         using var createResponse = await client.PostAsJsonAsync("/api/v1/licitaciones", new CrearLicitacionRequest("LIC-2026-API", "Compra API", 2500m, closeDate));
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
@@ -134,7 +135,7 @@ public sealed class LicitacionApiTests : IAsyncLifetime
     {
         using var createResponse = await client.PostAsJsonAsync(
             "/api/v1/licitaciones",
-            new CrearLicitacionRequest(code, "Compra API", 2500m, DateTimeOffset.UtcNow.AddDays(5)));
+            new CrearLicitacionRequest(code, "Compra API", 2500m, Now.AddDays(5)));
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
         return (await createResponse.Content.ReadFromJsonAsync<LicitacionResponse>())!;

@@ -23,8 +23,20 @@ jobs:
       - name: Build
         run: dotnet build Licitaciones.sln --configuration Release --no-restore
 
-      - name: Test
-        run: dotnet test Licitaciones.sln --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+      - name: Install Playwright Chromium
+        run: pwsh tests/Licitaciones.E2ETests/bin/Release/net9.0/playwright.ps1 install --with-deps chromium
+
+      - name: Unit tests with coverage
+        run: dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: Integration tests with coverage
+        run: dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: Functional tests with coverage
+        run: dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: E2E tests
+        run: dotnet test tests/Licitaciones.E2ETests/Licitaciones.E2ETests.csproj --configuration Release --no-build
 
       - name: Upload coverage results
         uses: actions/upload-artifact@v4

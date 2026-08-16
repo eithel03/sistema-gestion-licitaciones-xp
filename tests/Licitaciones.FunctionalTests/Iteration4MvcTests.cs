@@ -1,7 +1,6 @@
 extern alias WebApp;
 
 using System.Net;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using Licitaciones.Domain.Licitaciones;
 using Licitaciones.Infrastructure.Persistence;
@@ -17,6 +16,7 @@ namespace Licitaciones.FunctionalTests;
 [Collection(Iteration4MvcGroup.Name)]
 public sealed partial class Iteration4MvcTests : IAsyncLifetime
 {
+    private static readonly DateTimeOffset Now = new(2026, 8, 13, 10, 0, 0, TimeSpan.Zero);
     private readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:16")
         .WithDatabase("licitaciones_mvc_iteration4_tests")
         .WithUsername("iteration4_mvc")
@@ -39,8 +39,7 @@ public sealed partial class Iteration4MvcTests : IAsyncLifetime
         var context = scope.ServiceProvider.GetRequiredService<LicitacionesDbContext>();
         await context.Database.EnsureDeletedAsync();
         await context.Database.MigrateAsync();
-        var now = DateTimeOffset.UtcNow;
-        var licitacion = Licitacion.Create("LIC-MVC-TC", "Compra moneda", 1000m, now.AddDays(1), now.AddHours(-1));
+        var licitacion = Licitacion.Create("LIC-MVC-TC", "Compra moneda", 1000m, Now.AddDays(1), Now.AddHours(-1));
         context.Add(licitacion);
         await context.SaveChangesAsync();
         _licitacionId = licitacion.Id;
@@ -66,12 +65,27 @@ public sealed partial class Iteration4MvcTests : IAsyncLifetime
         Assert.Equal(HttpStatusCode.Redirect, create.StatusCode);
         var detailPath = create.Headers.Location!.ToString();
         var detail = await client.GetStringAsync(detailPath);
-        var version = ExtractInput(detail, "Version");
         Assert.Contains("500,00", detail);
+
+        var index = await client.GetStringAsync("/TiposCambio");
+        Assert.Contains("500,00", index);
+
+        var editPath = detailPath.Replace("Details", "Edit", StringComparison.OrdinalIgnoreCase);
+        var editPage = await client.GetStringAsync(editPath);
+        using var edit = await PostFormAsync(client, editPath, editPage, new()
+        {
+            ["Fecha"] = "2026-08-14",
+            ["CrcPorUsd"] = "510",
+            ["Version"] = ExtractInput(editPage, "Version")
+        });
+        Assert.Equal(HttpStatusCode.Redirect, edit.StatusCode);
+        detail = await client.GetStringAsync(detailPath);
+        Assert.Contains("510,00", detail);
+        Assert.Contains("Tipo de cambio actualizado correctamente", detail);
 
         using var activate = await PostFormAsync(client, detailPath.Replace("Details", "Activate", StringComparison.OrdinalIgnoreCase), detail, new()
         {
-            ["Version"] = version
+            ["Version"] = ExtractInput(detail, "Version")
         });
         Assert.Equal(HttpStatusCode.Redirect, activate.StatusCode);
 
@@ -85,8 +99,15 @@ public sealed partial class Iteration4MvcTests : IAsyncLifetime
         client.DefaultRequestHeaders.Add("Cookie", "licitaciones.currency=USD");
         var licitacion = await client.GetStringAsync($"/Licitaciones/Details/{_licitacionId}");
         Assert.Contains("USD", licitacion);
-        Assert.Contains("2,00", licitacion);
-        Assert.Contains("2026-08-13", licitacion);
+        Assert.Contains("1,96", licitacion);
+        Assert.Contains("2026-08-14", licitacion);
+
+        var deletePath = detailPath.Replace("Details", "Delete", StringComparison.OrdinalIgnoreCase);
+        var deletePage = await client.GetStringAsync(deletePath);
+        Assert.Contains("Confirmar eliminacion", deletePage);
+        using var delete = await PostFormAsync(client, deletePath, deletePage, []);
+        Assert.Equal(HttpStatusCode.Redirect, delete.StatusCode);
+        Assert.DoesNotContain("510,00", await client.GetStringAsync("/TiposCambio"));
     }
 
     [Theory]
@@ -102,7 +123,7 @@ public sealed partial class Iteration4MvcTests : IAsyncLifetime
 
         using var create = await PostFormAsync(client, "/TiposCambio/Create", createPage, new()
         {
-            ["Fecha"] = DateOnly.FromDateTime(DateTime.UtcNow.Date.AddDays(Math.Abs(submittedValue.GetHashCode()) % 20 + 1)).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+            ["Fecha"] = "2026-09-15",
             ["CrcPorUsd"] = submittedValue
         });
 
@@ -122,7 +143,7 @@ public sealed partial class Iteration4MvcTests : IAsyncLifetime
 
         using var create = await PostFormAsync(client, "/TiposCambio/Create", createPage, new()
         {
-            ["Fecha"] = DateOnly.FromDateTime(DateTime.UtcNow.Date.AddDays(Math.Abs(submittedValue.GetHashCode()) % 20 + 30)).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+            ["Fecha"] = "2026-10-15",
             ["CrcPorUsd"] = submittedValue
         });
 

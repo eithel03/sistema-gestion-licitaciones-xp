@@ -6,6 +6,54 @@ La Fase 3 preparo la suite unitaria para sostener TDD. La Fase 4 agrego pruebas 
 
 La Iteracion 2 amplio la cobertura con pruebas de licitaciones, reglas de estado, validaciones, persistencia relacional, concurrencia optimista y API REST, manteniendo PostgreSQL real mediante Testcontainers para las pruebas de integracion y funcionales.
 
+## Cierre documental de Fase 5
+
+La Fase 5 se ejecutó en la rama `chore/fase-05-pruebas-cobertura`, bajo modalidad XP en pareja: Chavala como Driver principal y Eithel como Navigator principal. La Iteración 4 ya estaba integrada en `main` mediante `ea9772f` (`Merge pull request #16 from eithel03/feature/iteracion-04-moneda-ux`).
+
+### Suites y resultados
+
+| Suite | Baseline | Resultado final |
+| --- | ---: | ---: |
+| UnitTests | 96/96 | 121/121 |
+| IntegrationTests | 27/27 | 37/37 |
+| FunctionalTests | 51 | 54/54 |
+| E2ETests | No existía | 6/6 |
+| **Total final** |  | **218/218** |
+
+Las pruebas de integración usaron `Testcontainers.PostgreSql` 4.13.0 con `postgres:16`. La suite E2E usa Chromium real, PostgreSQL Testcontainers y una aplicación Web iniciada con Kestrel mediante `dotnet run`.
+
+### Cobertura reproducible
+
+Se agregaron `coverage.runsettings`, `.config/dotnet-tools.json` y `scripts/verify-coverage.ps1`. La combinación usa ReportGenerator 5.4.17 sobre tres reportes Cobertura limpios (Unit, Integration y Functional), unificando por assembly, clase y línea.
+
+| Assembly | Cobertura de líneas |
+| --- | ---: |
+| `Licitaciones.Domain` | 91,64 % |
+| `Licitaciones.Application` | 88,60 % |
+| `Licitaciones.Infrastructure` | 95,43 % |
+| `Licitaciones.Api` | 90,03 % |
+| `Licitaciones.Web` | 66,53 % |
+| **Global** | **89,37 %** |
+
+La cobertura de ramas global disponible es 62,78 %. Los umbrales de líneas se cumplen: Domain >= 80 %, Application >= 80 % y Global >= 70 %. E2E no se incluye en cobertura porque la Web se ejecuta en un proceso externo no instrumentado por Coverlet.
+
+### Defectos y TDD registrados
+
+Los nuevos casos unitarios pasaron desde la primera ejecución; se documentan como cobertura faltante, sin defecto de producción. En integración sí se reprodujeron ROJOS reales: activación no atómica de tipos de cambio y orden no determinista de paginación. La corrección mínima fue una transacción explícita en `TipoCambioRepository`, con commit/rollback y respeto de transacciones externas, además del desempate `CreatedAt DESC` e `Id`.
+
+Los fallos iniciales de pruebas funcionales/E2E relacionados con aislamiento, selectores y validación cliente se clasificaron como problemas de prueba/testabilidad, no como defectos de negocio. La creación E2E de licitación conserva como riesgo pendiente la validación cliente que bloquea el clic normal; no se afirma que la funcionalidad esté rota.
+
+### Commits de Fase 5
+
+- `ba3ce34` — `test(unit): completar cobertura de licitaciones y tipos de cambio`.
+- `8f14743` — `test(integration): cubrir concurrencia y restricciones PostgreSQL`.
+- `1512dd8` — `fix(tipos-cambio): garantizar activacion atomica y orden determinista`.
+- `e8c1ee0` — `test(functional): completar flujos HTTP y MVC de tipos de cambio`.
+- `0cf4cb5` — `test(e2e): agregar suite Playwright con Chromium y PostgreSQL real`.
+- `7d0b716` — `build(coverage): configurar medicion reproducible y umbrales`.
+
+Fase 5 técnicamente completada y validada localmente. Revisión formal del Navigator, Pull Request, CI remoto y merge posterior permanecen pendientes.
+
 ## Pruebas unitarias agregadas en Fase 3
 
 - `EntityTests`: igualdad por identidad y rechazo de identificadores por defecto.
