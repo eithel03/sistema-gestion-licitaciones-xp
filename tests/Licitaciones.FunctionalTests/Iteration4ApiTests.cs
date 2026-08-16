@@ -65,25 +65,56 @@ public sealed class Iteration4ApiTests : IAsyncLifetime
         var first = await firstResponse.Content.ReadFromJsonAsync<TipoCambioResponse>();
         var second = await secondResponse.Content.ReadFromJsonAsync<TipoCambioResponse>();
 
-        using var firstActive = await client.PatchAsync($"/api/v1/tipos-cambio/{first!.Id}/activar", null);
+        using var updateResponse = await client.PutAsJsonAsync($"/api/v1/tipos-cambio/{first!.Id}", new ActualizarTipoCambioRequest(Fecha.AddDays(2), 510m, first.Version));
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
+        var updatedFirst = await updateResponse.Content.ReadFromJsonAsync<TipoCambioResponse>();
+        Assert.Equal(Fecha.AddDays(2), updatedFirst!.Fecha);
+        Assert.Equal(510m, updatedFirst.CrcPorUsd);
+
+        using var firstActive = await client.PatchAsync($"/api/v1/tipos-cambio/{first.Id}/activar", null);
         using var secondActive = await client.PatchAsync($"/api/v1/tipos-cambio/{second!.Id}/activar", null);
         using var postActivation = await client.PostAsync($"/api/v1/tipos-cambio/{second.Id}/activar", null);
         var active = await client.GetFromJsonAsync<TipoCambioResponse>("/api/v1/tipos-cambio/activo");
         var firstDetail = await client.GetFromJsonAsync<TipoCambioResponse>($"/api/v1/tipos-cambio/{first.Id}");
         var secondDetail = await client.GetFromJsonAsync<TipoCambioResponse>($"/api/v1/tipos-cambio/{second.Id}");
         var conversion = await client.GetFromJsonAsync<MontoVisualizadoResponse>("/api/v1/moneda/convertir?montoCrc=1050&moneda=USD");
+        using var deleteResponse = await client.DeleteAsync($"/api/v1/tipos-cambio/{first.Id}");
+        using var deletedGet = await client.GetAsync($"/api/v1/tipos-cambio/{first.Id}");
         var listed = await client.GetFromJsonAsync<TipoCambioPage>("/api/v1/tipos-cambio");
 
         Assert.Equal(HttpStatusCode.OK, firstActive.StatusCode);
         Assert.Equal(HttpStatusCode.OK, secondActive.StatusCode);
         Assert.Equal(HttpStatusCode.MethodNotAllowed, postActivation.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, deletedGet.StatusCode);
         Assert.Equal(second.Id, active!.Id);
         Assert.False(firstDetail!.Activo);
+        Assert.Equal(510m, firstDetail.CrcPorUsd);
         Assert.True(secondDetail!.Activo);
         Assert.Equal(2m, conversion!.MontoVisualizado);
         Assert.Equal(1050m, conversion.MontoOriginalCrc);
-        Assert.Equal(2, listed!.TotalItems);
+        Assert.Equal(1, listed!.TotalItems);
         Assert.Single(listed.Items, tipoCambio => tipoCambio.Activo);
+    }
+
+    [Fact]
+    public async Task ExchangeRateApiPaginatesMoreThanOnePageWithStableOrdering()
+    {
+        using var client = _factory!.CreateClient();
+        await client.PostAsJsonAsync("/api/v1/tipos-cambio", new CrearTipoCambioRequest(Fecha, 500m));
+        await client.PostAsJsonAsync("/api/v1/tipos-cambio", new CrearTipoCambioRequest(Fecha.AddDays(1), 510m));
+        await client.PostAsJsonAsync("/api/v1/tipos-cambio", new CrearTipoCambioRequest(Fecha.AddDays(2), 520m));
+
+        var firstPage = await client.GetFromJsonAsync<TipoCambioPage>("/api/v1/tipos-cambio?page=1&pageSize=2");
+        var secondPage = await client.GetFromJsonAsync<TipoCambioPage>("/api/v1/tipos-cambio?page=2&pageSize=2");
+
+        Assert.Equal(3, firstPage!.TotalItems);
+        Assert.Equal(2, firstPage.TotalPages);
+        Assert.Equal(2, firstPage.Items.Count);
+        Assert.Single(secondPage!.Items);
+        Assert.Equal(520m, firstPage.Items[0].CrcPorUsd);
+        Assert.Equal(510m, firstPage.Items[1].CrcPorUsd);
+        Assert.Equal(500m, secondPage.Items[0].CrcPorUsd);
     }
 
     [Fact]

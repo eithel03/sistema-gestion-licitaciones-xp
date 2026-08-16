@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Licitaciones.Application.Proveedores;
 using Licitaciones.Application.TiposCambio;
 using Licitaciones.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -131,6 +132,44 @@ public sealed class ApiHardeningTests : IAsyncLifetime
         Assert.Equal("application/problem+json", response.Content.Headers.ContentType!.MediaType);
         var body = await response.Content.ReadAsStringAsync();
         Assert.Contains("TipoCambio.ValorInvalido", body);
+    }
+
+    [Fact]
+    public async Task ProblemDetailsGeneratesCorrelationIdWhenClientDoesNotSendOne()
+    {
+        using var client = _factory!.CreateClient();
+
+        using var response = await client.GetAsync("/api/v1/tipos-cambio/00000000-0000-0000-0000-000000000001");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.True(response.Headers.TryGetValues("X-Correlation-ID", out var values));
+        var correlationId = Assert.Single(values!);
+        Assert.False(string.IsNullOrWhiteSpace(correlationId));
+        using var document = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.Equal(correlationId, document.RootElement.GetProperty("correlationId").GetString());
+    }
+
+    [Fact]
+    public async Task ConflictProblemDetailsIncludesCorrelationIdAndBusinessCode()
+    {
+        using var client = _factory!.CreateClient();
+        using var first = await client.PostAsJsonAsync("/api/v1/proveedores", new CrearProveedorRequest("Empresa Conflicto"));
+        Assert.Equal(HttpStatusCode.Created, first.StatusCode);
+
+        using var request = new HttpRequestMessage(HttpMethod.Post, "/api/v1/proveedores")
+        {
+            Content = JsonContent.Create(new CrearProveedorRequest(" empresa   conflicto "))
+        };
+        request.Headers.Add("X-Correlation-ID", "conflict-correlation-id");
+
+        using var response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        Assert.Equal("application/problem+json", response.Content.Headers.ContentType!.MediaType);
+        Assert.Equal("conflict-correlation-id", response.Headers.GetValues("X-Correlation-ID").Single());
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Proveedor.NombreDuplicado", body);
+        Assert.Contains("conflict-correlation-id", body);
     }
 
     [Theory]
