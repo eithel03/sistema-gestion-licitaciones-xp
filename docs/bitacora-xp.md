@@ -777,7 +777,7 @@ Los mensajes de conexión posteriores a `DROP DATABASE ... WITH (FORCE)` corresp
 
 ### Resultado
 
-32 puntos implementados y validados localmente. El sistema queda técnicamente preparado para la versión candidata prevista `v1.0.0-rc`, sujeta al cierre formal del flujo Git/GitHub.
+32 puntos implementados y validados localmente. El merge de Iteración 4 a `main` está evidenciado por `ea9772f`. El sistema queda técnicamente preparado para la versión candidata prevista `v1.0.0-rc`, sujeta al cierre formal restante del flujo Git/GitHub.
 
 ### Evidencia Git/GitHub
 
@@ -803,6 +803,49 @@ El workflow de CI está preparado dentro de `9b0fa75`, pero su ejecución remota
 - CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación de cierre: Pendiente.
-- Merge a `main`: Pendiente.
+- Merge a `main`: realizado mediante `ea9772f`.
 - Tag `v1.0.0-rc`: Pendiente.
 - GitHub Release: Pendiente.
+
+## Fase 5 - Pruebas completas y cobertura
+
+- Fecha: 16 de agosto de 2026.
+- Modalidad: Extreme Programming en pareja.
+- Driver principal: Chavala.
+- Navigator principal: Eithel.
+- Rama: `chore/fase-05-pruebas-cobertura`.
+- Objetivo: completar pruebas unitarias, integración PostgreSQL, funcionales HTTP/MVC, E2E real con Chromium y cobertura reproducible.
+
+### Bloques ejecutados
+
+- Bloque 1: cobertura unitaria de licitaciones, tipos de cambio, servicios, límites, conversión, redondeo y errores controlados.
+- Bloque 2: restricciones PostgreSQL, concurrencia, activación única, atomicidad, rollback, conversión persistida y paginación determinista.
+- Bloque 3: CRUD API/MVC de tipos de cambio, ProblemDetails, correlación, paginación y estabilización de datos.
+- Bloque 4: suite E2E real `tests/Licitaciones.E2ETests` con Chromium, Kestrel y PostgreSQL Testcontainers.
+- Bloque 5: Cobertura XPlat Code Coverage, Cobertura XML, ReportGenerator y verificación automática de umbrales.
+
+### TDD, defectos y correcciones
+
+Los casos nuevos del Bloque 1 pasaron inmediatamente y se registran como cobertura faltante, sin inventar un ciclo ROJO. En el Bloque 2 se reprodujeron ROJOS reales por activación no atómica de `TipoCambio` y paginación no determinista; también se verificó el fallo intermedio que justificó la corrección transaccional. `TipoCambioRepository` quedó con transacción explícita, commit tras `SaveChanges`, rollback ante error, respeto de transacción externa y desempate por `CreatedAt DESC` e `Id`. No se consideran defectos de producción los primeros fallos de pruebas funcionales/E2E causados por aislamiento, selectores u orden de validación.
+
+### Resultados
+
+| Suite | Resultado |
+| --- | ---: |
+| UnitTests | 121/121 |
+| IntegrationTests | 37/37 |
+| FunctionalTests | 54/54 |
+| E2ETests | 6/6 |
+| **Total** | **218/218** |
+
+Cobertura de líneas combinada: Domain 91,64 %, Application 88,60 %, Infrastructure 95,43 %, Api 90,03 %, Web 66,53 % y global 89,37 %. Branch coverage global disponible: 62,78 %. Se cumplieron Domain >= 80 %, Application >= 80 % y Global >= 70 %.
+
+La suite E2E cubrió landing, navegación, proveedores, licitaciones, ofertas, preferencias claro/oscuro y CRC/USD. La creación de licitación usa envío directo del formulario desde Chromium para evitar un bloqueo de validación cliente; queda como riesgo de testabilidad pendiente, sin afirmar una rotura funcional.
+
+### Decisiones, refactorizaciones y pendientes
+
+- Se mantuvo PostgreSQL real mediante Testcontainers y no se incorporó SQLite.
+- Se excluyeron E2E de cobertura porque la Web se inicia en un proceso externo no instrumentado por Coverlet.
+- No se modificaron Docker, Kubernetes, GitHub Actions ni código fuera del alcance de los bloques.
+- Fase 5 técnicamente completada y validada localmente.
+- Pendientes formales: revisión del Navigator, Pull Request, CI remoto y merge a `main`.

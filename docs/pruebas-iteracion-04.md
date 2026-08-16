@@ -1,5 +1,9 @@
 # Pruebas Iteración 4
 
+## Actualización de Fase 5
+
+La medición de Iteración 4 documentada abajo es histórica. La consolidación posterior de Fase 5 se ejecutó en `chore/fase-05-pruebas-cobertura` y obtuvo UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6. La cobertura combinada vigente es Domain 91,64 %, Application 88,60 % y global 89,37 %.
+
 ## Suite final
 
 | Suite | Aprobadas | Fallidas | Omitidas |

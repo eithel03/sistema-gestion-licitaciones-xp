@@ -91,7 +91,7 @@ Los mensajes de conexión de EF Core inmediatamente posteriores a `DROP DATABASE
 
 ## Velocidad técnica
 
-32 puntos implementados y validados localmente. El cierre formal depende todavía de CI remoto, revisión formal del Navigator y merge.
+32 puntos implementados y validados localmente. El merge a `main` está evidenciado por `ea9772f`; el cierre formal depende todavía de CI remoto y revisión formal del Navigator.
 
 ## Resultado demostrable
 
@@ -118,6 +118,6 @@ Permanecen pendientes:
 - CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación formal de cierre: Pendiente.
-- Merge a `main`: Pendiente.
+- Merge a `main`: realizado mediante `ea9772f`.
 - Tag `v1.0.0-rc`: Pendiente.
 - GitHub Release: Pendiente.

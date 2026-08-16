@@ -87,6 +87,24 @@ Evidencia formal: Issue `#10`, commits `cce95ad`, `812b59c`, `ed89c5a` y `c77343
 Pruebas finales: 64/64 aprobadas, 0 fallidas y 0 omitidas.
 Liberación: `v0.2.0` (Prevista); tag pendiente.
 
+## Evidencia de Fase 5
+
+- Rama: `chore/fase-05-pruebas-cobertura`.
+- Driver: Chavala.
+- Navigator: Eithel.
+- Iteración 4 integrada en `main` mediante `ea9772f` (`Merge pull request #16 from eithel03/feature/iteracion-04-moneda-ux`).
+- Commits: `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5` y `7d0b716`.
+- Pruebas: UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; total 218/218.
+- Cobertura: Domain 91,64 %, Application 88,60 %, Infrastructure 95,43 %, Api 90,03 %, Web 66,53 % y global 89,37 %.
+- E2E: Chromium real con `Microsoft.Playwright.Xunit` 1.61.0, Kestrel y PostgreSQL Testcontainers.
+- Documentación: `pruebas.md`, `bitacora-xp.md`, `uso-ia.md` y este documento.
+- Issue: no se creó Issue nuevo durante Fase 5; pendiente de trazabilidad formal.
+- Pull Request: pendiente.
+- CI remoto: pendiente.
+- Merge de Fase 5: pendiente.
+- Tag: no existe tag de Fase 5.
+- Estado: Fase 5 técnicamente completada y validada localmente.
+
 ## Evidencia común de Iteración 4
 
 - Rama: `feature/iteracion-04-moneda-ux`.
@@ -103,5 +121,5 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Pull Request: `#16`, desde `feature/iteracion-04-moneda-ux` hacia `main`.
 - Commits: `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12`, `2e710d2`.
 - Rama publicada y vinculada a `origin/feature/iteracion-04-moneda-ux`.
-- CI remoto, revisión formal del Navigator, merge, tag y GitHub Release: Pendientes.
+- Merge de Iteración 4 a `main`: realizado mediante `ea9772f`. CI remoto, revisión formal del Navigator, merge de Fase 5, tag y GitHub Release: pendientes.
 - Liberación: `v1.0.0-rc` (Prevista); el tag no existe todavía.

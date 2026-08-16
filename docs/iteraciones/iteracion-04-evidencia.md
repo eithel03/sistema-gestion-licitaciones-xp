@@ -1,5 +1,11 @@
 # Evidencia Iteración 4
 
+## Actualización posterior: integración y Fase 5
+
+La integración de Iteración 4 ya no está pendiente: Git evidencia `ea9772f`, merge de `feature/iteracion-04-moneda-ux` a `main` (`Merge pull request #16 from eithel03/feature/iteracion-04-moneda-ux`). La revisión formal del Navigator, CI remoto y el tag `v1.0.0-rc` continúan pendientes.
+
+La Fase 5 se ejecutó posteriormente en `chore/fase-05-pruebas-cobertura` con Chavala como Driver y Eithel como Navigator. Sus resultados finales fueron UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; total 218/218. La cobertura combinada de líneas fue Domain 91,64 %, Application 88,60 % y global 89,37 %.
+
 - Rama: `feature/iteracion-04-moneda-ux`.
 - Driver principal: Eithel.
 - Navigator principal: Chavala.
@@ -122,6 +128,6 @@ Permanecen pendientes:
 - CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación formal de cierre: Pendiente.
-- Merge a `main`: Pendiente.
+- Merge a `main`: realizado mediante `ea9772f`.
 - Tag `v1.0.0-rc`: Pendiente.
 - GitHub Release: Pendiente.

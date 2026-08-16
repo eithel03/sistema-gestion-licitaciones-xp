@@ -4,6 +4,20 @@
 
 Las herramientas de inteligencia artificial se utilizan como apoyo para analizar el enunciado, organizar el trabajo, aclarar conceptos técnicos y preparar propuestas que posteriormente son revisadas y validadas por los integrantes.
 
+## Registro 008 - Fase 5
+
+- Fecha: 16 de agosto de 2026.
+- Herramienta: OpenAI Codex.
+- Participantes responsables: Chavala como Driver y Eithel como Navigator.
+- Rama: `chore/fase-05-pruebas-cobertura`.
+- Evidencia de integración previa: Iteración 4 fue integrada en `main` mediante `ea9772f`; el merge pendiente referido en registros anteriores corresponde al estado documental previo a esa integración.
+- Finalidad: auditoría previa, identificación de brechas, generación y revisión de pruebas unitarias, análisis de concurrencia PostgreSQL, pruebas funcionales HTTP/MVC, suite Playwright y cobertura reproducible.
+- Componentes asistidos: `LicitacionService`, `TipoCambio`, `TipoCambioService`, dominio de licitaciones, `EvaluadorOfertas`, repositorio de tipos de cambio, pruebas Testcontainers, pruebas funcionales, Playwright, ReportGenerator y verificador de umbrales.
+- Validación humana: revisión de cambios; ejecución de UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; revisión de los ROJOS reales de transacción y paginación; revisión del arreglo transaccional; revisión de la suite E2E y de la cobertura combinada.
+- Resultado: Fase 5 validada localmente con 218/218 pruebas y cobertura de líneas Domain 91,64 %, Application 88,60 % y global 89,37 %.
+- Responsabilidad: Codex se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad final de comprender, revisar, validar y defender el trabajo.
+- Limitaciones: revisión formal del Navigator, Pull Request, CI remoto y merge posterior permanecen pendientes.
+
 ## Registro de uso
 
 ### Registro 001
@@ -87,4 +101,4 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Validaciones realizadas por los estudiantes: revisión del código; suite automatizada 174/174; pruebas manuales de CRUD, moneda, tema, Swagger y API; cobertura limpia; build; Docker, health checks y persistencia; renderizado de manifiestos Kubernetes.
 - Resultado: Iteración 4 implementada y validada localmente, con cobertura global de líneas de 87.3% y Docker operativo. El despliegue real en Kubernetes y el cierre Git/GitHub permanecen pendientes.
 - Responsabilidad: Codex se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad final de comprender, revisar, validar y defender el trabajo.
-- Evidencia Git/GitHub: Issue `#15`, Pull Request `#16` y commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` registrados. CI remoto, revisión formal final del Navigator, merge, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
+- Evidencia Git/GitHub: Issue `#15`, Pull Request `#16` y commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` registrados. El merge de Iteración 4 a `main` se realizó mediante `ea9772f`; CI remoto, revisión formal final del Navigator, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
