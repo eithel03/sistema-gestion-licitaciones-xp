@@ -29,11 +29,40 @@ public sealed class TipoCambioTests
     }
 
     [Fact]
+    public void CreateRejectsDefaultDate()
+    {
+        var exception = Assert.Throws<TipoCambioValidationException>(() =>
+            TipoCambio.Create(default, 520.25m, Now));
+
+        Assert.Contains(exception.Errors, error => error.Code == TipoCambioErrors.FechaInvalida);
+    }
+
+    [Theory]
+    [InlineData(1000, 500, 2)]
+    [InlineData(1000, 520, 1.92)]
+    [InlineData(100.5, 100, 1.01)]
+    public void ConvertCrcToUsdRoundsToTwoDecimalsAwayFromZero(
+        decimal amountCrc,
+        decimal crcPerUsd,
+        decimal expectedUsd)
+    {
+        var tipoCambio = TipoCambio.Create(Fecha, crcPerUsd, Now);
+
+        var result = tipoCambio.ConvertCrcToUsd(amountCrc);
+
+        Assert.Equal(expectedUsd, result);
+    }
+
+    [Fact]
     public void ActivateAndDeactivateUpdateActiveState()
     {
         var tipoCambio = TipoCambio.Create(Fecha, 520.25m, Now);
 
         tipoCambio.Activate(Now.AddMinutes(1));
+
+        Assert.True(tipoCambio.Activo);
+        Assert.Equal(Now.AddMinutes(1), tipoCambio.UpdatedAt);
+
         tipoCambio.Deactivate(Now.AddMinutes(2));
 
         Assert.False(tipoCambio.Activo);
