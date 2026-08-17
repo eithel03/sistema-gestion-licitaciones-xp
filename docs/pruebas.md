@@ -51,8 +51,10 @@ Los fallos iniciales de pruebas funcionales/E2E relacionados con aislamiento, se
 - `e8c1ee0` — `test(functional): completar flujos HTTP y MVC de tipos de cambio`.
 - `0cf4cb5` — `test(e2e): agregar suite Playwright con Chromium y PostgreSQL real`.
 - `7d0b716` — `build(coverage): configurar medicion reproducible y umbrales`.
+- `b8f0dbb` — `docs(fase-05): cerrar evidencia de pruebas y cobertura`.
+- `92c0301` — `ci(test): ejecutar Playwright E2E con Chromium`.
 
-Fase 5 técnicamente completada y validada localmente. Revisión formal del Navigator, Pull Request, CI remoto y merge posterior permanecen pendientes.
+Fase 5 técnicamente completada y validada. El Pull Request `#18` fue integrado a `main` mediante `f79d22d` (`Merge pull request #18 from eithel03/chore/fase-05-pruebas-cobertura`). Existieron ejecuciones fallidas de GitHub Actions durante el desarrollo; posteriormente el workflow, el CI del PR y el merge quedaron en verde. La revisión formal del Navigator permanece pendiente.
 
 ## Pruebas unitarias agregadas en Fase 3
 
@@ -304,3 +306,13 @@ Validacion final exacta del 2026-08-12:
 Prueba manual local de Iteracion 3: completada contra PostgreSQL 16 y API local. Se observaron 409 para duplicidad, 400 para presupuesto excedido, mejor oferta CRC 800000 con 20 % y clasificacion conveniente, aprobador persistido/editado, 409 para traslape y 204 al eliminar el nivel. Identificadores y flujo completo: `docs/iteraciones/iteracion-03.md`.
 
 Limitacion del entorno de ejecucion manual MVC: claves DPAPI no descifrables, Event Log sin permisos y certificado HTTPS local ausente o vencido impidieron mantener un servidor MVC independiente. Esto no representa una falla funcional de Iteracion 3: las pruebas MVC automatizadas con `WebApplicationFactory` y PostgreSQL real fueron satisfactorias.
+
+## Validación de pruebas durante Fase 6
+
+- `dotnet build Licitaciones.sln --configuration Release`: exitoso.
+- `dotnet test Licitaciones.sln --configuration Release --no-build`: 218/218 pruebas aprobadas, 0 fallidas y 0 omitidas.
+- `dotnet test tests/Licitaciones.E2ETests/Licitaciones.E2ETests.csproj --configuration Release`: 6/6 pruebas aprobadas, 0 fallidas y 0 omitidas.
+- Docker y Testcontainers estuvieron disponibles para las pruebas con PostgreSQL real.
+- En el entorno local fue necesario instalar Chromium de Playwright mediante `powershell -ExecutionPolicy Bypass -File tests/Licitaciones.E2ETests/bin/Release/net9.0/playwright.ps1 install chromium`.
+- Después de instalar Chromium, la suite E2E completa quedó en verde.
+- Esta ejecución confirma que los cambios Docker de Fase 6 no introdujeron regresiones en la suite automatizada.

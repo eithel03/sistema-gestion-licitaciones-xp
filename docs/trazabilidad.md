@@ -44,6 +44,7 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/`, `.github/workflows/ci.yml` | `#3` | `chore/arquitectura-inicial` | `ad7913b`, `e0e5ad1`, `821ab9d`, `65a6afd` | `#4` | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | CI aprobado |
 | FASE-03 | Preparación dominio/TDD | N/A | N/A | Convenciones mínimas de dominio y pruebas preparatorias | `EntityTests.cs`, `ValueObjectTests.cs`, `ValidationResultTests.cs`, `IClockTests.cs` | `Domain`, `Application`, `Infrastructure`, `UnitTests` | `#7` | `chore/fase-03-dominio-tdd` | `2200fe3` | `#6` | `docs/dominio-tdd.md`, `docs/pruebas.md`, `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md` | CI aprobado |
 | FASE-04 | Preparacion persistencia | N/A | N/A | Infraestructura minima de PostgreSQL y EF Core sin tablas futuras | `PersistenceConventionsTests.cs`, `PostgreSqlContainerTests.cs`, restore, build, test, Docker Compose | `Infrastructure`, `IntegrationTests`, `compose.yaml`, documentacion | `#5` | `chore/preparacion-persistencia` | Pendiente | Pendiente | `docs/arquitectura-general.md`, `docs/modelo-datos.md`, `docs/pruebas.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
+| FASE-06 | Docker y Docker Compose | N/A | N/A | Docker multi-stage, Compose, PostgreSQL healthy, persistencia, migraciones, usuario no privilegiado, build y pruebas | Validación manual Docker; build Release; 218/218 pruebas; E2E 6/6 | Dockerfiles, `compose.yaml`, Infrastructure, Web, API, documentación | `#19` | `chore/fase-06-docker` | Pendiente | Pendiente | `docs/docker.md`, `docs/bitacora-xp.md`, `docs/pruebas.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
 
 ## Totales
 
@@ -93,15 +94,15 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Driver: Chavala.
 - Navigator: Eithel.
 - Iteración 4 integrada en `main` mediante `ea9772f` (`Merge pull request #16 from eithel03/feature/iteracion-04-moneda-ux`).
-- Commits: `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5` y `7d0b716`.
+- Commits: `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5`, `7d0b716`, `b8f0dbb` y `92c0301`.
 - Pruebas: UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; total 218/218.
 - Cobertura: Domain 91,64 %, Application 88,60 %, Infrastructure 95,43 %, Api 90,03 %, Web 66,53 % y global 89,37 %.
 - E2E: Chromium real con `Microsoft.Playwright.Xunit` 1.61.0, Kestrel y PostgreSQL Testcontainers.
 - Documentación: `pruebas.md`, `bitacora-xp.md`, `uso-ia.md` y este documento.
-- Issue: no se creó Issue nuevo durante Fase 5; pendiente de trazabilidad formal.
-- Pull Request: pendiente.
-- CI remoto: pendiente.
-- Merge de Fase 5: pendiente.
+- Issue: Pendiente; no existe evidencia confirmada de número de Issue.
+- Pull Request: `#18`.
+- GitHub Actions: existieron ejecuciones fallidas durante el desarrollo; posteriormente el workflow, el CI del PR y el merge a `main` quedaron en verde.
+- Merge de Fase 5: `f79d22d` (`Merge pull request #18 from eithel03/chore/fase-05-pruebas-cobertura`).
 - Tag: no existe tag de Fase 5.
 - Estado: Fase 5 técnicamente completada y validada localmente.
 
@@ -121,5 +122,22 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Pull Request: `#16`, desde `feature/iteracion-04-moneda-ux` hacia `main`.
 - Commits: `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12`, `2e710d2`.
 - Rama publicada y vinculada a `origin/feature/iteracion-04-moneda-ux`.
-- Merge de Iteración 4 a `main`: realizado mediante `ea9772f`. CI remoto, revisión formal del Navigator, merge de Fase 5, tag y GitHub Release: pendientes.
+- Merge de Iteración 4 a `main`: realizado mediante `ea9772f`. CI remoto y revisión formal del Navigator de Iteración 4, tag y GitHub Release: pendientes. Fase 5 fue integrada a `main` mediante `f79d22d`.
 - Liberación: `v1.0.0-rc` (Prevista); el tag no existe todavía.
+
+## Evidencia de Fase 6
+
+- Rama: `chore/fase-06-docker`.
+- Issue: `#19`.
+- Dockerfiles multi-stage: Web y API construidos como `licitaciones-web:v1.0.0-rc` y `licitaciones-api:v1.0.0-rc`.
+- Docker Compose: `docker compose config` y `docker compose up --build -d` exitosos.
+- PostgreSQL: imagen `postgres:16`, puerto host `55432` y estado `healthy`.
+- Servicios: Web inició en `8080`, API inició en `8081` y Swagger fue verificado manualmente.
+- Persistencia: `docker compose restart` fue exitoso y el volumen conservó licitaciones, proveedores, ofertas y tipos de cambio.
+- Migraciones: Web y API ejecutan `Database.Migrate()`; `__EFMigrationsHistory` registró con EF Core 9.0.18 las migraciones `20260810092133_CreateProveedores`, `20260811234653_MakeProveedorNameUniqueIndexPartial`, `20260812002104_CreateLicitaciones`, `20260813011055_Iteration03OfertasAprobacion`, `20260813205016_Iteration04TiposCambio` y `20260814014136_AllowDuplicateTipoCambioDates`.
+- Usuario no privilegiado: `USER $APP_UID` en ambos Dockerfiles y UID `1654` confirmado en Web y API.
+- Build Release: exitoso.
+- Pruebas: 218/218 aprobadas, 0 fallidas y 0 omitidas; E2E 6/6 después de instalar Chromium de Playwright localmente.
+- Docker y Testcontainers: disponibles durante la validación.
+- `docker compose down -v`: no se ejecutó.
+- Commits, Pull Request y liberación de Fase 6: Pendiente.

@@ -848,4 +848,101 @@ La suite E2E cubrió landing, navegación, proveedores, licitaciones, ofertas, p
 - Se excluyeron E2E de cobertura porque la Web se inicia en un proceso externo no instrumentado por Coverlet.
 - No se modificaron Docker, Kubernetes, GitHub Actions ni código fuera del alcance de los bloques.
 - Fase 5 técnicamente completada y validada localmente.
-- Pendientes formales: revisión del Navigator, Pull Request, CI remoto y merge a `main`.
+- Pull Request: `#18`.
+- Commits: `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5`, `7d0b716`, `b8f0dbb` y `92c0301`.
+- GitHub Actions: existieron ejecuciones fallidas durante el desarrollo; posteriormente el workflow, el CI del PR y el merge a `main` quedaron en verde.
+- Merge a `main`: `f79d22d` (`Merge pull request #18 from eithel03/chore/fase-05-pruebas-cobertura`).
+- Revisión formal del Navigator: Pendiente.
+- Tag de Fase 5: Pendiente; no existe evidencia confirmada.
+
+## Fase 6 — Docker y Docker Compose
+
+- Fecha: 16 de agosto de 2026.
+- Modalidad: programación en pareja XP.
+- Driver: Eithel Herrera Rojas.
+- Navigator: Luis Diego Chavala.
+- Rama: `chore/fase-06-docker`.
+- Issue: `#19`.
+- Pull Request: Pendiente.
+- Commits: Pendiente.
+- CI remoto: Pendiente.
+- Merge: Pendiente.
+
+### Objetivo
+
+Consolidar y validar la infraestructura Docker y Docker Compose existente, confirmar el arranque reproducible de Web, API y PostgreSQL, y endurecer la ejecución de los contenedores de aplicación con un usuario no privilegiado.
+
+### Actividades realizadas
+
+- Revisión de los Dockerfiles multi-stage de Web y API.
+- Construcción de `licitaciones-web:v1.0.0-rc` y `licitaciones-api:v1.0.0-rc`.
+- Validación de la configuración y arranque mediante Docker Compose.
+- Verificación manual de Web, API y Swagger.
+- Reinicio de los servicios y comprobación de persistencia.
+- Revisión de la aplicación automática de migraciones EF Core.
+- Incorporación de `USER $APP_UID` en ambos Dockerfiles.
+- Validación del UID efectivo mediante `docker inspect`.
+- Build Release y ejecución de la suite completa y E2E.
+- Actualización localizada de la documentación de Fase 6.
+
+### Responsabilidades del Driver
+
+Eithel Herrera Rojas ejecutó y verificó los comandos, revisó los Dockerfiles, validó los servicios, la persistencia, las migraciones y las pruebas, e incorporó el cambio `USER $APP_UID`.
+
+### Responsabilidades del Navigator
+
+Luis Diego Chavala revisó los requisitos de la fase, comprobó la evidencia de Docker y migraciones, verificó que Web y API no se ejecutaran como root y revisó los resultados de build y pruebas.
+
+### Archivos modificados
+
+- `src/Licitaciones.Api/Dockerfile`.
+- `src/Licitaciones.Web/Dockerfile`.
+- `docs/docker.md`.
+- `docs/bitacora-xp.md`.
+- `docs/trazabilidad.md`.
+- `docs/pruebas.md`.
+- `docs/uso-ia.md`.
+- `docs/README.md`.
+
+### Validaciones Docker
+
+- `docker compose config`: exitoso.
+- `docker compose up --build -d`: exitoso.
+- PostgreSQL 16 en puerto host `55432`: estado `healthy`.
+- Web en puerto host `8080`: contenedor iniciado correctamente.
+- API en puerto host `8081`: contenedor iniciado correctamente.
+- Swagger: disponible y verificado manualmente.
+- `docker compose restart`: exitoso.
+- El volumen PostgreSQL conservó licitaciones, proveedores, ofertas y tipos de cambio después del reinicio.
+- `docker compose down -v`: no se ejecutó.
+
+### Migraciones
+
+Web y API ejecutan `dbContext.Database.Migrate()`. La tabla `__EFMigrationsHistory` registró con EF Core 9.0.18 las migraciones `20260810092133_CreateProveedores`, `20260811234653_MakeProveedorNameUniqueIndexPartial`, `20260812002104_CreateLicitaciones`, `20260813011055_Iteration03OfertasAprobacion`, `20260813205016_Iteration04TiposCambio` y `20260814014136_AllowDuplicateTipoCambioDates`.
+
+### Usuario no privilegiado
+
+Los Dockerfiles de Web y API incluyen `USER $APP_UID`. `docker inspect` confirmó UID `1654` en ambos contenedores, por lo que no se ejecutan como root.
+
+### Build y pruebas
+
+- `dotnet build Licitaciones.sln --configuration Release`: exitoso.
+- `dotnet test Licitaciones.sln --configuration Release --no-build`: 218/218 aprobadas, 0 fallidas y 0 omitidas.
+- `dotnet test tests/Licitaciones.E2ETests/Licitaciones.E2ETests.csproj --configuration Release`: 6/6 aprobadas, 0 fallidas y 0 omitidas.
+- Fue necesario instalar localmente Chromium mediante el script de Playwright; después de la instalación, las seis pruebas E2E quedaron en verde.
+
+### Decisiones técnicas
+
+- Conservar los Dockerfiles multi-stage y las imágenes candidatas existentes.
+- Mantener PostgreSQL 16 y el volumen persistente definido en Compose.
+- Aplicar migraciones automáticamente al iniciar Web y API.
+- Ejecutar Web y API con el usuario no privilegiado definido por `$APP_UID`.
+- No eliminar el volumen durante la validación.
+
+### Restricciones respetadas
+
+No se ejecutó `docker compose down -v`, no se eliminaron datos persistidos y no se inventó evidencia de commits, PR, CI remoto, revisión final o merge de Fase 6.
+
+### Resultado
+
+La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente, PostgreSQL permaneció saludable, Swagger estuvo disponible, los datos persistieron después del reinicio, las seis migraciones quedaron registradas, Web y API ejecutaron con UID `1654`, el build Release fue exitoso y las 218 pruebas, incluidas las 6 E2E, quedaron aprobadas. El cierre Git/GitHub de Fase 6 permanece pendiente.
