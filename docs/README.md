@@ -44,10 +44,18 @@
 
 Fase 5 está técnicamente completada y validada localmente en `chore/fase-05-pruebas-cobertura`. Chavala actuó como Driver principal y Eithel como Navigator principal. Las suites finales aprobaron 218/218 pruebas: UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6. La cobertura de líneas fue Domain 91,64 %, Application 88,60 % y global 89,37 %, superando los umbrales requeridos.
 
-Se registraron los commits `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5` y `7d0b716`. La revisión formal del Navigator, Pull Request, CI remoto y merge de Fase 5 permanecen pendientes. No existe tag de Fase 5.
+Se registraron los commits `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5`, `7d0b716`, `b8f0dbb` y `92c0301`. El Pull Request `#18` fue integrado a `main` mediante `f79d22d` (`Merge pull request #18 from eithel03/chore/fase-05-pruebas-cobertura`). Existieron ejecuciones fallidas de GitHub Actions durante el desarrollo; posteriormente el workflow, el CI del PR y el merge quedaron en verde. La revisión formal del Navigator permanece pendiente y no existe tag de Fase 5.
 
 ## Estado de Iteración 4
 
 Las historias HU-30 a HU-37 están implementadas y validadas localmente en `feature/iteracion-04-moneda-ux`. La suite final aprobó 174/174 pruebas y Docker fue validado con persistencia. Los manifiestos Kubernetes están preparados y renderizan correctamente; su despliegue real permanece pendiente de un clúster activo.
 
 Issue `#15`, Pull Request `#16` y los commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` están registrados. El merge de Iteración 4 a `main` está evidenciado por `ea9772f`. CI remoto, revisión formal final del Navigator, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
+
+## Estado de Fase 6
+
+La Fase 6 se validó localmente en la rama `chore/fase-06-docker`, asociada al Issue `#19`, con Eithel Herrera Rojas como Driver y Luis Diego Chavala como Navigator. Docker Compose inició correctamente Web en `8080`, API en `8081` y PostgreSQL 16 en `55432` con estado `healthy`; Swagger estuvo disponible y el volumen conservó licitaciones, proveedores, ofertas y tipos de cambio después del reinicio.
+
+Web y API están configurados para aplicar automáticamente las migraciones pendientes mediante `Database.Migrate()`. La tabla `__EFMigrationsHistory` confirmó seis migraciones aplicadas correctamente.
+
+El Issue `#19` fue realizado y se registraron los commits `b26d40a` y `5f16fa6`. El Pull Request `#20`, desde `chore/fase-06-docker` hacia `main`, permanece abierto con 2/2 checks exitosos y sin conflictos con la rama base. La revisión formal final del Navigator fue aprobada por Luis Diego Chavala. El merge y la liberación/tag permanecen pendientes.

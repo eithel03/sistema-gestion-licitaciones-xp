@@ -16,7 +16,8 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Validación humana: revisión de cambios; ejecución de UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; revisión de los ROJOS reales de transacción y paginación; revisión del arreglo transaccional; revisión de la suite E2E y de la cobertura combinada.
 - Resultado: Fase 5 validada localmente con 218/218 pruebas y cobertura de líneas Domain 91,64 %, Application 88,60 % y global 89,37 %.
 - Responsabilidad: Codex se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad final de comprender, revisar, validar y defender el trabajo.
-- Limitaciones: revisión formal del Navigator, Pull Request, CI remoto y merge posterior permanecen pendientes.
+- Evidencia Git/GitHub: Pull Request `#18`; commits `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5`, `7d0b716`, `b8f0dbb` y `92c0301`; merge a `main` mediante `f79d22d` (`Merge pull request #18 from eithel03/chore/fase-05-pruebas-cobertura`). Existieron ejecuciones fallidas durante el desarrollo; posteriormente el workflow, el CI del PR y el merge quedaron en verde.
+- Limitaciones: revisión formal del Navigator y tag de Fase 5 permanecen pendientes; no existe evidencia confirmada de Issue.
 
 ## Registro de uso
 
@@ -102,3 +103,19 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Resultado: Iteración 4 implementada y validada localmente, con cobertura global de líneas de 87.3% y Docker operativo. El despliegue real en Kubernetes y el cierre Git/GitHub permanecen pendientes.
 - Responsabilidad: Codex se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad final de comprender, revisar, validar y defender el trabajo.
 - Evidencia Git/GitHub: Issue `#15`, Pull Request `#16` y commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` registrados. El merge de Iteración 4 a `main` se realizó mediante `ea9772f`; CI remoto, revisión formal final del Navigator, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
+
+## Registro 009 - Fase 6
+
+- Fecha: 16 de agosto de 2026.
+- Herramientas: ChatGPT y OpenCode.
+- Participantes responsables: Eithel Herrera Rojas como Driver y Luis Diego Chavala como Navigator.
+- Rama: `chore/fase-06-docker`.
+- Issue: `#19`.
+- Finalidad: revisión de requisitos Docker, análisis de Dockerfiles, validación de usuario no privilegiado, preparación de comandos Docker, validación de migraciones, revisión de evidencia y apoyo en documentación.
+- Componentes asistidos: Dockerfiles multi-stage de Web y API, Docker Compose, PostgreSQL 16, persistencia, `Database.Migrate()`, `__EFMigrationsHistory`, comandos de validación y documentación de Fase 6.
+- Código modificado: únicamente la incorporación real de `USER $APP_UID` en `src/Licitaciones.Api/Dockerfile` y `src/Licitaciones.Web/Dockerfile`; el resto de la actividad asistida correspondió a revisión y documentación.
+- Validación humana: los estudiantes ejecutaron y verificaron manualmente los comandos; revisaron Docker, las migraciones, la persistencia después de `docker compose restart`, el UID `1654` de Web y API, el build Release y las 218 pruebas, incluidas las 6 E2E.
+- Resultado: Docker Compose validado con PostgreSQL `healthy`, Web y API operativos, Swagger disponible, datos persistentes, seis migraciones registradas y contenedores de aplicación ejecutados sin root.
+- Responsabilidad: la IA se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad de comprender, revisar, validar y defender el trabajo.
+- Evidencia Git/GitHub: Issue `#19`; commits `b26d40a` y `5f16fa6`; Pull Request `#20`; GitHub Actions / Checks 2/2 exitosos; sin conflictos con `main`; revisión formal final del Navigator aprobada por Luis Diego Chavala.
+- Limitaciones: el merge del Pull Request `#20` y la liberación/tag correspondiente permanecen pendientes.

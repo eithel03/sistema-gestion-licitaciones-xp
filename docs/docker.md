@@ -43,3 +43,47 @@ La persistencia se comprobó creando datos y reiniciando los contenedores. Prove
 ## Conservación de datos
 
 No se ejecutó `docker compose down -v`. No usar ese comando salvo decisión explícita del equipo, porque elimina el volumen local de PostgreSQL y sus datos persistidos.
+
+## Cierre y validación de Fase 6
+
+La Fase 6 consolidó y validó la infraestructura Docker existente. Web y API conservan Dockerfiles multi-stage y se construyeron como `licitaciones-web:v1.0.0-rc` y `licitaciones-api:v1.0.0-rc` mediante `docker compose up --build -d`.
+
+### Evidencia de servicios y persistencia
+
+- `docker compose config`: exitoso.
+- PostgreSQL: imagen `postgres:16`, puerto host `55432` y estado `healthy`.
+- Web: contenedor iniciado correctamente en el puerto host `8080`.
+- API: contenedor iniciado correctamente en el puerto host `8081`.
+- Swagger de la API: verificado manualmente y disponible.
+- Volumen persistente de PostgreSQL: operativo.
+- `docker compose restart`: exitoso.
+- Persistencia posterior al reinicio: se conservaron licitaciones, proveedores, ofertas y tipos de cambio.
+- `docker compose down -v`: no se ejecutó.
+
+### Migraciones automáticas
+
+`src/Licitaciones.Api/Program.cs` y `src/Licitaciones.Web/Program.cs` ejecutan `dbContext.Database.Migrate()` al iniciar. La tabla PostgreSQL `__EFMigrationsHistory` registró con EF Core 9.0.18 las seis migraciones aplicadas:
+
+- `20260810092133_CreateProveedores`.
+- `20260811234653_MakeProveedorNameUniqueIndexPartial`.
+- `20260812002104_CreateLicitaciones`.
+- `20260813011055_Iteration03OfertasAprobacion`.
+- `20260813205016_Iteration04TiposCambio`.
+- `20260814014136_AllowDuplicateTipoCambioDates`.
+
+### Usuario no privilegiado
+
+Los Dockerfiles de Web y API declaran `USER $APP_UID`. La validación mediante `docker inspect` devolvió UID `1654` para ambos contenedores, lo que confirma que no se ejecutan como root.
+
+### Comandos reproducibles
+
+```bash
+docker compose config
+docker compose up --build -d
+docker compose ps
+docker compose restart
+docker inspect $(docker compose ps -q api) --format '{{.Config.User}}'
+docker inspect $(docker compose ps -q web) --format '{{.Config.User}}'
+```
+
+Para validar el historial de migraciones desde PostgreSQL puede consultarse la tabla `__EFMigrationsHistory`. No se incluye `docker compose down -v` porque no fue ejecutado y eliminaría el volumen persistente.
