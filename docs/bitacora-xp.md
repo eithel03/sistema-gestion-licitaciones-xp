@@ -863,9 +863,13 @@ La suite E2E cubrió landing, navegación, proveedores, licitaciones, ofertas, p
 - Navigator: Luis Diego Chavala.
 - Rama: `chore/fase-06-docker`.
 - Issue: `#19`.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
-- CI remoto: Pendiente.
+- Pull Request: `#20` - `chore: completar Fase 6 - Docker y Docker Compose`, desde `chore/fase-06-docker` hacia `main`.
+- Commits:
+  - `b26d40a` — `chore(docker): ejecutar web y api con usuario no privilegiado`.
+  - `5f16fa6` — `docs(fase-06): registrar validacion docker y evidencia xp`.
+- GitHub Actions / Checks: exitosos; 2/2 checks aprobados en el Pull Request `#20`.
+- Conflictos: GitHub confirmó que no existen conflictos con la rama base `main` y que el Pull Request puede integrarse automáticamente.
+- Revisión formal final del Navigator: Aprobada por Luis Diego Chavala en el Pull Request `#20`.
 - Merge: Pendiente.
 
 ### Objetivo
@@ -945,4 +949,4 @@ No se ejecutó `docker compose down -v`, no se eliminaron datos persistidos y no
 
 ### Resultado
 
-La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente, PostgreSQL permaneció saludable, Swagger estuvo disponible, los datos persistieron después del reinicio, las seis migraciones quedaron registradas, Web y API ejecutaron con UID `1654`, el build Release fue exitoso y las 218 pruebas, incluidas las 6 E2E, quedaron aprobadas. El cierre Git/GitHub de Fase 6 permanece pendiente.
+La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente, PostgreSQL permaneció saludable, Swagger estuvo disponible, los datos persistieron después del reinicio, las seis migraciones quedaron registradas, Web y API ejecutaron con UID `1654`, el build Release fue exitoso y las 218 pruebas, incluidas las 6 E2E, quedaron aprobadas. El Issue, los commits, el push, el Pull Request, los checks y la revisión formal del Navigator están completados; el merge y la liberación/tag permanecen pendientes.

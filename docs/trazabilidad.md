@@ -44,7 +44,7 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/`, `.github/workflows/ci.yml` | `#3` | `chore/arquitectura-inicial` | `ad7913b`, `e0e5ad1`, `821ab9d`, `65a6afd` | `#4` | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | CI aprobado |
 | FASE-03 | Preparación dominio/TDD | N/A | N/A | Convenciones mínimas de dominio y pruebas preparatorias | `EntityTests.cs`, `ValueObjectTests.cs`, `ValidationResultTests.cs`, `IClockTests.cs` | `Domain`, `Application`, `Infrastructure`, `UnitTests` | `#7` | `chore/fase-03-dominio-tdd` | `2200fe3` | `#6` | `docs/dominio-tdd.md`, `docs/pruebas.md`, `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md` | CI aprobado |
 | FASE-04 | Preparacion persistencia | N/A | N/A | Infraestructura minima de PostgreSQL y EF Core sin tablas futuras | `PersistenceConventionsTests.cs`, `PostgreSqlContainerTests.cs`, restore, build, test, Docker Compose | `Infrastructure`, `IntegrationTests`, `compose.yaml`, documentacion | `#5` | `chore/preparacion-persistencia` | Pendiente | Pendiente | `docs/arquitectura-general.md`, `docs/modelo-datos.md`, `docs/pruebas.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
-| FASE-06 | Docker y Docker Compose | N/A | N/A | Docker multi-stage, Compose, PostgreSQL healthy, persistencia, migraciones, usuario no privilegiado, build y pruebas | Validación manual Docker; build Release; 218/218 pruebas; E2E 6/6 | Dockerfiles, `compose.yaml`, Infrastructure, Web, API, documentación | `#19` | `chore/fase-06-docker` | Pendiente | Pendiente | `docs/docker.md`, `docs/bitacora-xp.md`, `docs/pruebas.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
+| FASE-06 | Docker y Docker Compose | N/A | N/A | Docker multi-stage, Compose, PostgreSQL healthy, persistencia, migraciones, usuario no privilegiado, build y pruebas | Validación manual Docker; build Release; 218/218 pruebas; E2E 6/6 | Dockerfiles, `compose.yaml`, Infrastructure, Web, API, documentación | `#19` | `chore/fase-06-docker` | `b26d40a`, `5f16fa6` | `#20` | `docs/docker.md`, `docs/bitacora-xp.md`, `docs/pruebas.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
 
 ## Totales
 
@@ -140,4 +140,10 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Pruebas: 218/218 aprobadas, 0 fallidas y 0 omitidas; E2E 6/6 después de instalar Chromium de Playwright localmente.
 - Docker y Testcontainers: disponibles durante la validación.
 - `docker compose down -v`: no se ejecutó.
-- Commits, Pull Request y liberación de Fase 6: Pendiente.
+- Commits: `b26d40a` y `5f16fa6`.
+- Pull Request: `#20`, desde `chore/fase-06-docker` hacia `main`.
+- GitHub Actions / Checks: 2/2 exitosos en el Pull Request `#20`.
+- Conflictos: ninguno con la rama base `main`; GitHub confirmó que el Pull Request puede integrarse automáticamente.
+- Revisión formal final del Navigator: Aprobada por Luis Diego Chavala en el Pull Request `#20`.
+- Merge del Pull Request `#20`: Pendiente.
+- Liberación/tag: Pendiente.

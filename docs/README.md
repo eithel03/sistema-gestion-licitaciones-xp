@@ -57,3 +57,5 @@ Issue `#15`, Pull Request `#16` y los commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `
 La Fase 6 se validó localmente en la rama `chore/fase-06-docker`, asociada al Issue `#19`, con Eithel Herrera Rojas como Driver y Luis Diego Chavala como Navigator. Docker Compose inició correctamente Web en `8080`, API en `8081` y PostgreSQL 16 en `55432` con estado `healthy`; Swagger estuvo disponible y el volumen conservó licitaciones, proveedores, ofertas y tipos de cambio después del reinicio.
 
 Web y API están configurados para aplicar automáticamente las migraciones pendientes mediante `Database.Migrate()`. La tabla `__EFMigrationsHistory` confirmó seis migraciones aplicadas correctamente.
+
+El Issue `#19` fue realizado y se registraron los commits `b26d40a` y `5f16fa6`. El Pull Request `#20`, desde `chore/fase-06-docker` hacia `main`, permanece abierto con 2/2 checks exitosos y sin conflictos con la rama base. La revisión formal final del Navigator fue aprobada por Luis Diego Chavala. El merge y la liberación/tag permanecen pendientes.

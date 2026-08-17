@@ -117,4 +117,5 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Validación humana: los estudiantes ejecutaron y verificaron manualmente los comandos; revisaron Docker, las migraciones, la persistencia después de `docker compose restart`, el UID `1654` de Web y API, el build Release y las 218 pruebas, incluidas las 6 E2E.
 - Resultado: Docker Compose validado con PostgreSQL `healthy`, Web y API operativos, Swagger disponible, datos persistentes, seis migraciones registradas y contenedores de aplicación ejecutados sin root.
 - Responsabilidad: la IA se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad de comprender, revisar, validar y defender el trabajo.
-- Limitaciones: commits, Pull Request, CI remoto, revisión final y merge de Fase 6 permanecen pendientes.
+- Evidencia Git/GitHub: Issue `#19`; commits `b26d40a` y `5f16fa6`; Pull Request `#20`; GitHub Actions / Checks 2/2 exitosos; sin conflictos con `main`; revisión formal final del Navigator aprobada por Luis Diego Chavala.
+- Limitaciones: el merge del Pull Request `#20` y la liberación/tag correspondiente permanecen pendientes.
