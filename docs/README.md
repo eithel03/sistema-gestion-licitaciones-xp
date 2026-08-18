@@ -58,4 +58,10 @@ La Fase 6 se validó localmente en la rama `chore/fase-06-docker`, asociada al I
 
 Web y API están configurados para aplicar automáticamente las migraciones pendientes mediante `Database.Migrate()`. La tabla `__EFMigrationsHistory` confirmó seis migraciones aplicadas correctamente.
 
-El Issue `#19` fue realizado y se registraron los commits `b26d40a` y `5f16fa6`. El Pull Request `#20`, desde `chore/fase-06-docker` hacia `main`, permanece abierto con 2/2 checks exitosos y sin conflictos con la rama base. La revisión formal final del Navigator fue aprobada por Luis Diego Chavala. El merge y la liberación/tag permanecen pendientes.
+El Issue `#19` fue realizado y se registraron los commits `b26d40a` y `5f16fa6`. El Pull Request `#20`, desde `chore/fase-06-docker` hacia `main`, fue integrado el 17 de agosto de 2026 mediante `7557e45` con 2/2 checks exitosos y la revisión formal final del Navigator aprobada por Luis Diego Chavala. La liberación/tag permanece pendiente.
+
+## Estado de Fase 7
+
+La Fase 7 se validó en la rama local `chore/fase-07-kubernetes`, con Luis Diego Chavala como Driver y Eithel Herrera Rojas como Navigator. Los manifiestos de `/k8s` se reorganizaron a la estructura `namespace.yaml`, `app-deployment.yaml`, `app-service.yaml`, `app-configmap.yaml`, `app-secret.example.yaml`, `postgres-statefulset.yaml`, `postgres-service.yaml`, `postgres-pvc.yaml` y `kustomization.yaml`.
+
+El despliegue se realizó sobre el clúster local de Docker Desktop (Kubernetes v1.34.1): Namespace `licitaciones` Active, tres pods en Running con 0 reinicios, PVC `postgres-data` Bound, health checks `Healthy` en Web (`http://localhost:30080/health`) y API, seis migraciones aplicadas y persistencia comprobada después de eliminar y recrear el pod `postgres-0`. Los detalles están en [kubernetes.md](kubernetes.md) y [bitacora-xp.md](bitacora-xp.md). Commits, push, Pull Request y cierre formal permanecen pendientes.
