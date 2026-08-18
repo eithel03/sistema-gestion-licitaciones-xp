@@ -5,6 +5,7 @@ metadata:
   namespace: licitaciones
 data:
   ASPNETCORE_ENVIRONMENT: "Production"
+  ASPNETCORE_URLS: "http://+:8080"
   HealthChecks__PostgreSQL__Enabled: "true"
   POSTGRES_DB: "licitaciones"
   POSTGRES_USER: "licitaciones_app"

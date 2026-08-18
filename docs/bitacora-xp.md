@@ -870,7 +870,7 @@ La suite E2E cubrió landing, navegación, proveedores, licitaciones, ofertas, p
 - GitHub Actions / Checks: exitosos; 2/2 checks aprobados en el Pull Request `#20`.
 - Conflictos: GitHub confirmó que no existen conflictos con la rama base `main` y que el Pull Request puede integrarse automáticamente.
 - Revisión formal final del Navigator: Aprobada por Luis Diego Chavala en el Pull Request `#20`.
-- Merge: Pendiente.
+- Merge: Realizado el 17 de agosto de 2026 mediante `7557e45` (`Merge pull request #20 from eithel03/chore/fase-06-docker`).
 
 ### Objetivo
 
@@ -949,4 +949,100 @@ No se ejecutó `docker compose down -v`, no se eliminaron datos persistidos y no
 
 ### Resultado
 
-La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente, PostgreSQL permaneció saludable, Swagger estuvo disponible, los datos persistieron después del reinicio, las seis migraciones quedaron registradas, Web y API ejecutaron con UID `1654`, el build Release fue exitoso y las 218 pruebas, incluidas las 6 E2E, quedaron aprobadas. El Issue, los commits, el push, el Pull Request, los checks y la revisión formal del Navigator están completados; el merge y la liberación/tag permanecen pendientes.
+La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente, PostgreSQL permaneció saludable, Swagger estuvo disponible, los datos persistieron después del reinicio, las seis migraciones quedaron registradas, Web y API ejecutaron con UID `1654`, el build Release fue exitoso y las 218 pruebas, incluidas las 6 E2E, quedaron aprobadas. El Issue, los commits, el push, el Pull Request, los checks, la revisión formal del Navigator y el merge mediante `7557e45` están completados; la liberación/tag permanece pendiente.
+
+## Fase 7 — Kubernetes
+
+- Fecha: 17 y 18 de agosto de 2026.
+- Modalidad: programación en pareja XP.
+- Driver: Luis Diego Chavala.
+- Navigator: Eithel Herrera Rojas.
+- Rama: `chore/fase-07-kubernetes`.
+- Issue: `#21 - FASE-07: Despliegue en Kubernetes con StatefulSet, PVC y Probes`.
+- Pull Request: Pendiente.
+- Commit: `2d75e38` — `feat(k8s): implementar despliegue Fase 7 con StatefulSet, PVC y probes (Closes #21)`, subido a `origin/chore/fase-07-kubernetes`.
+
+### Objetivo
+
+Desplegar el sistema en Kubernetes con persistencia y configuración segura: reorganizar los manifiestos preparados en la Iteración 4 hacia la estructura definida para la fase, convertir PostgreSQL a StatefulSet, completar probes y recursos, validar el despliegue en el clúster local de Docker Desktop y demostrar la persistencia después del reinicio de pods.
+
+### Contexto y decisiones de arquitectura
+
+- Se adoptó la estructura `/k8s`: `namespace.yaml`, `app-deployment.yaml`, `app-service.yaml`, `app-configmap.yaml`, `app-secret.example.yaml`, `postgres-statefulset.yaml`, `postgres-service.yaml`, `postgres-pvc.yaml` y `kustomization.yaml`.
+- Los archivos `api.yaml`, `web.yaml`, `postgres.yaml`, `configmap.yaml` y `secret.example.yaml` de la Iteración 4 se migraron a la nueva estructura conservando toda la configuración válida.
+- `api.yaml` aportó el Deployment y Service de la API (probes, requests y limits).
+- `web.yaml` aportó el Deployment y Service de la Web (probes, requests y limits).
+- `postgres.yaml` aportó PVC, variables de entorno, volumen, readiness probe y Service; se convirtió de Deployment a StatefulSet.
+- Web y API no se comunican por HTTP entre sí: ambas consumen `ConnectionStrings:DefaultConnection` directamente contra PostgreSQL. La cadena de conexión apunta a `Host=postgres`, el nombre del Service de PostgreSQL dentro del clúster.
+- Se agregó un initContainer `wait-for-postgres` en los Deployments de Web y API que espera a que PostgreSQL acepte conexiones antes de iniciar la aplicación. En el primer despliegue, `Program.cs` ejecutaba `Migrate()` antes de que PostgreSQL estuviera disponible y los pods se reiniciaban (equivalentes a `depends_on: service_healthy` de Compose, que Kubernetes no ofrece nativamente).
+
+### Problemas encontrados y solución aplicada
+
+1. **Crash inicial de Web y API**: `NpgsqlException: Failed to connect to ...:5432` en `dbContext.Database.Migrate()` porque PostgreSQL aún no aceptaba conexiones; el proceso terminaba y el kubelet reiniciaba el contenedor (hasta 2 reinicios antes de converger). Solución: initContainer `wait-for-postgres` con `pg_isready` en ambos Deployments. Después de la corrección, los pods iniciaron con 0 reinicios.
+2. **Probes faltantes**: los manifiestos de la Iteración 4 no tenían `startupProbe` y PostgreSQL no tenía `livenessProbe` ni requests/limits. Se completaron los tres probes en los tres workloads y los recursos de PostgreSQL.
+3. **Error transitorio en prueba de persistencia**: una petición emitida exactamente durante la terminación forzada del pod de PostgreSQL respondió `500` por `57P01: terminating connection due to administrator command`. Es el comportamiento esperado al matar un pod con consultas en vuelo; la petición posterior respondió correctamente y el health check se recuperó solo.
+
+### Actividades realizadas
+
+- Reorganización de los manifiestos hacia la estructura definida.
+- Conversión de PostgreSQL a StatefulSet con PVC dedicado y Service estable.
+- Configuración de `startupProbe`, `readinessProbe` y `livenessProbe` para PostgreSQL, API y Web.
+- Configuración de requests y limits para los tres workloads.
+- Inyección de configuración mediante ConfigMap y Secret de ejemplo (`envFrom`).
+- Validación local: `kubectl kustomize k8s` y `kubectl apply --dry-run=client -k k8s` exitosos (10 objetos).
+- Despliegue con `kubectl apply -k k8s` sobre el clúster local de Docker Desktop (Kubernetes v1.34.1).
+- Verificación de Namespace, pods, deployments, StatefulSet, services, PVC, ConfigMap y Secret.
+- Verificación de health checks: API `http://localhost:8080/health` = `200 Healthy` (vía `kubectl port-forward -n licitaciones svc/licitaciones-api 8080:8080`); Web `http://localhost:30080/health` = `200 Healthy`; Swagger HTTP 200.
+- Verificación de las seis migraciones en `__EFMigrationsHistory` dentro del clúster.
+- Prueba de persistencia: creación de proveedor por API, eliminación del pod `postgres-0`, recreación por el StatefulSet y comprobación de que el dato continuaba existiendo.
+
+### Evidencia de despliegue
+
+- Namespace `licitaciones`: `Active`.
+- Pods: `postgres-0`, `licitaciones-api-*` y `licitaciones-web-*` en `Running`, `1/1`, 0 reinicios.
+- Deployments `licitaciones-api` y `licitaciones-web`: `1/1` Available.
+- StatefulSet `postgres`: `1/1` Ready.
+- Services: `licitaciones-api` ClusterIP `10.104.33.85:8080`, `licitaciones-web` NodePort `10.103.223.241:8080:30080`, `postgres` ClusterIP `10.106.37.125:5432`.
+- PVC `postgres-data`: `Bound` (1Gi, RWO).
+- ConfigMap `licitaciones-config`: 5 entradas; Secret `licitaciones-secret`: 2 entradas (ejemplo).
+- Migraciones aplicadas: `20260810092133_CreateProveedores`, `20260811234653_MakeProveedorNameUniqueIndexPartial`, `20260812002104_CreateLicitaciones`, `20260813011055_Iteration03OfertasAprobacion`, `20260813205016_Iteration04TiposCambio`, `20260814014136_AllowDuplicateTipoCambioDates`.
+
+### Prueba de persistencia
+
+1. `POST /api/v1/proveedores` creó "Proveedor Prueba Persistencia K8s" (id `5f534d0a-ebd1-4443-8da9-09c1fe0bd88c`).
+2. `kubectl delete pod postgres-0 -n licitaciones` eliminó el pod de PostgreSQL.
+3. El StatefulSet recreó `postgres-0` y quedó Ready en aproximadamente 15 segundos.
+4. Se consultó el proveedor por su ID y los datos sobrevivieron al reinicio, confirmando que el PVC funciona correctamente.
+
+La persistencia sobrevive al reinicio porque el StatefulSet monta el PVC `postgres-data` en `/var/lib/postgresql/data`. No se ejecutó `kubectl delete pvc postgres-data -n licitaciones`.
+
+### Responsabilidades del Driver
+
+Luis Diego Chavala ejecutó la reorganización de manifiestos, la conversión a StatefulSet, la configuración de probes y recursos, la validación, el despliegue, la verificación de health checks y la prueba de persistencia, y preparó la documentación de la fase.
+
+### Responsabilidades del Navigator
+
+Eithel Herrera Rojas revisó los manifiestos, las probes, el PVC, los Services y la evidencia de persistencia durante la sesión.
+
+### Archivos creados o actualizados
+
+- `k8s/app-deployment.yaml` (nuevo; sustituye `api.yaml` y `web.yaml`).
+- `k8s/app-service.yaml` (nuevo; sustituye los Services de `api.yaml` y `web.yaml`).
+- `k8s/app-configmap.yaml` (nuevo; sustituye `configmap.yaml`).
+- `k8s/app-secret.example.yaml` (nuevo; sustituye `secret.example.yaml`).
+- `k8s/postgres-statefulset.yaml` (nuevo; sustituye `postgres.yaml`).
+- `k8s/postgres-service.yaml` (nuevo; sustituye el Service de `postgres.yaml`).
+- `k8s/postgres-pvc.yaml` (nuevo; sustituye el PVC de `postgres.yaml`).
+- `k8s/kustomization.yaml` (actualizado).
+- `docs/kubernetes.md` (actualizado con evidencia real).
+- `docs/bitacora-xp.md` (esta sesión).
+- `docs/trazabilidad.md` (actualizado).
+- `docs/README.md` (actualizado).
+
+### Restricciones respetadas
+
+No se modificó código de aplicación. No se ejecutó `kubectl delete pvc postgres-data`. No se creó Pull Request. No se inventó evidencia: todos los resultados corresponden a ejecuciones reales del 17 y 18 de agosto de 2026.
+
+### Resultado
+
+La Fase 7 quedó validada: los diez recursos se aplicaron correctamente, los tres pods quedaron en estado Ready sin reinicios, los health checks de Web y API respondieron `200 Healthy`, las seis migraciones quedaron aplicadas y la persistencia sobrevivió a la eliminación y recreación del pod de PostgreSQL. El commit `2d75e38` se subió a `origin`. Pendientes: Pull Request, checks remotos y cierre formal con el Navigator.
