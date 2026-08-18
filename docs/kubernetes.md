@@ -80,10 +80,10 @@ Las seis migraciones quedaron aplicadas en PostgreSQL dentro del clúster (tabla
 
 ### Prueba de persistencia
 
-1. Se creó el proveedor "Proveedor Persistencia K8s Fase 7" mediante `POST /api/v1/proveedores` (id `9d51c481-714d-4f45-95aa-b847df69222e`).
+1. Se creó el proveedor "Proveedor Prueba Persistencia K8s" mediante `POST /api/v1/proveedores` (id `5f534d0a-ebd1-4443-8da9-09c1fe0bd88c`).
 2. Se eliminó el pod `postgres-0` (`kubectl delete pod postgres-0 -n licitaciones`).
 3. El StatefulSet recreó el pod con la misma identidad estable y quedó Ready en aproximadamente 15 segundos.
-4. El dato persistió: `SELECT count(*) FROM "Proveedores"` devolvió `1` y `GET /api/v1/proveedores?search=Persistencia K8s` devolvió el proveedor original.
+4. Se consultó el proveedor por su ID y los datos sobrevivieron al reinicio, confirmando que el PVC funciona correctamente.
 
 La persistencia sobrevive al reinicio del pod porque el StatefulSet monta el PVC `postgres-data` en `/var/lib/postgresql/data`. No se ejecutó `kubectl delete pvc postgres-data -n licitaciones`; eliminar el PVC destruiría los datos.
 

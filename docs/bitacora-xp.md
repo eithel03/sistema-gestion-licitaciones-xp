@@ -958,9 +958,9 @@ La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente
 - Driver: Luis Diego Chavala.
 - Navigator: Eithel Herrera Rojas.
 - Rama: `chore/fase-07-kubernetes`.
-- Issue: Pendiente de creación.
+- Issue: `#21 - FASE-07: Despliegue en Kubernetes con StatefulSet, PVC y Probes`.
 - Pull Request: Pendiente.
-- Commits: Pendientes; los cambios están en el árbol de trabajo sin commit.
+- Commit: `2d75e38` — `feat(k8s): implementar despliegue Fase 7 con StatefulSet, PVC y probes (Closes #21)`, subido a `origin/chore/fase-07-kubernetes`.
 
 ### Objetivo
 
@@ -992,7 +992,7 @@ Desplegar el sistema en Kubernetes con persistencia y configuración segura: reo
 - Validación local: `kubectl kustomize k8s` y `kubectl apply --dry-run=client -k k8s` exitosos (10 objetos).
 - Despliegue con `kubectl apply -k k8s` sobre el clúster local de Docker Desktop (Kubernetes v1.34.1).
 - Verificación de Namespace, pods, deployments, StatefulSet, services, PVC, ConfigMap y Secret.
-- Verificación de health checks: Web `http://localhost:30080/health` = `Healthy`; API `/health` = `Healthy` y Swagger HTTP 200.
+- Verificación de health checks: API `http://localhost:8080/health` = `200 Healthy` (vía `kubectl port-forward -n licitaciones svc/licitaciones-api 8080:8080`); Web `http://localhost:30080/health` = `200 Healthy`; Swagger HTTP 200.
 - Verificación de las seis migraciones en `__EFMigrationsHistory` dentro del clúster.
 - Prueba de persistencia: creación de proveedor por API, eliminación del pod `postgres-0`, recreación por el StatefulSet y comprobación de que el dato continuaba existiendo.
 
@@ -1002,17 +1002,17 @@ Desplegar el sistema en Kubernetes con persistencia y configuración segura: reo
 - Pods: `postgres-0`, `licitaciones-api-*` y `licitaciones-web-*` en `Running`, `1/1`, 0 reinicios.
 - Deployments `licitaciones-api` y `licitaciones-web`: `1/1` Available.
 - StatefulSet `postgres`: `1/1` Ready.
-- Services: `licitaciones-api` ClusterIP `8080`, `licitaciones-web` NodePort `30080`, `postgres` ClusterIP `5432`.
+- Services: `licitaciones-api` ClusterIP `10.104.33.85:8080`, `licitaciones-web` NodePort `10.103.223.241:8080:30080`, `postgres` ClusterIP `10.106.37.125:5432`.
 - PVC `postgres-data`: `Bound` (1Gi, RWO).
 - ConfigMap `licitaciones-config`: 5 entradas; Secret `licitaciones-secret`: 2 entradas (ejemplo).
 - Migraciones aplicadas: `20260810092133_CreateProveedores`, `20260811234653_MakeProveedorNameUniqueIndexPartial`, `20260812002104_CreateLicitaciones`, `20260813011055_Iteration03OfertasAprobacion`, `20260813205016_Iteration04TiposCambio`, `20260814014136_AllowDuplicateTipoCambioDates`.
 
 ### Prueba de persistencia
 
-1. `POST /api/v1/proveedores` creó "Proveedor Persistencia K8s Fase 7" (id `9d51c481-714d-4f45-95aa-b847df69222e`).
+1. `POST /api/v1/proveedores` creó "Proveedor Prueba Persistencia K8s" (id `5f534d0a-ebd1-4443-8da9-09c1fe0bd88c`).
 2. `kubectl delete pod postgres-0 -n licitaciones` eliminó el pod de PostgreSQL.
 3. El StatefulSet recreó `postgres-0` y quedó Ready en aproximadamente 15 segundos.
-4. `SELECT count(*) FROM "Proveedores"` devolvió `1` y la búsqueda por API devolvió el proveedor original.
+4. Se consultó el proveedor por su ID y los datos sobrevivieron al reinicio, confirmando que el PVC funciona correctamente.
 
 La persistencia sobrevive al reinicio porque el StatefulSet monta el PVC `postgres-data` en `/var/lib/postgresql/data`. No se ejecutó `kubectl delete pvc postgres-data -n licitaciones`.
 
@@ -1036,13 +1036,13 @@ Eithel Herrera Rojas revisó los manifiestos, las probes, el PVC, los Services y
 - `k8s/kustomization.yaml` (actualizado).
 - `docs/kubernetes.md` (actualizado con evidencia real).
 - `docs/bitacora-xp.md` (esta sesión).
-- `docs/trazabilidad.md` (pendiente de actualizar en la misma revisión).
-- `docs/README.md` (pendiente de actualizar en la misma revisión).
+- `docs/trazabilidad.md` (actualizado).
+- `docs/README.md` (actualizado).
 
 ### Restricciones respetadas
 
-No se modificó código de aplicación. No se ejecutó `kubectl delete pvc postgres-data`. No se crearon commits, push ni Pull Request. No se inventó evidencia: todos los resultados corresponden a ejecuciones reales del 17 y 18 de agosto de 2026.
+No se modificó código de aplicación. No se ejecutó `kubectl delete pvc postgres-data`. No se creó Pull Request. No se inventó evidencia: todos los resultados corresponden a ejecuciones reales del 17 y 18 de agosto de 2026.
 
 ### Resultado
 
-La Fase 7 quedó validada: los diez recursos se aplicaron correctamente, los tres pods quedaron en estado Ready sin reinicios, los health checks de Web y API respondieron `Healthy`, las seis migraciones quedaron aplicadas y la persistencia sobrevivió a la eliminación y recreación del pod de PostgreSQL. Pendientes: Issue, commits, push, Pull Request, checks remotos y cierre formal con el Navigator.
+La Fase 7 quedó validada: los diez recursos se aplicaron correctamente, los tres pods quedaron en estado Ready sin reinicios, los health checks de Web y API respondieron `200 Healthy`, las seis migraciones quedaron aplicadas y la persistencia sobrevivió a la eliminación y recreación del pod de PostgreSQL. El commit `2d75e38` se subió a `origin`. Pendientes: Pull Request, checks remotos y cierre formal con el Navigator.
