@@ -1046,3 +1046,47 @@ No se modificó código de aplicación. No se ejecutó `kubectl delete pvc postg
 ### Resultado
 
 La Fase 7 quedó validada: los diez recursos se aplicaron correctamente, los tres pods quedaron en estado Ready sin reinicios, los health checks de Web y API respondieron `200 Healthy`, las seis migraciones quedaron aplicadas y la persistencia sobrevivió a la eliminación y recreación del pod de PostgreSQL. El commit `2d75e38` se subió a `origin`. Pendientes: Pull Request, checks remotos y cierre formal con el Navigator.
+
+## Fase 8 — Consolidación de GitHub Actions
+
+- Fecha: 19 de agosto de 2026.
+- Driver: Eithel.
+- Navigator: Chavala.
+- Rama: `chore/fase-08-github-actions`.
+- Issue: `#23`.
+- Pull Request: `#24`, con destino a `main`.
+
+### Objetivo
+
+Consolidar y endurecer el workflow de GitHub Actions existente desde la Fase 2, integrando validaciones reproducibles de restore, compilación, pruebas, cobertura, formato, vulnerabilidades NuGet, imágenes Docker y manifiestos Kubernetes.
+
+### Actividades realizadas
+
+- Consolidación de `dotnet restore Licitaciones.sln` y compilación Release usando `global.json`.
+- Ejecución de UnitTests, IntegrationTests, FunctionalTests y E2ETests.
+- Consolidación de cobertura con `coverage.runsettings`, `.config/dotnet-tools.json`, ReportGenerator y `scripts/verify-coverage.ps1`.
+- Mantenimiento de los umbrales Domain >= 80 %, Application >= 80 % y Global >= 70 %.
+- Incorporación de la verificación no destructiva `dotnet format Licitaciones.sln --verify-no-changes --no-restore`, informativa mediante `continue-on-error`.
+- Reutilización del análisis estático configurado en `Directory.Build.props`, sin SonarQube, SonarCloud ni CodeQL.
+- Incorporación de la revisión informativa de vulnerabilidades NuGet transitivas.
+- Construcción de las imágenes Docker de `Licitaciones.Web` y `Licitaciones.Api` únicamente para validación CI, sin publicación en un registry.
+- Validación de los manifiestos de `k8s/` mediante instalación y renderizado con Kustomize, sin desplegar un clúster desde GitHub Actions.
+- Incorporación del job `ci-complete` para consolidar los resultados de los jobs principales y ofrecer un check final estable.
+- Normalización de la codificación UTF-8 sin BOM únicamente en cinco archivos de migraciones, sin cambios de lógica, SQL, comportamiento ni estructura.
+
+### Validaciones
+
+- UnitTests: 121/121.
+- IntegrationTests: 37/37.
+- FunctionalTests: 54/54.
+- E2ETests: 6/6.
+- Total: 218/218 pruebas aprobadas.
+- Cobertura: Domain 91,64 %, Application 88,60 % y Global 89,37 %.
+- GitHub Actions se ejecutó mediante `push` y `pull_request`.
+- Checks comprobados: `Build, pruebas y cobertura`, `CI completo`, `Construcción de imágenes Docker`, `Revisión de vulnerabilidades NuGet`, `Validación de manifiestos Kubernetes` y `Verificación de formato`.
+
+### Resultado y estado actual
+
+GitHub indica `All checks have passed` y muestra `12 successful checks`. El PR `#24` está abierto, dirigido a `main`, sin conflictos y puede integrarse automáticamente. El merge aún está pendiente; no se ha realizado ni se documenta como integrado a `main`.
+
+La revisión final del Navigator permanece pendiente por falta de evidencia confirmada. La protección de `main` queda pendiente de configuración o verificación manual.

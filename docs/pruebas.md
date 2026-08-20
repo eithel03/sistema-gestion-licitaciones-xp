@@ -317,3 +317,21 @@ Limitacion del entorno de ejecucion manual MVC: claves DPAPI no descifrables, Ev
 - Después de instalar Chromium, la suite E2E completa quedó en verde.
 - Esta ejecución confirma que los cambios Docker de Fase 6 no introdujeron regresiones en la suite automatizada.
 - El Pull Request `#20` ejecutó satisfactoriamente los checks remotos de GitHub, con 2/2 checks aprobados.
+
+## Validación de CI — Fase 8
+
+La consolidación de GitHub Actions validó el flujo completo de CI con los siguientes componentes:
+
+- Restore: `dotnet restore Licitaciones.sln`.
+- Build Release con `global.json`.
+- Pruebas: UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; total 218/218.
+- Cobertura mediante `coverage.runsettings`, `.config/dotnet-tools.json`, ReportGenerator y `scripts/verify-coverage.ps1`.
+- Resultados de cobertura: Domain 91,64 %, Application 88,60 % y Global 89,37 %, por encima de los umbrales Domain >= 80 %, Application >= 80 % y Global >= 70 %.
+- Formato con `dotnet format Licitaciones.sln --verify-no-changes --no-restore`; es una comprobación no destructiva e informativa mediante `continue-on-error`, por lo que no se afirma cumplimiento perfecto de todo el repositorio.
+- Análisis estático reutilizando `Directory.Build.props`; no se incorporaron SonarQube, SonarCloud ni CodeQL.
+- Revisión informativa de dependencias NuGet transitivas con `dotnet list Licitaciones.sln package --vulnerable --include-transitive --format json`. Este job no demuestra ausencia absoluta de vulnerabilidades.
+- Construcción de las imágenes Docker de `Licitaciones.Web` y `Licitaciones.Api` usando los Dockerfiles existentes, únicamente para validación CI y sin publicación en un registry.
+- Validación de `k8s/` mediante instalación y renderizado de Kustomize; GitHub Actions no despliega un clúster Kubernetes.
+- El job `ci-complete` consolida `build-and-test`, `format`, `vulnerability-scan`, `docker-build` y `k8s-validate`.
+
+GitHub Actions se ejecutó por `push` y `pull_request`. GitHub reportó `All checks have passed` y `12 successful checks`, incluyendo `Build, pruebas y cobertura`, `CI completo`, `Construcción de imágenes Docker`, `Revisión de vulnerabilidades NuGet`, `Validación de manifiestos Kubernetes` y `Verificación de formato`. El PR `#24` permanece abierto y sin conflictos con `main`; el merge sigue pendiente.
