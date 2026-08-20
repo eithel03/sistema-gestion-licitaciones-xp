@@ -192,3 +192,16 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Problema encontrado: reinicio inicial de Web/API por `Migrate()` contra PostgreSQL no disponible; resuelto con initContainer `wait-for-postgres`.
 - No se ejecutó `kubectl delete pvc postgres-data`; eliminar el PVC destruiría los datos.
 - Pull Request y cierre formal con el Navigator: Pendientes.
+
+## FASE-08 — Consolidación de GitHub Actions
+
+- Issue: `#23`.
+- Rama: `chore/fase-08-github-actions`.
+- Pull Request: `#24`, destino `main`, actualmente abierto y sin conflictos.
+- Workflow: `.github/workflows/ci.yml`.
+- Pruebas y cobertura: restore, build Release, 218/218 pruebas y cobertura Domain 91,64 %, Application 88,60 % y Global 89,37 %, con umbrales de 80 %, 80 % y 70 %.
+- Docker: construcción CI de las imágenes de `Licitaciones.Web` y `Licitaciones.Api`, sin publicación.
+- Kubernetes: validación de `k8s/` mediante Kustomize, sin despliegue de clúster desde GitHub Actions.
+- Documentación relacionada: `docs/bitacora-xp.md`, `docs/pruebas.md`, `docs/trazabilidad.md`, `docs/uso-ia.md` y `docs/README.md`.
+- CI: exitoso; GitHub muestra `All checks have passed` y 12 checks exitosos.
+- Estado: merge pendiente.
