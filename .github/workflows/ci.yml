@@ -6,6 +6,7 @@ on:
 
 jobs:
   build-and-test:
+    name: Build, pruebas y cobertura
     runs-on: ubuntu-latest
 
     steps:
@@ -15,31 +16,155 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          global-json-file: global.json
 
       - name: Restore
         run: dotnet restore Licitaciones.sln
 
-      - name: Build
+      - name: Build Release
         run: dotnet build Licitaciones.sln --configuration Release --no-restore
 
       - name: Install Playwright Chromium
         run: pwsh tests/Licitaciones.E2ETests/bin/Release/net9.0/playwright.ps1 install --with-deps chromium
 
       - name: Unit tests with coverage
-        run: dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+        run: dotnet test tests/Licitaciones.UnitTests/Licitaciones.UnitTests.csproj --configuration Release --no-build --settings coverage.runsettings --results-directory TestResults
 
       - name: Integration tests with coverage
-        run: dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+        run: dotnet test tests/Licitaciones.IntegrationTests/Licitaciones.IntegrationTests.csproj --configuration Release --no-build --settings coverage.runsettings --results-directory TestResults
 
       - name: Functional tests with coverage
-        run: dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+        run: dotnet test tests/Licitaciones.FunctionalTests/Licitaciones.FunctionalTests.csproj --configuration Release --no-build --settings coverage.runsettings --results-directory TestResults
 
       - name: E2E tests
         run: dotnet test tests/Licitaciones.E2ETests/Licitaciones.E2ETests.csproj --configuration Release --no-build
 
-      - name: Upload coverage results
+      - name: Restore local tools
+        run: dotnet tool restore
+
+      - name: Merge coverage reports
+        run: dotnet tool run reportgenerator -- -reports:"TestResults/**/coverage.cobertura.xml" -targetdir:TestResults/coverage -reporttypes:Cobertura
+
+      - name: Verify coverage thresholds
+        shell: pwsh
+        run: |
+          & ./scripts/verify-coverage.ps1 -ReportPath (Join-Path $env:GITHUB_WORKSPACE 'TestResults/coverage/Cobertura.xml')
+
+      - name: Upload coverage report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: TestResults
+          name: coverage-report
+          path: TestResults/coverage
+
+  format:
+    name: Verificación de formato
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore Licitaciones.sln
+
+      - name: Verify formatting (non destructive)
+        continue-on-error: true
+        run: dotnet format Licitaciones.sln --verify-no-changes --no-restore
+
+  vulnerability-scan:
+    name: Revisión de vulnerabilidades NuGet
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore Licitaciones.sln
+
+      - name: Check vulnerable packages (incl. transitive)
+        run: |
+          output="$(dotnet list Licitaciones.sln package --vulnerable --include-transitive --format json 2>&1)"
+          echo "$output"
+
+          if echo "$output" | grep -q '"severity"'; then
+            echo "::warning::Se detectaron paquetes NuGet vulnerables (incluye dependencias transitivas). Revisar el reporte anterior."
+          else
+            echo "No se detectaron paquetes vulnerables."
+          fi
+
+  docker-build:
+    name: Construcción de imágenes Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Web image
+        run: docker build -f src/Licitaciones.Web/Dockerfile -t licitaciones-web:ci .
+
+      - name: Build Api image
+        run: docker build -f src/Licitaciones.Api/Dockerfile -t licitaciones-api:ci .
+
+  k8s-validate:
+    name: Validación de manifiestos Kubernetes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Kustomize
+        run: |
+          curl -fsSL -o /tmp/kustomize.tar.gz "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.5.0/kustomize_v5.5.0_linux_amd64.tar.gz"
+          tar -xzf /tmp/kustomize.tar.gz -C /tmp
+
+      - name: Validate kustomize build
+        run: /tmp/kustomize build k8s/ > /dev/null
+
+  ci-complete:
+    name: CI completo
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - build-and-test
+      - format
+      - vulnerability-scan
+      - docker-build
+      - k8s-validate
+
+    steps:
+      - name: Verificar resultado de todos los jobs
+        run: |
+          echo "build-and-test -> ${{ needs.build-and-test.result }}"
+          echo "format -> ${{ needs.format.result }}"
+          echo "vulnerability-scan -> ${{ needs.vulnerability-scan.result }}"
+          echo "docker-build -> ${{ needs.docker-build.result }}"
+          echo "k8s-validate -> ${{ needs.k8s-validate.result }}"
+
+          for result in \
+            "${{ needs.build-and-test.result }}" \
+            "${{ needs.format.result }}" \
+            "${{ needs.vulnerability-scan.result }}" \
+            "${{ needs.docker-build.result }}" \
+            "${{ needs.k8s-validate.result }}"; do
+
+            if [ "$result" != "success" ]; then
+              echo "::error::Uno o más jobs de CI no finalizó correctamente."
+              exit 1
+            fi
+          done
+
+          echo "Todos los checks de CI finalizaron correctamente."
