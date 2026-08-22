@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using Licitaciones.Application.Abstractions.Time;
 using Licitaciones.Application.Licitaciones;
 using Licitaciones.Domain.Licitaciones;
 using Licitaciones.Infrastructure.Persistence;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Testcontainers.PostgreSql;
 
 namespace Licitaciones.FunctionalTests;
@@ -17,6 +19,7 @@ public sealed class LicitacionApiTests : IAsyncLifetime
 {
     private static readonly DateTimeOffset Now = new(2026, 8, 16, 10, 0, 0, TimeSpan.Zero);
     private readonly PostgreSqlContainer _container = new PostgreSqlBuilder("postgres:16").WithDatabase("licitaciones_api_licitaciones_tests").WithUsername("licitaciones_api_licitaciones_tests").WithPassword("licitaciones_api_licitaciones_tests").Build();
+    private readonly MutableClock _clock = new(Now);
     private WebApplicationFactory<Program>? _factory;
 
     public async Task InitializeAsync()
@@ -27,6 +30,11 @@ public sealed class LicitacionApiTests : IAsyncLifetime
         {
             builder.UseEnvironment("Testing");
             builder.ConfigureAppConfiguration((_, configuration) => configuration.AddInMemoryCollection(new Dictionary<string, string?> { ["ConnectionStrings:DefaultConnection"] = _container.GetConnectionString() }));
+            builder.ConfigureServices(services =>
+            {
+                services.RemoveAll<IClock>();
+                services.AddSingleton<IClock>(_clock);
+            });
         });
         using var scope = _factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<LicitacionesDbContext>();
@@ -149,6 +157,11 @@ public sealed class LicitacionApiTests : IAsyncLifetime
         };
 
         return await client.SendAsync(request);
+    }
+
+    private sealed class MutableClock(DateTimeOffset utcNow) : IClock
+    {
+        public DateTimeOffset UtcNow { get; set; } = utcNow;
     }
 }
 
