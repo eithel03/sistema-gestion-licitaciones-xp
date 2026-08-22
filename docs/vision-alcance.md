@@ -1,10 +1,10 @@
-# Vision y alcance
+# Visión y alcance
 
-## Vision
+## Visión
 
-El proyecto busca construir una aplicacion web modular para gestionar licitaciones, proveedores, ofertas, niveles de aprobacion y conversion visual CRC/USD mediante Extreme Programming. La planificacion se organiza con historias de usuario, iteraciones uniformes, pequenas liberaciones, TDD, programacion en parejas, integracion continua y trazabilidad documental.
+El proyecto implementa una aplicación web modular para gestionar licitaciones, proveedores, ofertas, niveles de aprobación y conversión visual CRC/USD mediante Extreme Programming. La planificación se organiza con historias de usuario, iteraciones, pequeñas liberaciones, TDD, programación en parejas, integración continua y trazabilidad documental.
 
-Este documento puede actualizarse a medida que se obtenga retroalimentacion del cliente.
+La línea base descrita en Fase 9 es `main@36e89ec`. Las limitaciones de la implementación se detallan en los documentos de cada módulo; este alcance no implica que exista una versión o tag oficial.
 
 ## Problema
 
@@ -27,7 +27,7 @@ Sin una fuente organizada, el seguimiento de reglas, decisiones, pruebas, entreg
 - Equipo de desarrollo.
 - Persona docente o evaluadora.
 
-## Alcance incluido
+## Alcance implementado
 
 - Landing page.
 - Navegacion.
@@ -50,7 +50,7 @@ Sin una fuente organizada, el seguimiento de reglas, decisiones, pruebas, entreg
 - GitHub Actions.
 - Documentacion en `/docs`.
 
-## Fuera de alcance inicial
+## Fuera de alcance
 
 - Integracion obligatoria con servicios externos de tipo de cambio.
 - Aplicaciones moviles nativas.
@@ -66,7 +66,7 @@ Sin una fuente organizada, el seguimiento de reglas, decisiones, pruebas, entreg
 - PostgreSQL 16 o superior.
 - CRC como fuente de verdad.
 - Extreme Programming como unica metodologia.
-- Documentacion unicamente en `/docs`.
+- Documentación principal en `/docs`, con un README raíz de entrada.
 - Trabajo en pareja con rotacion de driver y navigator.
 - Pruebas y TDD.
 - Docker, Kubernetes y GitHub Actions.

@@ -1,37 +1,14 @@
-﻿# Documentacion por modulos
+# Documentación por módulos
 
-- [Proveedores](proveedores.md): catalogo inicial implementado en la Iteracion 1.
-- [Licitaciones](licitaciones.md): gestion de licitaciones, estados, persistencia y API implementada en la Iteracion 2.
-- [Ofertas](ofertas.md): CRUD, reglas, mejor oferta y clasificacion implementados en Iteracion 3.
-- [Niveles de aprobacion](niveles-aprobacion.md): rangos y aprobador persistido implementados en Iteracion 3.
+Cada documento describe el estado real en `main@36e89ec` e incluye propósito, responsabilidades, dependencias, entradas, salidas, reglas de negocio, errores y pruebas relacionadas.
 
-## Evidencia Iteracion 1
+- [Proveedores](proveedores.md)
+- [Licitaciones](licitaciones.md)
+- [Ofertas](ofertas.md)
+- [Niveles de aprobación](niveles-aprobacion.md)
+- [Tipo de cambio](tipo-cambio.md)
+- [Interfaz Web](interfaz-web.md)
+- [API REST](api-rest.md)
+- [Persistencia](persistencia.md)
 
-- Rama: feature/iteracion-01-landing-proveedores.
-- Commit: 5696a0f.
-- Pull Request: #9.
-
-## Evidencia Iteracion 2
-
-## Evidencia Iteracion 2
-
-- Rama: `feature/iteracion-02-licitaciones`.
-- Driver: Eithel.
-- Navigator: Chavala.
-- Historias: HU-12 a HU-19.
-- Puntos: 36.
-- Issue: `#10`.
-- Commits: `cce95ad`, `812b59c`, `ed89c5a`.
-- Pull Request: `#12`.
-- CI remoto: Aprobado.
-- Merge: Pendiente.
-- Liberacion prevista: `v0.2.0`.
-
-## Evidencia Iteracion 3
-
-- Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Driver principal: Chavala. Navigator principal: Eithel.
-- Historias: HU-11 y HU-20 a HU-29.
-- Commits: `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
-- Estado: tecnicamente implementada y validada localmente; revision formal del Navigator, Pull Request, CI remoto, merge y tag pendientes.
-- Liberacion prevista: `v0.3.0`.
+Los flujos entre módulos se documentan en [Integración de módulos](../integracion-modulos.md). Los resultados de pruebas citados en los documentos son evidencia histórica, salvo indicación expresa de una ejecución posterior.

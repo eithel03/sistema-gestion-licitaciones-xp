@@ -1,6 +1,31 @@
 # Matriz de trazabilidad
 
-Esta matriz registra la trazabilidad prevista entre historias, criterios de aceptacion, pruebas, documentacion, Issues, ramas, commits, Pull Requests y liberaciones. Los campos sin evidencia real permanecen como `Pendiente`.
+Este documento relaciona historias, implementación, pruebas, commits y documentación. La información de ejecución conserva su carácter histórico: no se regeneraron suites ni coberturas durante la Fase 9.
+
+## Estado de integración de fases
+
+La línea base documental es `main@36e89ec`. El historial local evidencia que las fases 0 a 8 y las cuatro iteraciones son ancestros de `main`; las ramas remotas inspeccionadas correspondientes a esos trabajos también están contenidas en `main`. Un nombre de imagen o una versión prevista en documentos históricos no equivale a un tag: el repositorio no contiene tags Git ni una GitHub Release verificable localmente.
+
+| Trabajo | Pull Request | Integración en `main` | Estado |
+| --- | --- | --- | --- |
+| Fase 0 — organización inicial | `#1` | `41f39ea` | Integrada |
+| Fase 1 — Planning Game e historias | `#2` | `6f2e350` | Integrada |
+| Fase 2 — arquitectura modular | `#4` | `2c15126` | Integrada |
+| Fase 3 — dominio y TDD | `#6` | `7448226` | Integrada |
+| Fase 4 — persistencia | `#8` | `f70b4ad` | Integrada |
+| Iteración 1 — landing y proveedores | `#9` | `10cb32b` | Integrada |
+| Iteración 2 — licitaciones | `#12` | `fafcc66` | Integrada |
+| Iteración 3 — ofertas y aprobación | `#14` | `fe5317c` | Integrada |
+| Iteración 4 — moneda, UX y API | `#16` | `ea9772f` | Integrada |
+| Fase 5 — pruebas y cobertura | `#18` | `f79d22d` | Integrada |
+| Fase 6 — Docker | `#20` | `7557e45` | Integrada |
+| Fase 7 — Kubernetes | `#22` | `82c8c58` | Integrada |
+| Fase 8 — GitHub Actions | `#24` | `36e89ec` | Integrada |
+| Fase 9 — documentación | Registrar cuando exista | Registrar después | Actualizada localmente; integración no registrada |
+
+## Trazabilidad de historias
+
+Los campos marcados como pendientes no se completan sin evidencia. Los nombres de liberación de la tabla son planes históricos; ninguno representa un tag oficial.
 
 | Historia | Iteracion | Prioridad | Puntos | Criterios | Pruebas previstas | Modulo | Issue | Rama | Commits | PR | Documentacion | Liberacion |
 | --- | --- | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -33,9 +58,9 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-27 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `NivelAprobacionServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests` | Niveles de aprobacion | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37` | `#14` | `modulos/niveles-aprobacion.md`, `api.md`, `iteracion-03.md` | `v0.3.0` (Prevista) |
 | HU-28 | Iteracion 3 | Alta | 5 | Definidos en `historias-usuario.md` | `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests` | Niveles de aprobacion, ofertas | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `a20eb19`, `29e727c`, `37bcb55`, `437cc37` | `#14` | `modulos/niveles-aprobacion.md`, `modelo-datos.md`, `integracion-modulos.md` | `v0.3.0` (Prevista) |
 | HU-29 | Iteracion 3 | Alta | 3 | Definidos en `historias-usuario.md` | `Iteration3ApiTests` | Ofertas, aprobaciones, API REST | Pendiente | `feature/iteracion-03-ofertas-aprobacion` | `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `437cc37` | `#14` | `api.md`, `iteracion-03.md`, `modulos/ofertas.md`, `modulos/niveles-aprobacion.md` | `v0.3.0` (Prevista) |
-| HU-30 | Iteracion 4 | Media | 5 | Definidos en `historias-usuario.md` | `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests`, `Iteration4MvcTests` | Tipos de cambio | `#15` | `feature/iteracion-04-moneda-ux` | `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md`, `modulos/tipos-cambio.md`, `api-iteracion-04.md`, `pruebas-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
-| HU-31 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests` | Tipos de cambio, persistencia | `#15` | `feature/iteracion-04-moneda-ux` | `40c4f5d`, `38c5bf5`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `modulos/tipos-cambio.md`, `api-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
-| HU-32 | Iteracion 4 | Media | 3 | Definidos en `historias-usuario.md` | `TipoCambioServiceTests`, `Iteration4ApiTests`, `Iteration4MvcTests` | Tipos de cambio, interfaz, licitaciones, ofertas | `#15` | `feature/iteracion-04-moneda-ux` | `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `modulos/tipos-cambio.md`, `pruebas-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
+| HU-30 | Iteracion 4 | Media | 5 | Definidos en `historias-usuario.md` | `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests`, `Iteration4MvcTests` | Tipos de cambio | `#15` | `feature/iteracion-04-moneda-ux` | `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md`, `modulos/tipo-cambio.md`, `api-iteracion-04.md`, `pruebas-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
+| HU-31 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests` | Tipos de cambio, persistencia | `#15` | `feature/iteracion-04-moneda-ux` | `40c4f5d`, `38c5bf5`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `modulos/tipo-cambio.md`, `api-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
+| HU-32 | Iteracion 4 | Media | 3 | Definidos en `historias-usuario.md` | `TipoCambioServiceTests`, `Iteration4ApiTests`, `Iteration4MvcTests` | Tipos de cambio, interfaz, licitaciones, ofertas | `#15` | `feature/iteracion-04-moneda-ux` | `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `modulos/tipo-cambio.md`, `pruebas-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
 | HU-33 | Iteracion 4 | Media | 3 | Definidos en `historias-usuario.md` | `Iteration4MvcTests` y validacion manual de persistencia | Interfaz | `#15` | `feature/iteracion-04-moneda-ux` | `5cba6c2`, `9b0fa75`, `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md` | `v1.0.0-rc` (Prevista) |
 | HU-34 | Iteracion 4 | Alta | 5 | Definidos en `historias-usuario.md` | `ApiHardeningTests`, `Iteration4ApiTests`, `LicitacionApiTests` | API REST | `#15` | `feature/iteracion-04-moneda-ux` | `38c5bf5`, `9b0fa75`, `2e710d2` | `#16` | `api-iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md`, `pruebas-iteracion-04.md` | `v1.0.0-rc` (Prevista) |
 | HU-35 | Iteracion 4 | Alta | 5 | Definidos en `historias-usuario.md` | UnitTests 96/96, IntegrationTests 27/27, FunctionalTests 51/51; cobertura limpia 3x | Pruebas, integracion continua | `#15` | `feature/iteracion-04-moneda-ux` | `9b0fa75`, `2e710d2` | `#16` | `pruebas-iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md` | `v1.0.0-rc` (Prevista) |
@@ -43,9 +68,11 @@ Esta matriz registra la trazabilidad prevista entre historias, criterios de acep
 | HU-37 | Iteracion 4 | Alta | 3 | Definidos en `historias-usuario.md` | Revision documental, enlaces, trazabilidad y `git diff --check` | Documentacion, XP | `#15` | `feature/iteracion-04-moneda-ux` | `2e710d2` | `#16` | `iteraciones/iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md`, `bitacora-xp.md`, `uso-ia.md`, `trazabilidad.md` | `v1.0.0-rc` (Prevista) |
 | FASE-02 | Preparación técnica | N/A | N/A | Inicialización técnica del monolito modular | `ArchitectureTests.cs`, `InfrastructureAssemblyTests.cs`, `HealthEndpointTests.cs` | `src/`, `tests/`, `docs/`, `.github/workflows/ci.yml` | `#3` | `chore/arquitectura-inicial` | `ad7913b`, `e0e5ad1`, `821ab9d`, `65a6afd` | `#4` | `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | CI aprobado |
 | FASE-03 | Preparación dominio/TDD | N/A | N/A | Convenciones mínimas de dominio y pruebas preparatorias | `EntityTests.cs`, `ValueObjectTests.cs`, `ValidationResultTests.cs`, `IClockTests.cs` | `Domain`, `Application`, `Infrastructure`, `UnitTests` | `#7` | `chore/fase-03-dominio-tdd` | `2200fe3` | `#6` | `docs/dominio-tdd.md`, `docs/pruebas.md`, `docs/arquitectura-general.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md` | CI aprobado |
-| FASE-04 | Preparacion persistencia | N/A | N/A | Infraestructura minima de PostgreSQL y EF Core sin tablas futuras | `PersistenceConventionsTests.cs`, `PostgreSqlContainerTests.cs`, restore, build, test, Docker Compose | `Infrastructure`, `IntegrationTests`, `compose.yaml`, documentacion | `#5` | `chore/preparacion-persistencia` | Pendiente | Pendiente | `docs/arquitectura-general.md`, `docs/modelo-datos.md`, `docs/pruebas.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
+| FASE-04 | Preparacion persistencia | N/A | N/A | Infraestructura minima de PostgreSQL y EF Core sin tablas futuras | `PersistenceConventionsTests.cs`, `PostgreSqlContainerTests.cs`, restore, build, test, Docker Compose | `Infrastructure`, `IntegrationTests`, `compose.yaml`, documentacion | `#5` | `chore/preparacion-persistencia` | `677ae3d`, `1706703`, `f51851a` | `#8` | `docs/arquitectura-general.md`, `docs/modelo-datos.md`, `docs/pruebas.md`, `docs/bitacora-xp.md`, `docs/uso-ia.md`, `docs/README.md` | Sin tag oficial |
 | FASE-06 | Docker y Docker Compose | N/A | N/A | Docker multi-stage, Compose, PostgreSQL healthy, persistencia, migraciones, usuario no privilegiado, build y pruebas | Validación manual Docker; build Release; 218/218 pruebas; E2E 6/6 | Dockerfiles, `compose.yaml`, Infrastructure, Web, API, documentación | `#19` | `chore/fase-06-docker` | `b26d40a`, `5f16fa6` | `#20` | `docs/docker.md`, `docs/bitacora-xp.md`, `docs/pruebas.md`, `docs/uso-ia.md`, `docs/README.md` | Pendiente |
-| FASE-07 | Kubernetes | N/A | N/A | Namespace, Deployments y Services de Web/API, ConfigMap, Secret de ejemplo, StatefulSet/Service/PVC de PostgreSQL, probes, requests y limits, migraciones, despliegue y persistencia | `kubectl kustomize k8s`; dry-run; apply; pods/svcs/pvc Bound; health checks `200 Healthy`; migraciones; persistencia tras reinicio de pod | `k8s/*` (7 archivos creados, 5 eliminados, `kustomization.yaml` modificado), `docs/kubernetes.md`, `docs/bitacora-xp.md` | `#21` | `chore/fase-07-kubernetes` | `2d75e38` | Pendiente | `docs/kubernetes.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/README.md` | Pendiente |
+| FASE-07 | Kubernetes | N/A | N/A | Namespace, Deployments y Services de Web/API, ConfigMap, Secret de ejemplo, StatefulSet/Service/PVC de PostgreSQL, probes, requests y limits, migraciones, despliegue y persistencia | `kubectl kustomize k8s`; dry-run; apply; pods/svcs/pvc Bound; health checks `200 Healthy`; migraciones; persistencia tras reinicio de pod | `k8s/*` (7 archivos creados, 5 eliminados, `kustomization.yaml` modificado), `docs/kubernetes.md`, `docs/bitacora-xp.md` | `#21` | `chore/fase-07-kubernetes` | `2d75e38`, `1e08b70` | `#22` | `docs/kubernetes.md`, `docs/bitacora-xp.md`, `docs/trazabilidad.md`, `docs/README.md` | Sin tag oficial |
+| FASE-08 | GitHub Actions | N/A | N/A | Restore, build, suites, cobertura, formato informativo, vulnerabilidades informativas, Docker build y Kustomize build | Evidencia histórica de 218/218 y 12 checks exitosos | `.github/workflows/ci.yml`, pruebas, Dockerfiles y `k8s/` | `#23` | `chore/fase-08-github-actions` | `b9ee74d`, `0c44066`, `c4eda34` | `#24` | `docs/pruebas.md`, `docs/trazabilidad.md`, `docs/uso-ia.md`, `docs/README.md` | Sin tag oficial |
+| FASE-09 | Documentación | N/A | N/A | Sincronización documental con `main@36e89ec` | Validación estática de enlaces, estructura y alcance | `README.md`, `docs/` | Registrar cuando exista | Registrar cuando se cree | Registrar después | Registrar cuando exista | Índice canónico y documentos de módulos | Sin versión oficial |
 
 ## Totales
 
@@ -118,7 +145,7 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Docker: config, build, arranque, health checks y persistencia validados; PostgreSQL host 55432.
 - Kubernetes: manifiestos preparados y renderizados; despliegue real pendiente de clúster activo.
 - Swagger: UI interactiva en `/swagger` y documento en `/swagger/v1/swagger.json`.
-- Documentación: `iteraciones/iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md`, `api-iteracion-04.md`, `modulos/tipos-cambio.md`, `pruebas-iteracion-04.md`, `docker.md`, `kubernetes.md`, `bitacora-xp.md` y `uso-ia.md`.
+- Documentación: `iteraciones/iteracion-04.md`, `iteraciones/iteracion-04-evidencia.md`, `api-iteracion-04.md`, `modulos/tipo-cambio.md`, `pruebas-iteracion-04.md`, `docker.md`, `kubernetes.md`, `bitacora-xp.md` y `uso-ia.md`.
 - Issue: `#15 - ITER-04: Moneda, UX y consolidación técnica`.
 - Pull Request: `#16`, desde `feature/iteracion-04-moneda-ux` hacia `main`.
 - Commits: `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12`, `2e710d2`.
@@ -158,7 +185,7 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 - Issue: `#21` — `feat(k8s): Fase 7 - Despliegue en Kubernetes con StatefulSet, PVC y Probes`.
 - Rama: `chore/fase-07-kubernetes`.
 - Commit: `2d75e38` — `feat(k8s): implementar despliegue Fase 7 con StatefulSet, PVC y probes (Closes #21)`, subido a `origin`.
-- Pull Request: Pendiente.
+- Pull Request: `#22`, integrado mediante `82c8c58`.
 - Liberación/tag: Pendiente.
 - Estructura `/k8s` final: `namespace.yaml`, `app-deployment.yaml`, `app-service.yaml`, `app-configmap.yaml`, `app-secret.example.yaml`, `postgres-statefulset.yaml`, `postgres-service.yaml`, `postgres-pvc.yaml`, `kustomization.yaml`.
 - Migración desde Iteración 4: `api.yaml` y `web.yaml` → `app-deployment.yaml`/`app-service.yaml`; `postgres.yaml` → `postgres-statefulset.yaml`/`postgres-service.yaml`/`postgres-pvc.yaml` (Deployment convertido a StatefulSet); `configmap.yaml` → `app-configmap.yaml`; `secret.example.yaml` → `app-secret.example.yaml`.
@@ -191,17 +218,27 @@ Liberación: `v0.2.0` (Prevista); tag pendiente.
 
 - Problema encontrado: reinicio inicial de Web/API por `Migrate()` contra PostgreSQL no disponible; resuelto con initContainer `wait-for-postgres`.
 - No se ejecutó `kubectl delete pvc postgres-data`; eliminar el PVC destruiría los datos.
-- Pull Request y cierre formal con el Navigator: Pendientes.
+- Integración posterior: PR `#22`, commit de merge `82c8c58`. La revisión formal del Navigator se conserva como evidencia histórica solo donde fue registrada; no se presume una aprobación adicional.
 
 ## FASE-08 — Consolidación de GitHub Actions
 
 - Issue: `#23`.
 - Rama: `chore/fase-08-github-actions`.
-- Pull Request: `#24`, destino `main`, actualmente abierto y sin conflictos.
+- Pull Request: `#24`, integrado a `main` mediante `36e89ec`.
 - Workflow: `.github/workflows/ci.yml`.
 - Pruebas y cobertura: restore, build Release, 218/218 pruebas y cobertura Domain 91,64 %, Application 88,60 % y Global 89,37 %, con umbrales de 80 %, 80 % y 70 %.
 - Docker: construcción CI de las imágenes de `Licitaciones.Web` y `Licitaciones.Api`, sin publicación.
 - Kubernetes: validación de `k8s/` mediante Kustomize, sin despliegue de clúster desde GitHub Actions.
 - Documentación relacionada: `docs/bitacora-xp.md`, `docs/pruebas.md`, `docs/trazabilidad.md`, `docs/uso-ia.md` y `docs/README.md`.
 - CI: exitoso; GitHub muestra `All checks have passed` y 12 checks exitosos.
-- Estado: merge pendiente.
+- Estado: Fase 8 integrada. Los resultados de CI son evidencia histórica del PR y no fueron regenerados durante la Fase 9.
+
+## Fase 9 — documentación
+
+- Línea base: `main@36e89ec`.
+- Driver: Luis Diego Chavala.
+- Navigator: Eithel Herrera Rojas.
+- Rama, Issue, commits y Pull Request: registrar únicamente cuando existan.
+- Alcance: documentación; no modifica implementación, pruebas ni infraestructura.
+- Relación de trazabilidad: las historias conservan sus vínculos a pruebas, commits de implementación y documentos; la Fase 9 sincroniza esos documentos con el código actual.
+- Validación: comprobaciones estáticas de archivos, enlaces Markdown, secciones obligatorias y alcance del diff. No se atribuye a esta fase una nueva ejecución de las suites.

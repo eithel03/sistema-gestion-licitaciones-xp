@@ -1,31 +1,68 @@
-# Modulo Niveles de Aprobacion
+# Módulo Niveles de Aprobación
 
-## Responsabilidad
+## 1. Propósito
 
-Parametrizar mediante datos persistidos el aprobador aplicable a un monto, con CRUD MVC y API.
+Parametrizar el aprobador aplicable a un monto CRC mediante rangos persistidos.
 
-## Reglas
+## 2. Responsabilidades
 
-- `MontoMinimoCrc` es mayor que cero.
-- `MontoMaximoCrc` es nullable y, cuando existe, no es menor que el minimo.
-- Los limites son inclusivos.
-- Los rangos no se traslapan.
-- Solo existe un rango abierto.
-- El aprobador es requerido y tiene longitud maxima de 200 caracteres.
+- CRUD de niveles de aprobación.
+- Validar límites y aprobador.
+- Evitar rangos solapados y más de un rango abierto.
+- Encontrar el aprobador de un monto.
+- Integrarse con la respuesta de mejor oferta.
 
-## Persistencia
+## 3. Dependencias
 
-`NivelesAprobacion` usa montos `numeric(18,2)`, auditoria, `xmin`, `CHECK` de limites, indice parcial unico `NULLS NOT DISTINCT` para el rango abierto y exclusion GiST con `numrange &&` para impedir traslapes concurrentes.
+- Domain: `NivelAprobacion` y errores.
+- Application: `INivelAprobacionService`, contratos, resultados, repositorio e `IClock`.
+- Infrastructure: `NivelAprobacionRepository`, PostgreSQL, índice parcial y exclusión GiST.
+- Web: `NivelesAprobacionController`, modelos y vistas.
+- API: `NivelAprobacionEndpoints` y `OfertaEndpoints`.
 
-## Capas y evidencia
+## 4. Entradas
 
-- Domain: `NivelAprobacion`.
-- Application: contratos, consultas, resultados, validaciones, `INivelAprobacionService`, `NivelAprobacionService`, repositorio abstracto y excepciones controladas.
-- Infrastructure: `NivelAprobacionConfiguration`, `NivelAprobacionRepository`, registro en `LicitacionesDbContext`, inyeccion de dependencias y migracion `20260813011055_Iteration03OfertasAprobacion`.
-- MVC: `NivelesAprobacionController` y vistas `Index`, `Create`, `Details`, `Edit` y `Delete`.
-- API: CRUD y consulta de aprobador por monto. Los consumidores usan Application; la logica de rangos no reside en controladores.
-- Historias: HU-27 a HU-29.
-- Pruebas: `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests` e `Iteration3MvcTests`.
-- Commits: `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
-- Rama: `feature/iteracion-03-ofertas-aprobacion`.
-- Pull Request, CI remoto, merge, revision formal del Navigator y tag `v0.3.0`: Pendientes.
+- `MontoMinimoCrc`.
+- `MontoMaximoCrc` opcional.
+- `Aprobador`.
+- `Version` opcional al actualizar.
+- Listado: `page`, `pageSize`.
+- Consulta de aprobador: `montoCrc`.
+
+## 5. Salidas
+
+- `NivelAprobacionResponse` y `NivelAprobacionPage`.
+- `AprobadorResponse`.
+- Vistas CRUD.
+- API con 200/201/204 o ProblemDetails.
+
+## 6. Reglas de negocio
+
+- Mínimo mayor que cero.
+- Máximo nulo o mayor/igual al mínimo.
+- Límites inclusivos.
+- Máximo nulo representa rango abierto.
+- Solo un rango abierto.
+- Ningún rango puede solaparse con otro, incluso en el límite compartido.
+- Aprobador requerido, máximo 200 caracteres.
+- Concurrencia por `xmin`.
+- Application valida antes de guardar y PostgreSQL refuerza simultaneidad mediante restricciones.
+
+## 7. Errores
+
+- Mínimo inválido.
+- Máximo inválido.
+- Aprobador requerido o demasiado largo.
+- Rango traslapado.
+- Segundo rango abierto.
+- Nivel o aprobador no encontrado.
+- Conflicto de concurrencia.
+
+## 8. Pruebas relacionadas
+
+- Unitarias: `NivelAprobacionTests`, `NivelAprobacionServiceTests`.
+- Integración: `Iteration3PersistenceTests`.
+- Funcionales: `Iteration3ApiTests`, `Iteration3MvcTests`.
+- No existe un flujo E2E exclusivo del CRUD de niveles.
+
+Limitación MVC: la consulta está paginada en backend, pero la vista no ofrece navegación entre páginas. La integración con mejor oferta se expone por API, no como pantalla MVC.

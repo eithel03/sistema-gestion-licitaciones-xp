@@ -1,69 +1,32 @@
-# Pruebas Iteración 4
+# Pruebas de Iteración 4 — evidencia histórica
 
-## Actualización de Fase 5
+Este documento conserva la medición obtenida al cerrar técnicamente la Iteración 4. No representa una ejecución realizada durante Fase 9.
 
-La medición de Iteración 4 documentada abajo es histórica. La consolidación posterior de Fase 5 se ejecutó en `chore/fase-05-pruebas-cobertura` y obtuvo UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6. La cobertura combinada vigente es Domain 91,64 %, Application 88,60 % y global 89,37 %.
+## Medición registrada al cierre de la iteración
 
-## Suite final
+| Suite | Casos reportados |
+|---|---:|
+| UnitTests | 96/96 |
+| IntegrationTests | 27/27 |
+| FunctionalTests | 51/51 |
+| **Total** | **174/174** |
 
-| Suite | Aprobadas | Fallidas | Omitidas |
-| --- | ---: | ---: | ---: |
-| UnitTests | 96 | 0 | 0 |
-| IntegrationTests | 27 | 0 | 0 |
-| FunctionalTests | 51 | 0 | 0 |
-| Total | 174 | 0 | 0 |
+Cobertura de líneas registrada entonces: global 87,3 %, Domain 91,4 %, Application 83,8 %, API 88,4 %, Infrastructure 95,1 % y Web 61,6 %. También se registró 59 % de ramas y 84 % de métodos.
 
-- Restore: exitoso.
-- Build Release: exitoso, 0 errores y 0 advertencias.
-- Integración y funcionales usan PostgreSQL real mediante Testcontainers y `WebApplicationFactory`.
+## Casos incorporados
 
-## Pruebas agregadas y consolidadas
+- dominio y servicio de tipos de cambio;
+- persistencia, fecha repetida y activo único;
+- CRUD/activación/conversión por API;
+- formularios, formato decimal, moneda y tema por MVC;
+- rutas OpenAPI, Swagger UI, ProblemDetails y correlación;
+- PATCH de estado de licitación;
+- Unicode de proveedores.
 
-- `TipoCambioTests`: valor válido, rechazo de cero y negativos, estado y reglas de dominio.
-- `TipoCambioServiceTests`: CRUD, activación única y conversión sin modificar CRC.
-- `TipoCambioPersistenceTests`: persistencia PostgreSQL, fechas duplicadas e índice de activo único.
-- `Iteration4ApiTests`: CRUD, activación PATCH y conversión monetaria.
-- `Iteration4MvcTests`: formularios, formato decimal localizado, selector CRC/USD y temas.
-- `ApiHardeningTests`: OpenAPI, Swagger UI, verbos reales, ProblemDetails y correlación.
-- `LicitacionApiTests`: `PATCH /api/v1/licitaciones/{id}/estado`, transiciones válidas e inválidas y 404.
-- `ProveedorTests` y `ProveedorMvcTests`: nombres Unicode válidos y símbolos no permitidos.
+## Actualización histórica posterior
 
-Los casos de entrada decimal cubren `500`, `500.00`, `500,00`, `520.50` y `520,50`; también rechazan `0`, `-1` y `abc`.
+Fase 5 amplió las suites y registró 218/218 casos, con cobertura Domain 91,64 %, Application 88,60 % y global 89,37 %. La explicación vigente, las limitaciones y el conteo estático actual están en [pruebas.md](pruebas.md).
 
-## Cobertura definitiva
+## Limitación OpenAPI conocida
 
-El reporte limpio usa únicamente los tres archivos actuales de cobertura:
-
-```text
-Parser: MultiReport (3x Cobertura)
-```
-
-| Componente | Cobertura de líneas |
-| --- | ---: |
-| Global | 87.3% |
-| Licitaciones.Domain | 91.4% |
-| Licitaciones.Application | 83.8% |
-| Licitaciones.Api | 88.4% |
-| Licitaciones.Infrastructure | 95.1% |
-| Licitaciones.Web | 61.6% |
-
-- Branch coverage: 59%.
-- Method coverage: 84%.
-
-La evidencia definitiva utiliza únicamente los tres reportes actuales y no mezcla ejecuciones históricas.
-
-## Umbrales
-
-| Umbral obligatorio | Resultado | Estado |
-| --- | ---: | --- |
-| Global >= 70% | 87.3% | Cumplido |
-| Domain >= 80% | 91.4% | Cumplido |
-| Application >= 80% | 83.8% | Cumplido |
-
-## Testcontainers
-
-Las suites de integración y funcionales levantan PostgreSQL real mediante Testcontainers. Algunos logs muestran `fail: Microsoft.EntityFrameworkCore.Database.Connection` inmediatamente después de `DROP DATABASE ... WITH (FORCE)`; esto ocurre durante el reinicio intencional de las bases temporales y no representa pruebas fallidas.
-
-## Integración continua
-
-El workflow de GitHub Actions está preparado para ejecutar restore, build, pruebas y recolección de cobertura. La ejecución local final está validada; la evidencia de CI remoto posterior al push permanece Pendiente.
+Las pruebas de Iteración 4 validan rutas y métodos, pero el documento OpenAPI actual sigue siendo manual y superficial. No demuestra DTO, request bodies ni respuestas completos.

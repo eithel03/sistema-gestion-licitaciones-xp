@@ -1,70 +1,71 @@
 # Documentación del proyecto
 
-Índice oficial de la documentación del Sistema de Gestión de Licitaciones.
+Índice canónico del Sistema de Gestión de Licitaciones. La línea base documental de Fase 9 es `main@36e89ec`, después de la integración del Pull Request `#24` de Fase 8.
 
-## Planificación XP
+## Estado actual
 
-- [Visión y alcance](vision-alcance.md).
-- [Historias de usuario](historias-usuario.md).
-- [Plan XP](plan-xp.md).
-- [Plan de liberación](plan-liberacion.md).
-- [Bitácora XP](bitacora-xp.md).
-- [Matriz de trazabilidad](trazabilidad.md).
-- [Propuesta de GitHub Issues y Milestones](github-issues-propuestos.md).
+Estos documentos describen el comportamiento presente en el código:
 
-## Iteraciones
+- [Visión y alcance](vision-alcance.md)
+- [Arquitectura general](arquitectura-general.md)
+- [Modelo de datos](modelo-datos.md)
+- [API REST](api.md)
+- [Integración de módulos](integracion-modulos.md)
+- [Pruebas](pruebas.md)
+- [Docker](docker.md)
+- [Kubernetes](kubernetes.md)
+- [Uso de inteligencia artificial](uso-ia.md)
+- [Matriz de trazabilidad](trazabilidad.md)
+- [Documentación por módulos](modulos/README.md)
+- [Recursos visuales y criterio de capturas](assets/README.md)
 
-- [Iteración 1](iteraciones/iteracion-01.md).
-- [Iteración 2](iteraciones/iteracion-02.md).
-- [Iteración 3](iteraciones/iteracion-03.md).
-- [Iteración 4](iteraciones/iteracion-04.md).
-- [Evidencia de Iteración 4](iteraciones/iteracion-04-evidencia.md).
+### Módulos
 
-## Documentación técnica
+- [Proveedores](modulos/proveedores.md)
+- [Licitaciones](modulos/licitaciones.md)
+- [Ofertas](modulos/ofertas.md)
+- [Niveles de aprobación](modulos/niveles-aprobacion.md)
+- [Tipo de cambio](modulos/tipo-cambio.md)
+- [Interfaz Web](modulos/interfaz-web.md)
+- [API REST](modulos/api-rest.md)
+- [Persistencia](modulos/persistencia.md)
 
-- [Arquitectura general](arquitectura-general.md).
-- [Dominio y estrategia TDD](dominio-tdd.md).
-- [Modelo de datos](modelo-datos.md).
-- [API REST de iteraciones anteriores](api.md).
-- [API de Iteración 4](api-iteracion-04.md).
-- [Pruebas generales](pruebas.md).
-- [Pruebas de Iteración 4](pruebas-iteracion-04.md).
-- [Docker](docker.md).
-- [Kubernetes](kubernetes.md).
-- [Integración de módulos](integracion-modulos.md).
-- [Documentación por módulos](modulos/README.md).
-- [Módulo de tipos de cambio](modulos/tipos-cambio.md).
+### Estado de la liberación
 
-## Registros existentes
+- Fases 0 a 8: integradas en `main`.
+- Fase 9: documentación actualizada localmente al 21 de agosto de 2026; revisión del equipo e integración aún no registradas.
+- Fase 10: posterior a Fase 9; no iniciada ni evidenciada en esta línea base.
+- Tag Git oficial: no existe.
+- GitHub Release: no existe evidencia local de una release.
+- `v1.0.0-rc`: nombre de imágenes Docker y versión prevista, no tag oficial.
+- `v0.1.0` en la landing: texto antiguo que requiere una corrección técnica futura fuera de Fase 9.
 
-- [Flujo Git y GitHub](flujo-git.md).
-- [Uso de inteligencia artificial](uso-ia.md).
+## Planificación y registros XP
 
-## Estado de Fase 5
+- [Historias de usuario HU-01 a HU-37](historias-usuario.md)
+- [Plan XP](plan-xp.md)
+- [Plan de liberación](plan-liberacion.md)
+- [Bitácora XP](bitacora-xp.md)
+- [Flujo Git](flujo-git.md)
+- [Propuesta histórica de Issues](github-issues-propuestos.md)
+- [Estrategia histórica de dominio y TDD](dominio-tdd.md)
 
-Fase 5 está técnicamente completada y validada localmente en `chore/fase-05-pruebas-cobertura`. Chavala actuó como Driver principal y Eithel como Navigator principal. Las suites finales aprobaron 218/218 pruebas: UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6. La cobertura de líneas fue Domain 91,64 %, Application 88,60 % y global 89,37 %, superando los umbrales requeridos.
+## Histórico y evidencia de iteraciones
 
-Se registraron los commits `ba3ce34`, `8f14743`, `1512dd8`, `e8c1ee0`, `0cf4cb5`, `7d0b716`, `b8f0dbb` y `92c0301`. El Pull Request `#18` fue integrado a `main` mediante `f79d22d` (`Merge pull request #18 from eithel03/chore/fase-05-pruebas-cobertura`). Existieron ejecuciones fallidas de GitHub Actions durante el desarrollo; posteriormente el workflow, el CI del PR y el merge quedaron en verde. La revisión formal del Navigator permanece pendiente y no existe tag de Fase 5.
+Los siguientes documentos conservan decisiones y resultados registrados en el momento de cada iteración. Cuando un estado histórico difiera del actual, prevalecen esta página, la bitácora de Fase 9 y la matriz de trazabilidad vigente.
 
-## Estado de Iteración 4
+- [Iteración 1 — landing y proveedores](iteraciones/iteracion-01.md)
+- [Iteración 2 — licitaciones](iteraciones/iteracion-02.md)
+- [Iteración 3 — ofertas y aprobaciones](iteraciones/iteracion-03.md)
+- [Iteración 4 — moneda, UX y API](iteraciones/iteracion-04.md)
+- [Evidencia de Iteración 4](iteraciones/iteracion-04-evidencia.md)
+- [API de Iteración 4, referencia histórica](api-iteracion-04.md)
+- [Pruebas de Iteración 4, referencia histórica](pruebas-iteracion-04.md)
 
-Las historias HU-30 a HU-37 están implementadas y validadas localmente en `feature/iteracion-04-moneda-ux`. La suite final aprobó 174/174 pruebas y Docker fue validado con persistencia. Los manifiestos Kubernetes están preparados y renderizan correctamente; su despliegue real permanece pendiente de un clúster activo.
+## Criterio de evidencia
 
-Issue `#15`, Pull Request `#16` y los commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` están registrados. El merge de Iteración 4 a `main` está evidenciado por `ea9772f`. CI remoto, revisión formal final del Navigator, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
+- **Estado actual:** verificado contra archivos presentes en `main@36e89ec`.
+- **Evidencia histórica:** resultados registrados por el equipo en fases anteriores; no implica una nueva ejecución durante Fase 9.
+- **Trabajo futuro:** limitaciones técnicas detectadas y no corregidas porque Fase 9 solo modifica documentación.
 
-## Estado de Fase 6
-
-La Fase 6 se validó localmente en la rama `chore/fase-06-docker`, asociada al Issue `#19`, con Eithel Herrera Rojas como Driver y Luis Diego Chavala como Navigator. Docker Compose inició correctamente Web en `8080`, API en `8081` y PostgreSQL 16 en `55432` con estado `healthy`; Swagger estuvo disponible y el volumen conservó licitaciones, proveedores, ofertas y tipos de cambio después del reinicio.
-
-Web y API están configurados para aplicar automáticamente las migraciones pendientes mediante `Database.Migrate()`. La tabla `__EFMigrationsHistory` confirmó seis migraciones aplicadas correctamente.
-
-El Issue `#19` fue realizado y se registraron los commits `b26d40a` y `5f16fa6`. El Pull Request `#20`, desde `chore/fase-06-docker` hacia `main`, fue integrado el 17 de agosto de 2026 mediante `7557e45` con 2/2 checks exitosos y la revisión formal final del Navigator aprobada por Luis Diego Chavala. La liberación/tag permanece pendiente.
-
-## Estado de Fase 7
-
-La Fase 7 se validó en la rama `chore/fase-07-kubernetes` (Issue `#21`), con Luis Diego Chavala como Driver y Eithel Herrera Rojas como Navigator. Los manifiestos de `/k8s` se reorganizaron a la estructura `namespace.yaml`, `app-deployment.yaml`, `app-service.yaml`, `app-configmap.yaml`, `app-secret.example.yaml`, `postgres-statefulset.yaml`, `postgres-service.yaml`, `postgres-pvc.yaml` y `kustomization.yaml`.
-
-El despliegue se realizó sobre el clúster local de Docker Desktop (Kubernetes v1.34.1): Namespace `licitaciones` Active, tres pods en Running con 0 reinicios, PVC `postgres-data` Bound, health checks `200 Healthy` en Web (`http://localhost:30080/health`) y API (`http://localhost:8080/health`), seis migraciones aplicadas y persistencia comprobada después de eliminar y recrear el pod `postgres-0`. Los detalles están en [kubernetes.md](kubernetes.md) y [bitacora-xp.md](bitacora-xp.md). El commit `2d75e38` se subió a `origin/chore/fase-07-kubernetes`; el Pull Request y el cierre formal permanecen pendientes.
-
-## Estado de Fase 8
-La Fase 8 corresponde al Issue `#23`, desarrollada en la rama `chore/fase-08-github-actions` y gestionada mediante el Pull Request `#24` con destino a main. Durante esta fase se consolidó el workflow de GitHub Actions para ejecutar restauración de dependencias, compilación en Release, pruebas automatizadas, cobertura, verificación de formato, revisión de vulnerabilidades, construcción de imágenes Docker y validación de manifiestos Kubernetes. GitHub Actions reportó 12 checks exitosos y el Pull Request no presentó conflictos con la rama main. La revisión final del Navigator fue completada satisfactoriamente, la protección de main fue configurada utilizando el check CI completo como validación requerida y el Pull Request `#24` fue integrado correctamente a main, dando por finalizada la Fase 8.
+No se atribuyen a Fase 9 tags, releases, Issues, ramas, commits, Pull Requests ni resultados de pruebas que aún no existan.

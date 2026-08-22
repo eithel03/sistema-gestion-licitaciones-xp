@@ -1,117 +1,99 @@
 # Plan XP
 
-## Metodologia
+## Metodología
 
-Extreme Programming es la unica metodologia usada en este proyecto. Todas las decisiones de planificacion, ejecucion, revision y mejora se expresan con terminos y practicas de XP.
+Extreme Programming es la única metodología del proyecto. El trabajo se organiza mediante Planning Game, historias de usuario, iteraciones cortas, pequeñas liberaciones, programación en parejas, TDD, integración continua, diseño simple, refactorización y propiedad colectiva.
 
-## Planning Game
+## Estado del plan al iniciar Fase 9
 
-El Planning Game permite que el cliente exprese necesidades mediante historias de usuario y que los programadores estimen el esfuerzo relativo. El resultado inicial queda documentado en historias priorizadas, plan de liberacion y planes de iteracion.
+Línea base: `main@36e89ec`.
 
-## Historias de usuario
+| Bloque | Estado Git comprobado |
+|---|---|
+| Fases 0–4 | Integradas en `main`. |
+| Iteraciones 1–4 | Integradas mediante PR #9, #12, #14 y #16. |
+| Fase 5 | Integrada mediante PR #18. |
+| Fase 6 | Integrada mediante PR #20. |
+| Fase 7 | Integrada mediante PR #22 y merge `82c8c58`. |
+| Fase 8 | Integrada mediante PR #24 y merge `36e89ec`. |
+| Fase 9 | Actualización documental; no existe todavía rama, Issue, commit o PR registrado. |
+| Fase 10 | Posterior a Fase 9; no iniciada ni evidenciada. |
 
-Cada historia incluye codigo unico, prioridad, estimacion, dependencias, iteracion asignada, criterios de aceptacion, pruebas previstas, modulo relacionado y campos de trazabilidad para Issue, Pull Request, commits y pruebas.
+## Planning Game e historias
 
-## Iteraciones cortas y pequenas liberaciones
+El alcance funcional está expresado en 37 historias, 136 puntos y cuatro iteraciones. Cada historia conserva prioridad, estimación, dependencias, criterios de aceptación, módulos y pruebas. La Fase 9 sincroniza documentación; no crea historias funcionales nuevas.
 
-El proyecto se organiza en cuatro iteraciones uniformes. Cada iteracion debe producir un resultado demostrable, aunque sea pequeno, y registrar la velocidad XP observada para ajustar el plan.
+## Iteraciones y pequeñas liberaciones
+
+- Iteración 1: landing y proveedores.
+- Iteración 2: licitaciones.
+- Iteración 3: ofertas y niveles de aprobación.
+- Iteración 4: tipo de cambio, UX, API e infraestructura inicial.
+
+Los nombres `v0.1.0`, `v0.2.0`, `v0.3.0` y `v1.0.0-rc` son versiones previstas en el plan. No existen tags Git oficiales.
+
+## Programación en parejas y rotación
+
+| Trabajo | Driver | Navigator |
+|---|---|---|
+| Iteración 1 | Luis Diego Chavala | Eithel Herrera Rojas |
+| Iteración 2 | Eithel Herrera Rojas | Luis Diego Chavala |
+| Iteración 3 | Luis Diego Chavala | Eithel Herrera Rojas |
+| Iteración 4 | Eithel Herrera Rojas | Luis Diego Chavala |
+| Fase 5 | Luis Diego Chavala | Eithel Herrera Rojas |
+| Fase 6 | Eithel Herrera Rojas | Luis Diego Chavala |
+| Fase 7 | Luis Diego Chavala | Eithel Herrera Rojas |
+| Fase 8 | Eithel Herrera Rojas | Luis Diego Chavala |
+| Fase 9 | Luis Diego Chavala | Eithel Herrera Rojas |
+
+El Driver opera el entorno y prepara cambios. El Navigator revisa estrategia, exactitud, omisiones y coherencia. La responsabilidad final permanece en ambos estudiantes.
 
 ## TDD
 
-Las reglas de negocio se implementaran siguiendo TDD:
+Para cambios funcionales se sigue rojo–verde–refactorización:
 
-1. Escribir una prueba que falle por la regla requerida.
-2. Implementar el codigo minimo para hacerla pasar.
-3. Refactorizar manteniendo las pruebas en verde.
-4. Registrar evidencia del ciclo cuando la historia lo requiera.
+1. prueba que demuestra la regla faltante;
+2. código mínimo;
+3. refactorización con pruebas en verde;
+4. evidencia en bitácora y trazabilidad.
 
-## Programacion en parejas
+Fase 9 no modifica código ni crea pruebas funcionales; valida documentación mediante inspección, enlaces y correspondencia con la línea base.
 
-El equipo trabajara en pareja con driver y navigator. El driver opera el entorno y el navigator revisa estrategia, calidad, omisiones y coherencia con la historia.
+## Integración continua
 
-## Rotacion de driver y navigator
+Cada Pull Request ejecuta las validaciones disponibles. El workflow actual incluye build, cuatro suites, cobertura, formato informativo, vulnerabilidades informativas, construcción Docker y renderizado Kustomize. Sus limitaciones se documentan en [pruebas.md](pruebas.md#integración-continua).
 
-- Iteracion 1: Driver Chavala, navigator Eithel.
-- Iteracion 2: Driver Eithel, navigator Chavala.
-- Iteracion 3: Driver Chavala, navigator Eithel.
-- Iteracion 4: Driver Eithel, navigator Chavala.
+## Diseño simple y refactorización
 
-## Integracion continua
+El diseño resuelve las historias presentes sin anticipar complejidad innecesaria. Las refactorizaciones funcionales requieren pruebas. En Fase 9 solo se refactoriza estructura documental; las limitaciones técnicas se registran como trabajo futuro.
 
-Cada Pull Request debera ejecutar las verificaciones automatizadas disponibles. Al avanzar el proyecto, la integracion continua incorporara pruebas unitarias, pruebas de integracion con PostgreSQL real, pruebas funcionales E2E, cobertura y revision de dependencias.
+## Propiedad colectiva y estándares
 
-## Diseno simple
+- Ambos integrantes pueden revisar y mejorar cualquier documento o componente.
+- .NET 9 y convenciones idiomáticas para código.
+- Conventional Commits.
+- Errores sin datos sensibles.
+- Decisiones técnicas documentadas.
+- No inventar Issues, PR, commits, tags, releases ni resultados.
 
-El diseno debe resolver la historia actual sin anticipar complejidad innecesaria. Las abstracciones se agregaran cuando eliminen duplicacion real, mejoren claridad o protejan reglas compartidas.
+## Ritmo sostenible y velocidad
 
-## Refactorizacion
+La velocidad XP se calcula con puntos terminados por iteración. Las cuatro iteraciones planificaron 136 puntos. Fase 9 es una fase documental y no altera retrospectivamente la estimación de las historias.
 
-La refactorizacion se realizara de forma continua, respaldada por pruebas. Debe mejorar estructura interna sin cambiar comportamiento esperado.
+## Definición de terminado
 
-## Propiedad colectiva
+Una historia funcional está terminada cuando cumple criterios, pruebas aplicables, revisión de pareja, integración y trazabilidad. Fase 9 termina cuando:
 
-Ambos integrantes pueden modificar cualquier parte del codigo o documentacion, siempre con revision de la pareja y trazabilidad clara.
+- la documentación representa `main@36e89ec`;
+- los documentos canónicos separan estado actual, evidencia histórica y trabajo futuro;
+- los ocho módulos contienen las secciones requeridas;
+- enlaces y nombres se validan;
+- Bitácora, trazabilidad y uso de IA registran Fase 9;
+- no se modifica código, infraestructura ni pruebas;
+- rama, Issue, commits y PR se registran únicamente cuando existan.
 
-## Estandares de codigo
+## Convenciones de ramas y commits
 
-- Usar convenciones idiomaticas de .NET 9.
-- Mantener nombres claros y consistentes.
-- Evitar duplicacion innecesaria.
-- Mantener errores controlados y sin datos sensibles.
-- Documentar decisiones tecnicas cuando afecten arquitectura, API, persistencia o pruebas.
+Ramas: `feature/`, `test/`, `fix/`, `refactor/`, `docs/` o `chore/`. Commits: `feat`, `test`, `fix`, `refactor`, `docs`, `chore`.
 
-## Ritmo sostenible
-
-La planificacion se ajustara segun velocidad XP observada. No se compensara baja velocidad con trabajo oculto ni con reduccion de calidad.
-
-## Pruebas de aceptacion
-
-Cada historia contiene criterios verificables. Una historia no se considera terminada si sus pruebas de aceptacion no pueden demostrarse o si falta trazabilidad minima.
-
-## Velocidad XP
-
-La velocidad XP se calcula con puntos de historias terminadas por iteracion. Solo cuentan historias con criterios aceptados, pruebas aplicables ejecutadas y documentacion actualizada.
-
-## Reglas de trabajo
-
-- No trabajar directamente sobre `main`.
-- Crear ramas pequenas alineadas con historias o tareas tecnicas.
-- Mantener commits pequenos y descriptivos.
-- Registrar decisiones y evidencias en la bitacora XP.
-- No inventar Issues, Pull Requests, commits ni resultados de pruebas.
-- Priorizar calidad verificable sobre cantidad de cambios.
-
-## Definicion de terminado
-
-Una historia esta terminada cuando:
-
-- Sus criterios de aceptacion fueron cumplidos.
-- Las pruebas previstas aplicables fueron ejecutadas.
-- La pareja reviso el cambio.
-- La integracion continua no reporta fallos bloqueantes.
-- La documentacion y trazabilidad fueron actualizadas.
-- La bitacora XP registra resultado, driver y navigator.
-
-## Convenciones de ramas
-
-- `feature/HU-XX-descripcion`
-- `test/HU-XX-descripcion`
-- `fix/HU-XX-descripcion`
-- `refactor/HU-XX-descripcion`
-- `docs/descripcion`
-- `chore/descripcion`
-
-## Convenciones de commits
-
-Se usaran Conventional Commits:
-
-- `feat`: funcionalidad.
-- `test`: pruebas.
-- `fix`: correccion.
-- `refactor`: mejora interna sin cambio funcional.
-- `docs`: documentacion.
-- `chore`: mantenimiento o configuracion.
-
-## Flujo de trabajo
-
-Issue -> rama -> TDD -> commits pequenos -> Pull Request -> integracion continua -> revision de pareja -> merge -> bitacora XP.
+Flujo XP: historia o tarea → rama → trabajo en pareja → pruebas/validación aplicable → commits pequeños → Pull Request → integración continua → revisión → merge → bitácora y trazabilidad.
