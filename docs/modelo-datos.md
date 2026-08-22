@@ -2,259 +2,19 @@
 
 ## Estado actual
 
-La Fase 4 preparo la persistencia base mediante PostgreSQL, Entity Framework Core y Testcontainers.
+El modelo persistente de `main@36e89ec` usa PostgreSQL 16, Entity Framework Core 9 y Npgsql. Contiene cinco tablas de negocio y la tabla de historial de migraciones de EF Core.
 
-La Iteracion 1 agrego el modelo persistente de proveedores mediante EF Core y la migracion `20260810092133_CreateProveedores`.
+## DbContext y estrategia EF Core
 
-Durante la Iteracion 2 se agrego el modelo persistente de licitaciones, junto con las reglas de auditoria, borrado logico, estados y concurrencia optimista.
+`LicitacionesDbContext` vive en Infrastructure y aplica configuraciones separadas mediante `ApplyConfigurationsFromAssembly`. Las convenciones comunes configuran:
 
-Actualmente existen las tablas:
+- `CreatedAt`, `UpdatedAt` y `DeletedAt` como `timestamp with time zone` cuando existen;
+- `Version` como token de concurrencia;
+- montos con precisión `numeric(18,2)` mediante `HasMoneyPrecision()`.
 
-- `Proveedores`
-- `Licitaciones`
-- `Ofertas`
-- `NivelesAprobacion`
+La cadena se obtiene de `ConnectionStrings:DefaultConnection`. La fábrica de diseño usa por defecto PostgreSQL local en `localhost:55432` si no existe la variable `ConnectionStrings__DefaultConnection`.
 
-Aun no existe una tabla de tipos de cambio, ya que corresponde a Iteracion 4.
-
-## Motor
-
-- Motor local previsto: PostgreSQL 16.
-- Desarrollo local: `compose.yaml` con servicio `postgres`, volumen persistente y health check `pg_isready`.
-- Pruebas de integracion: Testcontainers con imagen `postgres:16`.
-
-## Estrategia EF Core
-
-- `LicitacionesDbContext` vive en `Licitaciones.Infrastructure.Persistence`.
-- EF Core 9 y Npgsql se instalan solo en `Licitaciones.Infrastructure`.
-- `Domain` no depende de EF Core.
-- `Application` no depende directamente de EF Core.
-- Las configuraciones futuras deben agregarse como clases separadas, preferiblemente mediante `IEntityTypeConfiguration<T>`.
-
-## Cadena de conexion
-
-Convencion unica elegida:
-
-```text
-ConnectionStrings:DefaultConnection
-ConnectionStrings__DefaultConnection
-```
-
-PowerShell:
-
-```powershell
-$env:ConnectionStrings__DefaultConnection="Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password"
-```
-
-Git Bash:
-
-```bash
-export ConnectionStrings__DefaultConnection='Host=localhost;Port=55432;Database=licitaciones_dev;Username=licitaciones_app;Password=change_this_password'
-```
-
-Docker Compose usa variables del archivo `.env` local no versionado. El repositorio incluye `.env.example`:
-
-```bash
-cp .env.example .env
-```
-
-Variables de Compose:
-
-```text
-POSTGRES_DB=licitaciones_dev
-POSTGRES_USER=licitaciones_app
-POSTGRES_PASSWORD=change_this_password
-POSTGRES_PORT=55432
-```
-
-Los valores son ejemplos de desarrollo y deben reemplazarse localmente. No se deben versionar secretos reales.
-
-## Convenciones preparadas
-
-- `CreatedAt`, `UpdatedAt` y `DeletedAt`: se utilizan para auditoria y borrado logico cuando corresponde.
-- `Version`: se mantiene como convencion de concurrencia para entidades que utilizan este mecanismo.
-- En licitaciones, la concurrencia optimista se implementa mediante la columna de sistema `xmin` de PostgreSQL.
-- Dinero: las propiedades monetarias se configuran explicitamente con precision `numeric(18,2)`. No se aplica una precision global a todos los `decimal`.
-
-## Migraciones
-
-La estrategia preparada ubica migraciones versionadas dentro de `Licitaciones.Infrastructure`.
-
-Comando utilizado como patron para agregar nuevas migraciones:
-
-```bash
-dotnet ef migrations add NombreMigracion --project src/Licitaciones.Infrastructure --startup-project src/Licitaciones.Api --output-dir Persistence/Migrations
-```
-
-Aplicacion local de migraciones:
-
-```bash
-dotnet ef database update --project src/Licitaciones.Infrastructure --startup-project src/Licitaciones.Api
-```
-
-Migracion real existente:
-
-- `20260810092133_CreateProveedores`
-- `20260811234653_MakeProveedorNameUniqueIndexPartial`
-- `20260812002104_CreateLicitaciones`
-- `20260813011055_Iteration03OfertasAprobacion`
-
-
-## Tabla `Proveedores`
-
-Entidad de dominio: `Licitaciones.Domain.Proveedores.Proveedor`.
-
-| Campo | Tipo EF/PostgreSQL | Requerido | Observaciones |
-| --- | --- | --- | --- |
-| `Id` | `uuid` | Si | Identificador generado por dominio; EF usa `ValueGeneratedNever`. |
-| `Nombre` | `character varying(200)` | Si | Nombre de presentacion normalizado para mostrar. |
-| `NombreNormalizado` | `character varying(200)` | Si | Clave normalizada para comparacion de duplicados. |
-| `CreatedAt` | `timestamp with time zone` | Si | Convencion de auditoria. |
-| `UpdatedAt` | `timestamp with time zone` | Si | Convencion de auditoria. |
-| `DeletedAt` | `timestamp with time zone` | No | Borrado logico. |
-| `Version` | `bigint` | Si | Campo preparado por convencion de persistencia. |
-
-Restricciones e indices reales:
-
-- Llave primaria: `PK_Proveedores` sobre `Id`.
-- Indice unico parcial: `IX_Proveedores_NombreNormalizado` sobre `NombreNormalizado`, aplicado solamente cuando `DeletedAt IS NULL`.
-- Filtro global EF Core: excluye proveedores con `DeletedAt` distinto de `null`.
-
-Normalizacion y duplicidad:
-
-- `Nombre` se recorta, normaliza Unicode en Form C y reduce espacios repetidos.
-- `NombreNormalizado` usa normalizacion Form KC y mayusculas invariantes para comparacion.
-- La aplicacion valida duplicidad antes de guardar.
-- PostgreSQL refuerza la regla mediante un indice unico parcial sobre `NombreNormalizado` para proveedores activos.
-- Esto permite retirar un proveedor mediante borrado logico y posteriormente registrar nuevamente el mismo nombre normalizado.
-
-Relaciones:
-
-- La Iteracion 1 no define relaciones desde `Proveedores` hacia otras tablas.
-
-## Tabla `Licitaciones`
-
-Entidad de dominio: `Licitaciones.Domain.Licitaciones.Licitacion`.
-
-La tabla fue agregada durante la Iteración 2 mediante la migración:
-
-```text
-20260812002104_CreateLicitaciones
-```
-
-| Campo | Tipo EF/PostgreSQL | Requerido | Observaciones |
-| :--- | :--- | :--- | :--- |
-| **Id** | `uuid` | Sí | Identificador único de la licitación. |
-| **Codigo** | `character varying(50)` | Sí | Código de presentación de la licitación. |
-| **CodigoNormalizado** | `character varying(50)` | Sí | Código utilizado para comparación de duplicados. |
-| **Titulo** | `character varying(200)` | Sí | Título descriptivo de la licitación. |
-| **PresupuestoCrc** | `numeric(18,2)` | Sí | Presupuesto almacenado en colones costarricenses. |
-| **FechaCierreUtc** | `timestamp with time zone` | Sí | Fecha de cierre almacenada en UTC. |
-| **Estado** | `character varying(20)` | Sí | Estado actual de la licitación. |
-| **CreatedAt** | `timestamp with time zone` | Sí | Fecha de creación para auditoría. |
-| **UpdatedAt** | `timestamp with time zone` | Sí | Fecha de última modificación. |
-| **PublishedAt** | `timestamp with time zone` | No | Fecha en que la licitación fue publicada. |
-| **ClosedAt** | `timestamp with time zone` | No | Fecha en que la licitación fue cerrada. |
-| **DeletedAt** | `timestamp with time zone` | No | Borrado lógico de la licitación. |
-| **xmin** | Columna de sistema PostgreSQL | Sí | Token utilizado para concurrencia optimista. |
-
-### Restricciones e índices
-
-* **Llave primaria:** `PK_Licitaciones` sobre `Id`.
-* **Índice único parcial:** `IX_Licitaciones_CodigoNormalizado` sobre `CodigoNormalizado` cuando `DeletedAt IS NULL`.
-* **Índice:** `IX_Licitaciones_Estado` sobre `Estado`.
-* **Filtro global de EF Core:** para excluir licitaciones retiradas mediante borrado lógico.
-* **PresupuestoCrc:** utiliza precisión `numeric(18,2)`.
-
-### Normalización y duplicidad
-
-* El código se normaliza antes de realizar comparaciones.
-* La aplicación verifica duplicidad antes de guardar.
-* PostgreSQL refuerza la unicidad mediante el índice parcial sobre `CodigoNormalizado`.
-* El borrado lógico permite conservar el historial sin considerar registros retirados como activos.
-
-### Estados
-
-Los estados persistidos actualmente son:
-
-* **Borrador**
-* **Publicada**
-* **Cerrada**
-
-Las transiciones válidas son controladas por el dominio.
-
-### Auditoría
-
-La tabla registra:
-
-* `CreatedAt`
-* `UpdatedAt`
-* `PublishedAt`
-* `ClosedAt`
-* `DeletedAt`
-
-Estos campos permiten mantener evidencia del ciclo de vida de cada licitación.
-
-### Concurrencia optimista
-
-* Las licitaciones utilizan `xmin`, columna de sistema de PostgreSQL, como token de concurrencia optimista.
-* Durante una actualización, EF Core verifica que la versión leída inicialmente coincida con la versión actual de la fila.
-* Esto evita que una modificación obsoleta sobrescriba silenciosamente cambios realizados por otra operación.
-* Los conflictos son tratados de forma controlada por la capa de aplicación.
-
-### Relaciones
-
-* Iteracion 3 agrega relaciones desde `Ofertas` hacia `Licitaciones` y `Proveedores`.
-* Las eliminaciones relacionadas usan `RESTRICT` para conservar la integridad de la evidencia.
-
-## Ampliacion progresiva
-
-## Tablas de Iteracion 3
-
-### `Ofertas`
-
-| Campo | PostgreSQL | Regla |
-| --- | --- | --- |
-| `Id` | `uuid` | PK. |
-| `LicitacionId` | `uuid` | FK restrictiva a `Licitaciones`. |
-| `ProveedorId` | `uuid` | FK restrictiva a `Proveedores`. |
-| `MontoOfertadoCrc` | `numeric(18,2)` | Requerido y `CHECK` mayor que cero. |
-| `FechaRegistro`, `UpdatedAt` | `timestamp with time zone` | Auditoria UTC. |
-| `xmin` | `xid` | Concurrencia optimista. |
-
-`IX_Ofertas_LicitacionId_ProveedorId` es unico y refuerza una oferta por proveedor/licitacion. `IX_Ofertas_ProveedorId` soporta la consulta de ofertas relacionadas.
-
-Restricciones verificadas:
-
-- `PK_Ofertas` sobre `Id`.
-- `FK_Ofertas_Licitaciones_LicitacionId` y `FK_Ofertas_Proveedores_ProveedorId`, ambas con eliminacion `RESTRICT`.
-- `CK_Ofertas_MontoPositivo` exige monto mayor que cero.
-- `IX_Ofertas_LicitacionId_ProveedorId` es un indice compuesto unico.
-- `xmin` actua como token de concurrencia optimista.
-
-### `NivelesAprobacion`
-
-| Campo | PostgreSQL | Regla |
-| --- | --- | --- |
-| `Id` | `uuid` | PK. |
-| `MontoMinimoCrc` | `numeric(18,2)` | Mayor que cero. |
-| `MontoMaximoCrc` | `numeric(18,2)` nullable | Nulo o mayor/igual al minimo. |
-| `Aprobador` | `character varying(200)` | Requerido. |
-| `CreatedAt`, `UpdatedAt` | `timestamp with time zone` | Auditoria UTC. |
-| `xmin` | `xid` | Concurrencia optimista. |
-
-El indice parcial `IX_NivelesAprobacion_UnicoRangoAbierto` usa `NULLS NOT DISTINCT`. `EX_NivelesAprobacion_SinTraslapes` usa exclusion GiST con `numrange(..., '[]') WITH &&`. Ambas tablas se crean en `20260813011055_Iteration03OfertasAprobacion`.
-
-Restricciones verificadas:
-
-- `PK_NivelesAprobacion` sobre `Id`.
-- `CK_NivelesAprobacion_MinimoPositivo` exige minimo mayor que cero.
-- `CK_NivelesAprobacion_MaximoValido` permite maximo nulo o mayor/igual al minimo.
-- El indice parcial unico admite un solo registro con `MontoMaximoCrc IS NULL`.
-- La exclusion GiST compara intervalos cerrados `numrange` y rechaza rangos que se traslapen, incluso ante escrituras concurrentes que alcancen PostgreSQL.
-- `xmin` actua como token de concurrencia optimista.
-
-### Relaciones de Iteracion 3
+## Diagrama relacional
 
 ```mermaid
 erDiagram
@@ -262,35 +22,155 @@ erDiagram
     LICITACIONES ||--o{ OFERTAS : recibe
 
     PROVEEDORES {
-        uuid Id PK
+      uuid Id PK
+      varchar Nombre
+      varchar NombreNormalizado
+      timestamptz CreatedAt
+      timestamptz UpdatedAt
+      timestamptz DeletedAt
+      bigint Version
     }
     LICITACIONES {
-        uuid Id PK
-        numeric PresupuestoCrc
-        timestamptz FechaCierreUtc
-        string Estado
+      uuid Id PK
+      varchar Codigo
+      varchar CodigoNormalizado
+      varchar Titulo
+      numeric PresupuestoCrc
+      timestamptz FechaCierreUtc
+      varchar Estado
+      xid xmin
     }
     OFERTAS {
-        uuid Id PK
-        uuid LicitacionId FK
-        uuid ProveedorId FK
-        numeric MontoOfertadoCrc
-        timestamptz FechaRegistro
-        timestamptz UpdatedAt
-        xid xmin
+      uuid Id PK
+      uuid LicitacionId FK
+      uuid ProveedorId FK
+      numeric MontoOfertadoCrc
+      timestamptz FechaRegistro
+      xid xmin
     }
     NIVELES_APROBACION {
-        uuid Id PK
-        numeric MontoMinimoCrc
-        numeric MontoMaximoCrc
-        string Aprobador
-        timestamptz CreatedAt
-        timestamptz UpdatedAt
-        xid xmin
+      uuid Id PK
+      numeric MontoMinimoCrc
+      numeric MontoMaximoCrc
+      varchar Aprobador
+      xid xmin
+    }
+    TIPOS_CAMBIO {
+      uuid Id PK
+      date Fecha
+      numeric CrcPorUsd
+      boolean Activo
+      xid xmin
     }
 ```
 
-- Proveedores: implementado en Iteracion 1.
-- Licitaciones, auditoria y concurrencia: implementado en Iteracion 2.
-- Ofertas y niveles de aprobacion: implementados en Iteracion 3.
-- Tipos de cambio: previsto para Iteracion 4.
+Niveles de aprobación y tipos de cambio no tienen claves foráneas. Son catálogos consultados por Application.
+
+## Tabla `Proveedores`
+
+| Columna | Tipo | Regla |
+|---|---|---|
+| `Id` | `uuid` | PK, generado por Domain. |
+| `Nombre` | `varchar(200)` | Requerido. |
+| `NombreNormalizado` | `varchar(200)` | Requerido. |
+| `CreatedAt` / `UpdatedAt` | `timestamptz` | Auditoría. |
+| `DeletedAt` | `timestamptz NULL` | Borrado lógico. |
+| `Version` | `bigint` | Token de concurrencia configurado por convención. |
+
+`IX_Proveedores_NombreNormalizado` es único y parcial con filtro `DeletedAt IS NULL`. El query filter omite retirados. El nombre puede reutilizarse después del borrado lógico.
+
+Limitación: los contratos de proveedores no exponen `Version` y el repositorio no traduce explícitamente conflictos concurrentes o carreras del índice único.
+
+## Tabla `Licitaciones`
+
+| Columna | Tipo | Regla |
+|---|---|---|
+| `Id` | `uuid` | PK. |
+| `Codigo` | `varchar(50)` | Requerido. |
+| `CodigoNormalizado` | `varchar(50)` | Requerido y único entre activos. |
+| `Titulo` | `varchar(200)` | Requerido. |
+| `PresupuestoCrc` | `numeric(18,2)` | Regla positiva en Domain. |
+| `FechaCierreUtc` | `timestamptz` | Requerida. |
+| `Estado` | `varchar(20)` | `Borrador`, `Publicada` o `Cerrada`. |
+| Auditoría | `timestamptz` | `CreatedAt`, `UpdatedAt`, `PublishedAt`, `ClosedAt`, `DeletedAt`. |
+| `xmin` | `xid` | Concurrencia optimista expuesta como `Version`. |
+
+Índices:
+
+- `IX_Licitaciones_CodigoNormalizado`: único parcial para registros sin `DeletedAt`.
+- `IX_Licitaciones_Estado`.
+
+Existe query filter para borrado lógico.
+
+## Tabla `Ofertas`
+
+| Columna | Tipo | Regla |
+|---|---|---|
+| `Id` | `uuid` | PK. |
+| `LicitacionId` | `uuid` | FK restrictiva a `Licitaciones`. |
+| `ProveedorId` | `uuid` | FK restrictiva a `Proveedores`. |
+| `MontoOfertadoCrc` | `numeric(18,2)` | `CK_Ofertas_MontoPositivo`. |
+| `FechaRegistro` / `UpdatedAt` | `timestamptz` | Registro y auditoría. |
+| `xmin` | `xid` | Concurrencia optimista como `Version`. |
+
+Índices:
+
+- `IX_Ofertas_LicitacionId_ProveedorId`: único; una oferta por proveedor y licitación.
+- `IX_Ofertas_ProveedorId`.
+
+La oferta se elimina físicamente cuando la licitación todavía permite la operación.
+
+## Tabla `NivelesAprobacion`
+
+| Columna | Tipo | Regla |
+|---|---|---|
+| `Id` | `uuid` | PK. |
+| `MontoMinimoCrc` | `numeric(18,2)` | `CK_NivelesAprobacion_MinimoPositivo`. |
+| `MontoMaximoCrc` | `numeric(18,2) NULL` | `NULL` representa rango abierto. |
+| `Aprobador` | `varchar(200)` | Requerido. |
+| `CreatedAt` / `UpdatedAt` | `timestamptz` | Auditoría. |
+| `xmin` | `xid` | Concurrencia optimista. |
+
+Restricciones:
+
+- `CK_NivelesAprobacion_MaximoValido`: máximo nulo o mayor/igual al mínimo.
+- `IX_NivelesAprobacion_UnicoRangoAbierto`: índice único parcial con nulos no distintos.
+- `EX_NivelesAprobacion_SinTraslapes`: exclusión GiST con `numrange(..., '[]')` para límites inclusivos.
+- `IX_NivelesAprobacion_MontoMinimoCrc`.
+
+## Tabla `TiposCambio`
+
+| Columna | Tipo | Regla |
+|---|---|---|
+| `Id` | `uuid` | PK. |
+| `Fecha` | `date` | Requerida; puede repetirse. |
+| `CrcPorUsd` | `numeric(18,2)` | `CK_TiposCambio_CrcPorUsdPositivo`. |
+| `Activo` | `boolean` | Solo uno puede ser verdadero. |
+| `CreatedAt` / `UpdatedAt` | `timestamptz` | Auditoría. |
+| `xmin` | `xid` | Concurrencia optimista. |
+
+Índices:
+
+- `IX_TiposCambio_Fecha`: no único.
+- `IX_TiposCambio_UnicoActivo`: único parcial con filtro `Activo = TRUE`.
+
+La activación desactiva el registro activo anterior y guarda el nuevo dentro de una transacción controlada por `TipoCambioRepository`.
+
+## Migraciones
+
+El modelo actual tiene seis migraciones, en este orden:
+
+1. `20260810092133_CreateProveedores`
+2. `20260811234653_MakeProveedorNameUniqueIndexPartial`
+3. `20260812002104_CreateLicitaciones`
+4. `20260813011055_Iteration03OfertasAprobacion`
+5. `20260813205016_Iteration04TiposCambio`
+6. `20260814014136_AllowDuplicateTipoCambioDates`
+
+## Ejecución de migraciones
+
+Web y API llaman `Database.Migrate()` durante el arranque fuera del entorno `Testing`. Docker y Kubernetes no contienen un migrador independiente. Dos hosts pueden intentar aplicar migraciones al mismo tiempo; el estado se documenta aquí, sin corregirlo durante Fase 9.
+
+## Persistencia y pruebas
+
+Las pruebas de integración usan PostgreSQL 16 real mediante Testcontainers. Cubren migraciones, restricciones, índices, relaciones, filtros, concurrencia y transacciones. Los resultados numéricos registrados pertenecen a evidencia histórica y se detallan en [pruebas.md](pruebas.md).

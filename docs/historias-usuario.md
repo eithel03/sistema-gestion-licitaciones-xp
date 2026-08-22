@@ -1,13 +1,15 @@
 # Historias de usuario
 
-Estas historias fueron identificadas, divididas, priorizadas y estimadas durante el Planning Game de XP del Sistema de Gestion de Licitaciones. La planificacion inicial busca que cada historia pueda ser entendida por el cliente, implementada por los programadores en una iteracion corta y verificada mediante pruebas de aceptacion.
+Estas historias fueron identificadas, divididas, priorizadas y estimadas durante el Planning Game de XP del Sistema de Gestion de Licitaciones. Se conservan su prioridad, estimación, dependencias, iteración, criterios de aceptación, módulos y pruebas. Los estados se sincronizaron en Fase 9 con la integración observable en `main@36e89ec`.
 
 ## Escala y convenciones
 
 - Estimacion: 1, 2, 3, 5 u 8 puntos de historia.
 - Prioridad: Alta, Media o Baja.
-- Estado inicial: Planificada.
-- Evidencias reales: Issue, Pull Request, commits y pruebas se completaran cuando la historia sea implementada.
+- Estado inicial histórico: Planificada.
+- Estado actual: HU-01 a HU-37 implementadas e integradas según los PR y commits indicados en cada historia.
+- Evidencia: los campos Issue, Pull Request y commits solo se completan cuando existe respaldo en el historial; `Pendiente` significa que no se confirmó el dato, no que la implementación siga abierta.
+- Pruebas ejecutadas: nombres y resultados registrados históricamente por el equipo; no representan una nueva ejecución durante Fase 9.
 
 ## Historias
 
@@ -28,7 +30,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorMvcTests.LandingPageAndProviderListAreAvailable`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-02 - Usar diseno adaptable en la interfaz base
 
@@ -47,7 +49,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: revision responsive en vistas MVC y cobertura funcional mediante `ProveedorMvcTests`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-03 - Visualizar mensajes de exito, advertencia y error
 
@@ -66,7 +68,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorMvcTests.CreateEditAndRejectDuplicateProviderThroughMvc`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-04 - Aplicar paginacion, filtrado y ordenamiento base
 
@@ -85,7 +87,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorServiceTests.ListFiltersSortsAndPaginatesProviders`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-05 - Crear proveedores
 
@@ -104,7 +106,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorTests`, `ProveedorServiceTests.CreateReturnsCreatedProvider`, `ProveedorApiTests.CreateProviderReturnsCreatedAndCanBeRead`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-06 - Listar y consultar proveedores
 
@@ -123,7 +125,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorPersistenceTests.SavesAndRetrievesProveedor`, `ProveedorMvcTests.LandingPageAndProviderListAreAvailable`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-07 - Editar y aplicar borrado logico de proveedores
 
@@ -142,7 +144,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorTests.RenameUpdatesNameAndTimestamp`, `ProveedorPersistenceTests.RetiresProveedorWithLogicalDelete`, `ProveedorApiTests.UpdateAndDeleteProviderUseExpectedStatusCodes`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-08 - Validar nombre unico y normalizado de proveedor
 
@@ -161,7 +163,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorTests.NormalizedNameIgnoresCaseAndRepeatedSpaces`, `ProveedorPersistenceTests.UniqueIndexRejectsEquivalentNormalizedName`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-09 - Validar caracteres permitidos en proveedores
 
@@ -180,7 +182,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorTests.CreateAcceptsAllowedCharacters`, `ProveedorTests.CreateRejectsDisallowedCharacters`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-10 - Exponer API REST basica de proveedores
 
@@ -199,7 +201,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#9`.
 - Commits: `5696a0f`.
 - Pruebas ejecutadas: `ProveedorApiTests`.
-- Estado: Implementada en Iteracion 1.
+- Estado: Implementada e integrada a `main` mediante PR `#9` y merge `10cb32b`; no existe tag oficial.
 
 ### HU-11 - Consultar ofertas relacionadas con proveedor
 
@@ -221,7 +223,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `7e6a317`, `29e727c`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `Iteration3MvcTests`, `Iteration3PersistenceTests`.
 - Documentacion relacionada: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `integracion-modulos.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-12 - Crear licitaciones
 
@@ -410,7 +412,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `api.md`, `modelo-datos.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-21 - Listar, consultar y filtrar ofertas
 
@@ -431,7 +433,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `iteraciones/iteracion-03.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-22 - Editar y eliminar ofertas cuando este permitido
 
@@ -452,7 +454,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `iteraciones/iteracion-03.md`, `pruebas.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-23 - Rechazar ofertas duplicadas, vencidas o no publicadas
 
@@ -473,7 +475,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `OfertaServiceTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `modelo-datos.md`, `pruebas.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-24 - Validar ofertas contra presupuesto
 
@@ -494,7 +496,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `OfertaTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `pruebas.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-25 - Determinar mejor oferta y resolver empates
 
@@ -515,7 +517,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `iteraciones/iteracion-03.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-26 - Calcular clasificacion del ahorro
 
@@ -536,7 +538,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `EvaluadorOfertasTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/ofertas.md`, `api.md`, `pruebas.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-27 - Administrar niveles de aprobacion
 
@@ -558,7 +560,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `a20eb19`, `29e727c`, `37bcb55`, `4faaf83`, `437cc37`.
 - Pruebas ejecutadas: `NivelAprobacionServiceTests`, `Iteration3ApiTests`, `Iteration3MvcTests`.
 - Documentacion relacionada: `modulos/niveles-aprobacion.md`, `api.md`, `iteraciones/iteracion-03.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-28 - Evitar traslapes y determinar aprobador
 
@@ -579,7 +581,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `a20eb19`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `NivelAprobacionTests`, `NivelAprobacionServiceTests`, `Iteration3PersistenceTests`, `Iteration3ApiTests`.
 - Documentacion relacionada: `modulos/niveles-aprobacion.md`, `modelo-datos.md`, `integracion-modulos.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-29 - Exponer API REST de ofertas y aprobaciones
 
@@ -600,7 +602,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Commits: `d6d6009`, `7e6a317`, `a20eb19`, `29e727c`, `37bcb55`, `437cc37`.
 - Pruebas ejecutadas: `Iteration3ApiTests`.
 - Documentacion relacionada: `api.md`, `iteraciones/iteracion-03.md`, `modulos/ofertas.md`, `modulos/niveles-aprobacion.md`.
-- Estado: Implementada, validada e integrada a main en Iteracion 3; Issue, CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#14` y merge `fe5317c`; no existe Issue confirmado para la iteración ni tag oficial.
 
 ### HU-30 - Administrar tipos de cambio
 
@@ -620,7 +622,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests`, `Iteration4ApiTests` e `Iteration4MvcTests`.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; no existe tag oficial.
 
 ### HU-31 - Activar un unico tipo de cambio
 
@@ -640,7 +642,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `40c4f5d`, `38c5bf5`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `TipoCambioTests`, `TipoCambioServiceTests`, `TipoCambioPersistenceTests` e `Iteration4ApiTests`.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; no existe tag oficial.
 
 ### HU-32 - Alternar visualmente entre CRC y USD
 
@@ -660,7 +662,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `40c4f5d`, `5cba6c2`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `TipoCambioServiceTests`, `Iteration4ApiTests` e `Iteration4MvcTests`; validacion manual de licitacion y oferta en CRC/USD.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; no existe tag oficial.
 
 ### HU-33 - Alternar modo claro y oscuro con preferencia persistida
 
@@ -679,7 +681,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `5cba6c2`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `Iteration4MvcTests` y validacion manual, incluida la conservacion de preferencia despues de reiniciar contenedores.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; no existe tag oficial.
 
 ### HU-34 - Documentar y endurecer la API REST
 
@@ -699,7 +701,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `38c5bf5`, `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: `ApiHardeningTests`, `Iteration4ApiTests` y `LicitacionApiTests`; Swagger UI y ProblemDetails validados manualmente.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; no existe tag oficial.
 
 ### HU-35 - Automatizar pruebas, cobertura e integracion continua
 
@@ -719,7 +721,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `9b0fa75`, `2e710d2`.
 - Pruebas ejecutadas: UnitTests 96/96, IntegrationTests 27/27 y FunctionalTests 51/51; total 174/174. Cobertura limpia global 87.3%, Domain 91.4% y Application 83.8%.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; no existe tag oficial.
 
 ### HU-36 - Preparar infraestructura de despliegue
 
@@ -737,8 +739,8 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Rama: `feature/iteracion-04-moneda-ux`.
 - Pull Request: `#16`.
 - Commits: `8103b12`, `2e710d2`.
-- Pruebas ejecutadas: `docker compose config`, build, arranque, health checks y persistencia; `kubectl kustomize k8s` exitoso. Despliegue real en Kubernetes pendiente de cluster activo.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator, tag y despliegue real de Kubernetes pendientes.
+- Pruebas ejecutadas: evidencia histórica de `docker compose config`, build, arranque, health checks, persistencia y `kubectl kustomize k8s`; Fase 7 documentó posteriormente un despliegue real.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; ampliada por Fases 6 y 7; no existe tag oficial.
 
 ### HU-37 - Mantener documentacion XP, trazabilidad y preparacion de defensa
 
@@ -757,7 +759,7 @@ Estas historias fueron identificadas, divididas, priorizadas y estimadas durante
 - Pull Request: `#16`.
 - Commits: `2e710d2`.
 - Pruebas ejecutadas: revision documental, comprobacion de enlaces y `git diff --check`.
-- Estado: Implementada y validada en Iteracion 4; Issue #15, commits y PR #16 registrados; merge a `main` realizado mediante `ea9772f`; CI remoto, revision formal del Navigator y tag pendientes.
+- Estado: Implementada e integrada a `main` mediante PR `#16` y merge `ea9772f`; documentación sincronizada en Fase 9; no existe tag oficial.
 
 ## Resumen de puntos
 

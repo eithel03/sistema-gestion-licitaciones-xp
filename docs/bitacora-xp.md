@@ -131,7 +131,7 @@ Se realizaron las siguientes validaciones manuales:
 - Verificación de que las historias tuvieran criterios de aceptación.
 - Confirmación de que existieran cuatro iteraciones.
 - Revisión de dependencias entre historias.
-- Verificación de que no se utilizara terminología de Scrum o Kanban.
+- Verificación de uso exclusivo de terminología XP.
 - Revisión de enlaces internos y estructura documental.
 - Comparación del plan de liberación con el alcance oficial del proyecto.
 
@@ -414,8 +414,8 @@ La Fase 3 quedó preparada y validada correctamente a nivel de código, document
 - Navigator: Luis Diego Chavala.
 - Rama: `chore/preparacion-persistencia`.
 - Issue: `#5 - FASE-04: Preparacion de persistencia`.
-- Pull Request: Pendiente.
-- Commits: Pendiente.
+- Pull Request: `#8`, integrado posteriormente a `main` mediante el commit de merge `f70b4ad`.
+- Commits: `677ae3d`, `1706703` y `f51851a`.
 
 ### Objetivo
 
@@ -505,7 +505,7 @@ No se implementaron CRUD, entidades completas, proveedores, licitaciones, oferta
 
 ### Resultado actual
 
-La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convenciones basicas preparados para crecer durante las iteraciones. PR, commits, merge y CI remoto quedan pendientes para ejecucion manual del equipo.
+La Fase 4 dejó EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convenciones básicas preparados para crecer durante las iteraciones. Posteriormente fue integrada mediante el PR `#8` y el commit de merge `f70b4ad`. Las validaciones citadas pertenecen a aquella sesión.
 
 ## Iteración 1 — Landing page y proveedores
 
@@ -518,7 +518,7 @@ La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convencion
 - Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
 - Destino del PR: `main`.
 - Origen del PR: `feature/iteracion-01-landing-proveedores`.
-- Estado del PR: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
+- Estado posterior del PR: integrado a `main` mediante `10cb32b`.
 - Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
 - Historias trabajadas: HU-01, HU-02, HU-03, HU-04, HU-05, HU-06, HU-07, HU-08, HU-09 y HU-10.
 - Ciclos TDD:
@@ -543,7 +543,7 @@ La Fase 4 deja EF Core, Npgsql, PostgreSQL 16 local, Testcontainers y convencion
   - MVC y API consumen `IProveedorService`; no acceden directamente a EF Core.
 - Resultado: implementacion funcional de landing y gestion de proveedores. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo.
 - Retroalimentacion: pendiente de registrar revision real del navigator.
-- Velocidad: 30 puntos implementados en la rama de Iteracion 1, pendientes de cierre formal despues de integracion a `main`.
+- Velocidad: 30 puntos implementados según la evidencia histórica; la iteración fue integrada a `main` mediante `10cb32b`.
 
 ## Iteracion 2 - Licitaciones y persistencia base
 
@@ -737,7 +737,7 @@ Completar la administración local de tipos de cambio, la presentación CRC/USD,
 - ProblemDetails se produce de forma común y segura para los módulos API.
 - PostgreSQL 16 real se conserva en pruebas mediante Testcontainers.
 - Docker usa el puerto host 55432 para PostgreSQL y conserva el volumen.
-- Kubernetes se mantuvo básico, reproducible y sin afirmar un despliegue no realizado.
+- En la Iteración 4 Kubernetes quedó preparado y renderizado; el despliegue real se realizó posteriormente en la Fase 7.
 
 ### Defectos y ajustes encontrados
 
@@ -773,7 +773,7 @@ Los mensajes de conexión posteriores a `DROP DATABASE ... WITH (FORCE)` corresp
 - `docker compose down -v`: no ejecutado.
 - `kubectl kustomize k8s`: exitoso.
 - El dry-run no completó la consulta porque el API server local no estaba disponible en `kubernetes.docker.internal:6443`.
-- Despliegue, pods, logs y persistencia real en Kubernetes: Pendientes.
+- En esta iteración el despliegue real estaba pendiente; quedó validado posteriormente en la Fase 7.
 
 ### Resultado
 
@@ -796,14 +796,14 @@ Los mensajes de conexión posteriores a `DROP DATABASE ... WITH (FORCE)` corresp
 - `8103b12` - `chore(deploy): preparar Docker y Kubernetes`.
 - `2e710d2` - `docs(xp): documentar cierre tecnico de iteracion 4`.
 
-El workflow de CI está preparado dentro de `9b0fa75`, pero su ejecución remota para el Pull Request permanece pendiente de evidencia confirmada. Esta actualización documental posterior todavía no tiene commit.
+El workflow de CI se preparó dentro de `9b0fa75`. La Iteración 4 se integró mediante `ea9772f` y el workflow fue consolidado posteriormente en la Fase 8. No se atribuye a la Iteración 4 evidencia remota que no esté registrada.
 
-### Pendientes formales
+### Estado posterior y asuntos sin evidencia
 
 - CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación de cierre: Pendiente.
-- Merge a `main`: realizado mediante `ea9772f`.
+- Merge a `main`: realizado mediante `ea9772f`; no está pendiente.
 - Tag `v1.0.0-rc`: Pendiente.
 - GitHub Release: Pendiente.
 
@@ -959,7 +959,7 @@ La Fase 6 quedó validada localmente: los tres servicios iniciaron correctamente
 - Navigator: Eithel Herrera Rojas.
 - Rama: `chore/fase-07-kubernetes`.
 - Issue: `#21 - FASE-07: Despliegue en Kubernetes con StatefulSet, PVC y Probes`.
-- Pull Request: Pendiente.
+- Pull Request: `#22`, integrado a `main` mediante el commit de merge `82c8c58`.
 - Commit: `2d75e38` — `feat(k8s): implementar despliegue Fase 7 con StatefulSet, PVC y probes (Closes #21)`, subido a `origin/chore/fase-07-kubernetes`.
 
 ### Objetivo
@@ -1041,11 +1041,11 @@ Eithel Herrera Rojas revisó los manifiestos, las probes, el PVC, los Services y
 
 ### Restricciones respetadas
 
-No se modificó código de aplicación. No se ejecutó `kubectl delete pvc postgres-data`. No se creó Pull Request. No se inventó evidencia: todos los resultados corresponden a ejecuciones reales del 17 y 18 de agosto de 2026.
+No se modificó código de aplicación y no se ejecutó `kubectl delete pvc postgres-data`. Al cierre de la sesión original todavía no se había creado el Pull Request; posteriormente se creó el PR `#22` y quedó integrado. Los resultados de despliegue corresponden a ejecuciones históricas del 17 y 18 de agosto de 2026.
 
 ### Resultado
 
-La Fase 7 quedó validada: los diez recursos se aplicaron correctamente, los tres pods quedaron en estado Ready sin reinicios, los health checks de Web y API respondieron `200 Healthy`, las seis migraciones quedaron aplicadas y la persistencia sobrevivió a la eliminación y recreación del pod de PostgreSQL. El commit `2d75e38` se subió a `origin`. Pendientes: Pull Request, checks remotos y cierre formal con el Navigator.
+La Fase 7 quedó validada históricamente: los diez recursos se aplicaron correctamente, los tres pods quedaron en estado Ready sin reinicios, los health checks de Web y API respondieron `200 Healthy`, las seis migraciones quedaron aplicadas y la persistencia sobrevivió a la eliminación y recreación del pod de PostgreSQL. El trabajo del commit `2d75e38` se integró a `main` mediante el PR `#22` y el commit de merge `82c8c58`. Esta evidencia no fue regenerada durante la Fase 9.
 
 ## Fase 8 — Consolidación de GitHub Actions
 
@@ -1087,6 +1087,46 @@ Consolidar y endurecer el workflow de GitHub Actions existente desde la Fase 2, 
 
 ### Resultado y estado actual
 
-GitHub indica `All checks have passed` y muestra `12 successful checks`. El PR `#24` está abierto, dirigido a `main`, sin conflictos y puede integrarse automáticamente. El merge aún está pendiente; no se ha realizado ni se documenta como integrado a `main`.
+La evidencia histórica registrada para el PR `#24` indica `All checks have passed` y `12 successful checks`. El PR fue integrado a `main` mediante el commit de merge `36e89ec`, que constituye la línea base documental de la Fase 9. Estos resultados no se volvieron a ejecutar durante la actualización documental.
 
-La revisión final del Navigator permanece pendiente por falta de evidencia confirmada. La protección de `main` queda pendiente de configuración o verificación manual.
+La configuración o verificación de protección de `main` no puede demostrarse con el contenido local del repositorio y queda identificada como comprobación externa futura.
+
+## Registro de fase — Fase 9
+
+- Fase: 9 — Documentación completa.
+- Fecha: 21/08/2026.
+- Duración: pendiente de registrar por el equipo.
+- Driver: Luis Diego Chavala.
+- Navigator: Eithel Herrera Rojas.
+- Línea base: `main@36e89ec`.
+- Rama: registrar cuando se cree.
+- Issue: registrar cuando exista.
+- Pull Request: registrar cuando exista.
+- Commits: registrar después de que sean creados por el equipo.
+- Pruebas creadas: N/A; la fase es exclusivamente documental.
+- Pruebas ejecutadas: no se ejecutaron suites automatizadas durante esta sesión documental. Se realizaron comprobaciones estáticas de estructura, enlaces y alcance de archivos.
+
+### Decisiones
+
+- Sincronizar la documentación con la implementación observable en `main@36e89ec`.
+- Separar claramente estado actual, evidencia histórica y trabajo técnico futuro.
+- Documentar Web y API como hosts independientes que comparten Application, Domain, Infrastructure y PostgreSQL.
+- No corregir lógica, hosts, pruebas ni configuración de infraestructura durante esta fase.
+- No declarar una versión oficial, tag o GitHub Release que no exista.
+- Usar diagramas Mermaid verificables en Markdown y no fabricar capturas de pantalla.
+
+### Refactorizaciones
+
+N/A para código funcional. La reorganización se limitó a documentos, enlaces y nombres de archivos Markdown.
+
+### Resultado
+
+Documentación actualizada para representar el estado actual del repositorio en la línea base indicada. El commit, la rama, el Issue, el Pull Request, la revisión final del Navigator y la duración se registrarán únicamente cuando exista evidencia.
+
+### Observaciones y trabajo técnico futuro
+
+- La landing MVC y la vista MVC asociada con Swagger conservan mensajes antiguos; su corrección requiere una fase técnica posterior.
+- El OpenAPI se construye manualmente y describe de forma superficial DTO y cuerpos de solicitud.
+- No existe una vista MVC específica de mejor oferta y algunas listas MVC no exponen toda la paginación, filtros u ordenamiento disponibles en Application/API.
+- Web y API pueden intentar aplicar migraciones al iniciar; no existe un migrador independiente.
+- El versionado visible es inconsistente: Docker/Kubernetes usan `v1.0.0-rc`, la landing muestra `v0.1.0` y Git no contiene tags.

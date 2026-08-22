@@ -1,5 +1,7 @@
 # API Iteración 4
 
+> Evidencia histórica de la Iteración 4. Para el contrato observado actualmente, consulte [api.md](api.md) y [API REST](modulos/api-rest.md). Los resultados de pruebas de este documento no fueron regenerados en la Fase 9.
+
 La API conserva las rutas versionadas bajo `/api/v1` y documenta únicamente los verbos HTTP implementados.
 
 ## Tipos de cambio y moneda
@@ -47,9 +49,10 @@ Se rechazan Publicada a Borrador, Cerrada a Publicada y Cerrada a Borrador. Los 
 
 - Interfaz Swagger UI interactiva: `/swagger`.
 - Documento OpenAPI v1: `/swagger/v1/swagger.json`.
-- Swagger UI consume el documento v1 y permite consultar operaciones, parámetros, esquemas, respuestas y ejecutar solicitudes con `Try it out`.
+- Swagger UI consume el documento v1 y permite explorar y ejecutar las operaciones publicadas con `Try it out`.
 - El contrato documenta `PATCH /api/v1/tipos-cambio/{id}/activar` y `PATCH /api/v1/licitaciones/{id}/estado` con sus verbos reales.
 - Las pruebas comparan rutas documentadas con métodos admitidos para evitar POST, PUT o DELETE inexistentes.
+- Limitación actual: el OpenAPI se construye manualmente y es superficial; no describe completamente los DTO, cuerpos de solicitud ni todos los esquemas y respuestas.
 
 ## ProblemDetails y correlación
 
@@ -69,9 +72,9 @@ El mismo identificador se envía en `X-Correlation-ID`. El valor del cuerpo coin
 
 La infraestructura común cubre los endpoints de proveedores, licitaciones, ofertas, niveles de aprobación y tipos de cambio.
 
-## Evidencia automatizada
+## Evidencia automatizada histórica
 
 - `Iteration4ApiTests`.
 - `ApiHardeningTests`.
 - `LicitacionApiTests`.
-- Suite funcional final: 51/51.
+- Suite funcional registrada al cierre de la Iteración 4: 51/51. No corresponde a una ejecución de la Fase 9.

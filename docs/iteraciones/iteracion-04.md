@@ -1,5 +1,7 @@
 # Iteración 4 - Moneda, UX y consolidación técnica
 
+> Registro histórico de la Iteración 4. El PR `#16` fue integrado a `main` mediante `ea9772f`. Kubernetes se desplegó posteriormente en la Fase 7. Los resultados de pruebas y cobertura aquí consignados no fueron regenerados en la Fase 9.
+
 - Objetivo: completar tipos de cambio, visualización CRC/USD, modo claro y oscuro, consolidación de API, pruebas e infraestructura para una versión candidata reproducible.
 - Duración: Pendiente de completar por el equipo.
 - Fecha: Pendiente de completar por el equipo.
@@ -18,7 +20,7 @@
 | HU-32 | 3 | Alternancia visual CRC/USD implementada y validada |
 | HU-33 | 3 | Modo claro y oscuro con preferencia persistida implementado y validado |
 | HU-34 | 5 | Swagger UI, OpenAPI, versionado, ProblemDetails y correlación implementados y validados |
-| HU-35 | 5 | Suite y cobertura consolidadas localmente; workflow de CI preparado y ejecución remota de la Iteración 4 pendiente |
+| HU-35 | 5 | Suite y cobertura consolidadas según evidencia histórica; CI fue ampliado en fases posteriores |
 | HU-36 | 5 | Docker validado y manifiestos Kubernetes preparados y renderizados |
 | HU-37 | 3 | Documentación y trazabilidad actualizadas localmente; cierre formal pendiente |
 
@@ -87,11 +89,11 @@ Los mensajes de conexión de EF Core inmediatamente posteriores a `DROP DATABASE
 - La persistencia del volumen PostgreSQL se comprobó después de reiniciar contenedores; no se ejecutó `docker compose down -v`.
 - `kubectl kustomize k8s` renderizó correctamente Namespace, ConfigMap, Secret de ejemplo, PostgreSQL, PVC, Deployments, Services, probes y recursos.
 - `kubectl apply --dry-run=client --validate=false -k k8s` no completó la consulta al API server porque Kubernetes local no estaba disponible en `kubernetes.docker.internal:6443`.
-- El despliegue y la persistencia reales sobre un clúster Kubernetes activo permanecen pendientes.
+- En esta iteración el clúster todavía estaba pendiente; el despliegue y la persistencia reales se validaron posteriormente en la Fase 7.
 
 ## Velocidad técnica
 
-32 puntos implementados y validados localmente. El merge a `main` está evidenciado por `ea9772f`; el cierre formal depende todavía de CI remoto y revisión formal del Navigator.
+32 puntos registrados como implementados y validados localmente. El merge a `main` está evidenciado por `ea9772f`; no se presume evidencia adicional de revisión formal del Navigator.
 
 ## Resultado demostrable
 
@@ -113,11 +115,11 @@ El sistema funciona localmente con proveedores, licitaciones, ofertas, evaluaci�
 
 Antes de esta actualización documental, `git status` indicó `nothing to commit, working tree clean` y `git diff --check` terminó sin errores.
 
-Permanecen pendientes:
+Estado posterior y asuntos sin evidencia:
 
 - CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación formal de cierre: Pendiente.
-- Merge a `main`: realizado mediante `ea9772f`.
+- Merge a `main`: realizado mediante `ea9772f`; no está pendiente.
 - Tag `v1.0.0-rc`: Pendiente.
 - GitHub Release: Pendiente.

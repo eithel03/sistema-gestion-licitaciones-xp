@@ -1,5 +1,7 @@
 # Iteracion 2 - Licitaciones y persistencia base
 
+> Registro histórico de la Iteración 2. El PR `#12` fue integrado a `main` mediante `fafcc66`. La versión `v0.2.0` fue prevista, pero no existe un tag oficial. Los resultados de ejecución son evidencia histórica y no fueron regenerados en la Fase 9.
+
 - Objetivo: entregar gestion de licitaciones con reglas de codigo, presupuesto, fecha de cierre, estados, vencimiento, persistencia relacional base y API relacionada.
 - Duracion uniforme propuesta: Pendiente de completar por el equipo.
 - Fecha prevista: Pendiente de completar por el equipo.
@@ -9,7 +11,7 @@
 - Puntos planificados: 36.
 - Rama de trabajo: `feature/iteracion-02-licitaciones`.
 - Issue: `#10 - ITER-02: Implementar gestion de licitaciones y persistencia base`.
-- Estado de la iteracion: implementada y validada localmente; pendiente de revision final del navigator, commits, Pull Request, CI, merge y tag.
+- Estado de la iteracion: implementada e integrada a `main`; no existe tag oficial.
 
 ## Historias seleccionadas
 
@@ -164,8 +166,6 @@ Se implemento concurrencia optimista mediante `xmin` de PostgreSQL y se tradujer
 
 ## Commits y Pull Requests
 
-## Commits y Pull Requests
-
 - Issue: `#10 - ITER-02: Implementar gestion de licitaciones y persistencia base`.
 - Rama: `feature/iteracion-02-licitaciones`.
 - Commit de implementacion: `cce95ad` - `feat(licitaciones): implementar gestion de licitaciones`.
@@ -173,5 +173,5 @@ Se implemento concurrencia optimista mediante `xmin` de PostgreSQL y se tradujer
 - Commit documental: `ed89c5a` - `docs(xp): documentar iteracion 2 y evidencias`.
 - Pull Request: `#12 - feat: completar Iteración 2 - Licitaciones y persistencia base`.
 - CI remoto: Aprobado.
-- Merge a `main`: Pendiente.
-- Tag previsto: `v0.2.0`.
+- Merge a `main`: realizado mediante `fafcc66`.
+- Tag previsto históricamente: `v0.2.0`; no existe.

@@ -1,15 +1,17 @@
 # Iteracion 1 - Landing page y proveedores
 
+> Registro histórico de la Iteración 1. El PR `#9` fue integrado posteriormente a `main` mediante `10cb32b`. La versión `v0.1.0` fue prevista, pero no existe un tag oficial. Las frases de planificación que siguen describen el momento de la iteración.
+
 - Objetivo: entregar una primera version funcional con landing page, navegacion y administracion completa de proveedores por MVC y API REST.
 - Driver principal: Chavala.
 - Navigator principal: Eithel.
 - Rama de trabajo: `feature/iteracion-01-landing-proveedores`.
 - Commit principal: `5696a0f` - `feat(proveedores): completar iteracion 1 de landing y gestion de proveedores`.
 - Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
-- Estado del PR: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
+- Estado actual del PR: integrado a `main` mediante `10cb32b`.
 - Version prevista: `v0.1.0`.
 - Puntos planificados: 30.
-- Estado de la iteracion: tecnicamente implementada en la rama de trabajo, pendiente de merge a `main`.
+- Estado de la iteracion: implementada e integrada a `main`.
 
 ## Historias seleccionadas
 
@@ -66,11 +68,11 @@
 
 ## Resultado
 
-La Iteracion 1 queda tecnicamente implementada en la rama de trabajo. La aplicacion permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al modulo. Falta merge a `main` y tag `v0.1.0` para cerrar la liberacion.
+La Iteracion 1 quedó técnicamente implementada y luego se integró a `main` mediante `10cb32b`. La aplicación permite administrar proveedores mediante MVC y API, utilizando persistencia en PostgreSQL y las validaciones asociadas al módulo. El tag `v0.1.0` no existe.
 
 ## Velocidad observada
 
-30 puntos implementados localmente, pendientes de validacion final por PR y CI.
+30 puntos registrados como implementados en la evidencia histórica. El PR fue integrado; esta fase documental no volvió a ejecutar su CI.
 
 ## Retroalimentacion
 
@@ -88,4 +90,4 @@ Pendiente de registrar despues de la revision real del navigator.
 - Pull Request: `#9 - feat: completar Iteración 1 - Landing page y proveedores`.
 - Base: `main`.
 - Rama origen: `feature/iteracion-01-landing-proveedores`.
-- Estado: Open / Ready to merge, segun dato proporcionado por el equipo; verificacion remota pendiente porque `gh` no esta disponible en el entorno local.
+- Estado: integrado a `main` mediante `10cb32b`.

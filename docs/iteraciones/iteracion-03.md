@@ -1,5 +1,7 @@
 # Iteracion 3 - Ofertas, mejor oferta y aprobaciones
 
+> Registro histórico de la Iteración 3. El PR `#14` fue integrado a `main` mediante `fe5317c`. La versión `v0.3.0` fue prevista, pero no existe un tag oficial. Las ejecuciones citadas no se repitieron en la Fase 9.
+
 - Objetivo: entregar gestion de ofertas, evaluacion economica y niveles de aprobacion parametrizables.
 - Driver: Chavala.
 - Navigator: Eithel.
@@ -107,13 +109,13 @@ El servidor MVC independiente no pudo dejarse disponible en este host: el perfil
 
 ## Estado y pendientes
 
-Iteracion 3 tecnicamente implementada y validada localmente.
+Iteracion 3 técnicamente implementada, validada históricamente e integrada a `main`.
 
 - Issue: Pendiente.
 - Commits: registrados en esta rama.
-- Pull Request: Pendiente.
+- Pull Request: `#14`.
 - CI remoto: Pendiente.
 - Revision formal del Navigator: Pendiente.
-- Merge: Pendiente.
+- Merge: realizado mediante `fe5317c`.
 - Tag `v0.3.0`: Pendiente.
 - Velocidad tecnica: 38 puntos implementados; cierre formal y retroalimentacion del cliente pendientes.

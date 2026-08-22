@@ -2,7 +2,7 @@
 
 ## Información general
 
-Las herramientas de inteligencia artificial se utilizan como apoyo para analizar el enunciado, organizar el trabajo, aclarar conceptos técnicos y preparar propuestas que posteriormente son revisadas y validadas por los integrantes.
+Las herramientas de inteligencia artificial se utilizan como apoyo para analizar el enunciado, organizar el trabajo, aclarar conceptos técnicos y preparar propuestas que posteriormente son revisadas y validadas por los integrantes. Las decisiones, la aceptación del resultado y la responsabilidad académica corresponden a los estudiantes. Las referencias a resultados o pendientes dentro de registros antiguos describen el momento de cada sesión; el estado integrado actual se resume al final.
 
 ## Registro 008 - Fase 5
 
@@ -10,7 +10,7 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Herramienta: OpenAI Codex.
 - Participantes responsables: Chavala como Driver y Eithel como Navigator.
 - Rama: `chore/fase-05-pruebas-cobertura`.
-- Evidencia de integración previa: Iteración 4 fue integrada en `main` mediante `ea9772f`; el merge pendiente referido en registros anteriores corresponde al estado documental previo a esa integración.
+- Evidencia de integración previa: Iteración 4 fue integrada en `main` mediante `ea9772f`; los registros anteriores que todavía no contaban con esa integración describen únicamente su momento histórico.
 - Finalidad: auditoría previa, identificación de brechas, generación y revisión de pruebas unitarias, análisis de concurrencia PostgreSQL, pruebas funcionales HTTP/MVC, suite Playwright y cobertura reproducible.
 - Componentes asistidos: `LicitacionService`, `TipoCambio`, `TipoCambioService`, dominio de licitaciones, `EvaluadorOfertas`, repositorio de tipos de cambio, pruebas Testcontainers, pruebas funcionales, Playwright, ReportGenerator y verificador de umbrales.
 - Validación humana: revisión de cambios; ejecución de UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; revisión de los ROJOS reales de transacción y paginación; revisión del arreglo transaccional; revisión de la suite E2E y de la cobertura combinada.
@@ -89,7 +89,7 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Validaciones realizadas por los estudiantes: revision del codigo; build manual; 76 pruebas unitarias; 22 pruebas de integracion; 13 pruebas funcionales; revision de la migracion; revision de `EvaluadorOfertas`; revision de restricciones PostgreSQL.
 - Resultado: Iteracion 3 tecnicamente implementada y validada localmente con 111/111 pruebas aprobadas.
 - Responsabilidad: Codex se utilizo como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad del trabajo y deben comprender, revisar y defender el codigo.
-- Limitaciones de evidencia: revision formal del Navigator, Pull Request, CI remoto, merge y tag permanecen pendientes.
+- Limitaciones de evidencia en la sesión original: la revisión formal del Navigator, el Pull Request, CI remoto, merge y tag todavía no estaban disponibles. El PR `#14` fue integrado posteriormente mediante `fe5317c`; no existe tag oficial.
 
 ### Registro 007 - Iteración 4
 
@@ -100,7 +100,7 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Componentes asistidos: tipos de cambio, conversión CRC/USD, tema claro/oscuro, Swagger/OpenAPI, ProblemDetails, correlación, pruebas automatizadas, cobertura, Docker, Kubernetes, corrección de defectos y documentación.
 - Correcciones asistidas: fecha duplicada de tipo de cambio, entrada decimal con punto o coma, acción Activar redundante, validación cliente Unicode de proveedores, activación API por PATCH, verbos OpenAPI exactos y PATCH de estado de licitación.
 - Validaciones realizadas por los estudiantes: revisión del código; suite automatizada 174/174; pruebas manuales de CRUD, moneda, tema, Swagger y API; cobertura limpia; build; Docker, health checks y persistencia; renderizado de manifiestos Kubernetes.
-- Resultado: Iteración 4 implementada y validada localmente, con cobertura global de líneas de 87.3% y Docker operativo. El despliegue real en Kubernetes y el cierre Git/GitHub permanecen pendientes.
+- Resultado histórico: Iteración 4 implementada y validada localmente, con cobertura global de líneas de 87.3% y Docker operativo. El despliegue real en Kubernetes se realizó posteriormente en la Fase 7; el PR `#16` quedó integrado mediante `ea9772f`.
 - Responsabilidad: Codex se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad final de comprender, revisar, validar y defender el trabajo.
 - Evidencia Git/GitHub: Issue `#15`, Pull Request `#16` y commits `40c4f5d`, `38c5bf5`, `5cba6c2`, `9b0fa75`, `8103b12` y `2e710d2` registrados. El merge de Iteración 4 a `main` se realizó mediante `ea9772f`; CI remoto, revisión formal final del Navigator, tag `v1.0.0-rc` y GitHub Release permanecen pendientes.
 
@@ -118,7 +118,18 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Resultado: Docker Compose validado con PostgreSQL `healthy`, Web y API operativos, Swagger disponible, datos persistentes, seis migraciones registradas y contenedores de aplicación ejecutados sin root.
 - Responsabilidad: la IA se utilizó como herramienta de asistencia y no constituye un tercer integrante. Driver y Navigator mantienen la responsabilidad de comprender, revisar, validar y defender el trabajo.
 - Evidencia Git/GitHub: Issue `#19`; commits `b26d40a` y `5f16fa6`; Pull Request `#20`; GitHub Actions / Checks 2/2 exitosos; sin conflictos con `main`; revisión formal final del Navigator aprobada por Luis Diego Chavala.
-- Limitaciones: el merge del Pull Request `#20` y la liberación/tag correspondiente permanecen pendientes.
+- Estado posterior: el Pull Request `#20` fue integrado mediante `7557e45`. La liberación/tag no existe.
+
+## Registro de uso — Fase 7
+
+- Fecha histórica: 17 y 18 de agosto de 2026.
+- Herramienta: OpenAI Codex, según la evidencia documental incorporada al repositorio.
+- Participantes responsables: Luis Diego Chavala como Driver y Eithel Herrera Rojas como Navigator.
+- Propósito: apoyar la revisión de manifiestos, la reorganización de recursos Kubernetes, la identificación de problemas de inicio y la preparación de evidencia y documentación.
+- Validación humana registrada: revisión de manifiestos, despliegue local, probes, migraciones, health checks y persistencia con PVC.
+- Integración: PR `#22`, commit de merge `82c8c58`.
+- Responsabilidad: las decisiones de arquitectura, la ejecución y la aceptación corresponden a los estudiantes; la IA fue una herramienta de apoyo.
+- Limitación: la Fase 9 no volvió a ejecutar ni reprodujo esta evidencia histórica.
 
 ## Registro 010 - Fase 8
 
@@ -130,3 +141,21 @@ Las herramientas de inteligencia artificial se utilizan como apoyo para analizar
 - Resultado asistido: consolidación documental de la evidencia del workflow de GitHub Actions, sus validaciones y el estado del PR.
 - Responsabilidad: la IA no constituye un tercer integrante. Driver y Navigator revisaron y validaron el resultado; GitHub Actions confirmó los checks reales, con 12 checks exitosos.
 - Limitaciones: no se atribuyen a estas herramientas commits, push, merge, tags, releases, configuración de protección de `main` ni revisión final del Navigator sin evidencia confirmada.
+
+- Estado posterior verificable en Git: el PR `#24` fue integrado a `main` mediante `36e89ec`. No existe tag oficial ni GitHub Release verificable en el repositorio local.
+
+## Registro de uso — Fase 9
+
+- Fecha: 21 de agosto de 2026.
+- Herramienta: OpenAI Codex.
+- Driver: Luis Diego Chavala.
+- Navigator: Eithel Herrera Rojas.
+- Línea base analizada: `main@36e89ec`.
+- Propósito: auditar el estado local y apoyar la actualización de la documentación para que corresponda con la implementación real.
+- Actividades asistidas: inventario de proyectos y documentos; contraste entre código, pruebas, EF Core, Docker, Kubernetes, GitHub Actions e historial Git; redacción y sincronización de documentos; validación estática de enlaces, nombres, estructura y alcance del diff.
+- Decisiones humanas: el alcance documental, los roles XP, la línea base y la prohibición de modificar código o infraestructura fueron definidos por los estudiantes. Codex no sustituyó esas decisiones.
+- Validación humana: el Driver conserva la responsabilidad de revisar el diff; la revisión del Navigator debe registrarse cuando ocurra y no se declara completada de antemano.
+- Código funcional: no modificado. Tampoco se modificaron suites de pruebas, Docker, Kubernetes ni GitHub Actions.
+- Pruebas ejecutadas: no se ejecutaron suites automatizadas en esta sesión; los conteos y coberturas citados son evidencia histórica o inspección estática claramente identificada.
+- Operaciones Git/GitHub: no se crearon commits, no se hizo push y no se creó Pull Request durante esta asistencia.
+- Responsabilidad final: Luis Diego Chavala y Eithel Herrera Rojas deben comprender, revisar, validar y defender la documentación entregada.

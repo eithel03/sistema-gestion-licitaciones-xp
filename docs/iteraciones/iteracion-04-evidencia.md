@@ -2,7 +2,9 @@
 
 ## Actualización posterior: integración y Fase 5
 
-La integración de Iteración 4 ya no está pendiente: Git evidencia `ea9772f`, merge de `feature/iteracion-04-moneda-ux` a `main` (`Merge pull request #16 from eithel03/feature/iteracion-04-moneda-ux`). La revisión formal del Navigator, CI remoto y el tag `v1.0.0-rc` continúan pendientes.
+La integración de Iteración 4 ya no está pendiente: Git evidencia `ea9772f`, merge de `feature/iteracion-04-moneda-ux` a `main` (`Merge pull request #16 from eithel03/feature/iteracion-04-moneda-ux`). La revisión formal del Navigator no se presume sin evidencia. No existe el tag `v1.0.0-rc`; CI fue consolidado posteriormente en la Fase 8.
+
+> Este archivo conserva evidencia histórica. Sus resultados de pruebas y cobertura no fueron regenerados durante la Fase 9. Kubernetes fue desplegado y validado posteriormente en la Fase 7.
 
 La Fase 5 se ejecutó posteriormente en `chore/fase-05-pruebas-cobertura` con Chavala como Driver y Eithel como Navigator. Sus resultados finales fueron UnitTests 121/121, IntegrationTests 37/37, FunctionalTests 54/54 y E2ETests 6/6; total 218/218. La cobertura combinada de líneas fue Domain 91,64 %, Application 88,60 % y global 89,37 %.
 
@@ -22,8 +24,8 @@ La Fase 5 se ejecutó posteriormente en `chore/fase-05-pruebas-cobertura` con Ch
 | HU-32 | Conversión visual CRC/USD validada sin alterar montos CRC persistidos |
 | HU-33 | Tema claro/oscuro y persistencia de preferencia validados manualmente |
 | HU-34 | Swagger UI, OpenAPI exacto, ProblemDetails y correlación validados |
-| HU-35 | 174/174 pruebas y cobertura limpia validadas localmente; CI remoto pendiente |
-| HU-36 | Docker operativo; Kubernetes renderizado y pendiente de clúster activo |
+| HU-35 | 174/174 pruebas y cobertura limpia validadas históricamente; CI consolidado después en Fase 8 |
+| HU-36 | Docker operativo; Kubernetes estaba solo renderizado en esta iteración y fue desplegado en Fase 7 |
 | HU-37 | Documentación y trazabilidad actualizadas localmente; cierre formal pendiente |
 
 ## Evidencia funcional
@@ -105,7 +107,7 @@ Esta es la medición definitiva y utiliza únicamente los tres reportes actuales
 - `kubectl kustomize k8s`: exitoso.
 - Recursos renderizados: Namespace, ConfigMap, Secret de ejemplo, PostgreSQL, PVC, Deployments y Services de API y Web, probes, requests y limits.
 - `kubectl apply --dry-run=client --validate=false -k k8s`: no completó la consulta al API server porque Kubernetes local no estaba iniciado en `kubernetes.docker.internal:6443`.
-- Despliegue, pods, logs y persistencia real en un clúster activo: Pendiente.
+- En esta iteración el despliegue estaba pendiente; se realizó posteriormente en la Fase 7.
 
 ## Evidencia Git/GitHub y pendientes formales
 
@@ -123,11 +125,11 @@ Esta es la medición definitiva y utiliza únicamente los tres reportes actuales
 
 Antes de esta actualización documental, `git status` indicó `nothing to commit, working tree clean` y `git diff --check` terminó sin errores.
 
-Permanecen pendientes:
+Estado posterior y asuntos sin evidencia:
 
 - CI remoto del Pull Request: Pendiente de evidencia confirmada.
 - Revisión formal final del Navigator: Pendiente.
 - Retroalimentación formal de cierre: Pendiente.
-- Merge a `main`: realizado mediante `ea9772f`.
+- Merge a `main`: realizado mediante `ea9772f`; no está pendiente.
 - Tag `v1.0.0-rc`: Pendiente.
 - GitHub Release: Pendiente.

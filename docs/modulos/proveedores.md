@@ -1,67 +1,63 @@
-# Modulo Proveedores
+# Módulo Proveedores
 
-## Proposito
+## 1. Propósito
 
-Mantener el catalogo inicial de proveedores del Sistema de Gestion de Licitaciones. Este modulo permite registrar organizaciones que luego podran participar en ofertas.
+Mantener el catálogo de organizaciones que pueden presentar ofertas en una licitación.
 
-## Evidencia Iteracion 1
+## 2. Responsabilidades
 
-- Rama: `feature/iteracion-01-landing-proveedores`.
-- Commit: `5696a0f`.
-- Pull Request: `#9`.
-- Driver: Chavala.
-- Navigator: Eithel.
+- Crear, consultar, listar y editar proveedores.
+- Retirar proveedores mediante borrado lógico.
+- Normalizar nombres y evitar duplicados activos.
+- Exponer operaciones MVC y API.
+- Mostrar en el detalle MVC las ofertas relacionadas.
 
-## Responsabilidades
+## 3. Dependencias
 
-- Crear proveedores.
-- Consultar detalle de proveedor.
-- Listar proveedores activos con busqueda, ordenamiento y paginacion.
-- Editar el nombre del proveedor.
-- Retirar proveedores mediante borrado logico.
-- Exponer operaciones equivalentes por API REST.
+- Domain: `Proveedor`, normalizador y errores.
+- Application: `IProveedorService`, contratos y `IProveedorRepository`.
+- Infrastructure: `ProveedorRepository`, configuración EF Core y PostgreSQL.
+- Web: `ProveedoresController`, modelos y vistas.
+- API: `ProveedorEndpoints`.
+- Ofertas: `IOfertaService` para el detalle relacionado.
 
-## Reglas
+## 4. Entradas
 
-- `Id` se genera automaticamente y no se edita desde la interfaz.
-- `Nombre` es requerido.
-- `Nombre` tiene longitud maxima de 200 caracteres en persistencia.
-- `NombreNormalizado` se calcula en el servidor.
-- La normalizacion elimina espacios laterales, reduce espacios repetidos, normaliza Unicode y compara sin distinguir mayusculas/minusculas.
-- Caracteres permitidos: letras, numeros, espacios, punto, coma y parentesis.
-- No se permiten proveedores activos duplicados por nombre normalizado.
-- PostgreSQL refuerza la unicidad con un indice unico sobre `NombreNormalizado`.
-- La eliminacion se implementa como borrado logico mediante `DeletedAt`.
-
-## Entradas
-
-- MVC: formulario de proveedor con campo `Nombre`.
+- MVC: `ProveedorFormViewModel.Nombre`.
 - API: `CrearProveedorRequest` y `ActualizarProveedorRequest`.
-- Listado: `page`, `pageSize`, `search` y `sort`.
+- Listado: `page`, `pageSize`, `search`, `sort`.
 
-## Salidas
+## 5. Salidas
 
-- MVC: vistas de listado, detalle, creacion, edicion y confirmacion de eliminacion.
-- API: `ProveedorResponse` y `ProveedorPage`.
-- Errores controlados con mensajes comprensibles.
+- MVC: listado, detalle, alta, edición y confirmación de retiro.
+- API: `ProveedorResponse`, `ProveedorPage`, 201/200/204 o ProblemDetails.
+- Detalle MVC: proveedor y hasta 100 ofertas relacionadas consultadas por `ProveedorId`.
 
-## Dependencias
+## 6. Reglas de negocio
 
-- `Licitaciones.Domain.Proveedores`.
-- `Licitaciones.Application.Proveedores`.
-- `Licitaciones.Infrastructure.Persistence.LicitacionesDbContext`.
-- `Licitaciones.Infrastructure.Persistence.Repositories.ProveedorRepository`.
-- PostgreSQL configurado para desarrollo local mediante `compose.yaml`.
+- Nombre requerido y máximo 200 caracteres.
+- Espacios laterales eliminados y espacios repetidos reducidos.
+- Normalización Unicode Form C para presentación y Form KC/mayúsculas para comparación.
+- Caracteres permitidos: letras Unicode, números, espacios, punto, coma y paréntesis.
+- Unicidad entre proveedores activos por `NombreNormalizado`.
+- Borrado lógico mediante `DeletedAt`; el nombre puede reutilizarse después.
+- El listado filtra retirados, busca con `ILIKE`, ordena por nombre y pagina hasta 100 registros.
 
-## Errores
+## 7. Errores
 
-- Nombre requerido: rechazo con validacion de servidor.
-- Caracteres invalidos: rechazo con validacion de servidor.
-- Duplicado normalizado: API devuelve `409 Conflict`; MVC muestra error junto al campo.
-- Proveedor no encontrado: API devuelve `404 Not Found`; MVC responde `NotFound`.
+- `Proveedor.NombreRequerido`.
+- `Proveedor.NombreCaracteresInvalidos`.
+- `Proveedor.NombreLongitudMaxima`.
+- `Proveedor.NombreDuplicado`, traducido normalmente a 409 por API.
+- `Proveedor.NoEncontrado`, traducido a 404.
 
-## Pruebas
+Limitación: los contratos no exponen `Version`; el repositorio no convierte explícitamente una carrera concurrente del índice único ni un conflicto de concurrencia en resultado controlado.
 
-- Unitarias: normalizacion, caracteres, creacion, edicion, borrado logico y duplicidad en Application.
-- Integracion: guardar, recuperar, actualizar, indice unico, normalizacion persistida, migracion y borrado logico con PostgreSQL real.
-- Funcionales: landing, listado MVC, crear/editar/rechazar duplicado por MVC, y endpoints API de proveedores.
+## 8. Pruebas relacionadas
+
+- Unitarias: `ProveedorTests`, `ProveedorServiceTests`.
+- Integración: `ProveedorPersistenceTests`.
+- Funcionales: `ProveedorApiTests`, `ProveedorMvcTests`.
+- E2E: `ProveedorE2ETests`.
+
+Los resultados numéricos son evidencia histórica consolidada en [pruebas.md](../pruebas.md), no una ejecución de Fase 9.

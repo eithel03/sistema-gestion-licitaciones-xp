@@ -1,143 +1,134 @@
 # API REST
 
-## Proveedores - Iteracion 1
+## Estado actual
 
-La API REST de proveedores esta disponible en el proyecto `Licitaciones.Api`.
+`Licitaciones.Api` es un host ASP.NET Core Minimal API separado de la interfaz MVC. Todas las operaciones de negocio están bajo `/api/v1`. El versionado es fijo por ruta; no existe negociación ni una biblioteca formal de versionado.
 
-| Metodo | Ruta | Resultado principal |
-| --- | --- | --- |
-| GET | `/api/v1/proveedores` | Lista paginada de proveedores activos |
-| GET | `/api/v1/proveedores/{id}` | Detalle de proveedor |
-| POST | `/api/v1/proveedores` | Crea proveedor y devuelve `201 Created` |
-| PUT | `/api/v1/proveedores/{id}` | Actualiza proveedor y devuelve `200 OK` |
-| DELETE | `/api/v1/proveedores/{id}` | Retira proveedor y devuelve `204 No Content` |
+## Proveedores
 
-Parametros de listado:
+| Método | Ruta | Resultado principal |
+|---|---|---|
+| GET | `/api/v1/proveedores` | `ProveedorPage`. |
+| GET | `/api/v1/proveedores/{id}` | `ProveedorResponse` o 404. |
+| POST | `/api/v1/proveedores` | Crea y devuelve 201. |
+| PUT | `/api/v1/proveedores/{id}` | Actualiza y devuelve 200. |
+| DELETE | `/api/v1/proveedores/{id}` | Borrado lógico y 204. |
 
-- `page`: pagina solicitada.
-- `pageSize`: tamano de pagina, maximo 100.
-- `search`: filtro por nombre.
-- `sort`: `name` o `name_desc`.
+Listado: `page`, `pageSize`, `search`, `sort` (`name` o `name_desc`).
 
-Errores esperados:
+## Licitaciones
 
-- `400 Bad Request`: datos invalidos.
-- `404 Not Found`: proveedor inexistente o retirado.
-- `409 Conflict`: nombre equivalente a otro proveedor activo.
+| Método | Ruta | Resultado principal |
+|---|---|---|
+| GET | `/api/v1/licitaciones` | `LicitacionPage`. |
+| GET | `/api/v1/licitaciones/{id}` | Detalle o 404. |
+| POST | `/api/v1/licitaciones` | Crea en Borrador y devuelve 201. |
+| PUT | `/api/v1/licitaciones/{id}` | Actualiza un borrador. |
+| DELETE | `/api/v1/licitaciones/{id}` | Borrado lógico y 204. |
+| POST | `/api/v1/licitaciones/{id}/publish` | Publica. |
+| POST | `/api/v1/licitaciones/{id}/close` | Cierra. |
+| PATCH | `/api/v1/licitaciones/{id}/estado` | Cambia estado mediante `CambiarEstadoLicitacionRequest`. |
 
-### Contratos reales
+Listado: `page`, `pageSize`, `search`, `sort` (`code`, `code_desc`, `close_desc`). Las transiciones reales son Borrador→Publicada, Borrador→Cerrada y Publicada→Cerrada.
 
-Solicitudes:
+## Ofertas y mejor oferta
 
-- `CrearProveedorRequest`: `nombre`.
-- `ActualizarProveedorRequest`: `nombre`.
+| Método | Ruta | Resultado principal |
+|---|---|---|
+| GET | `/api/v1/ofertas` | `OfertaPage`. |
+| GET | `/api/v1/ofertas/{id}` | Detalle o 404. |
+| POST | `/api/v1/ofertas` | Crea y devuelve 201. |
+| PUT | `/api/v1/ofertas/{id}` | Actualiza monto. |
+| DELETE | `/api/v1/ofertas/{id}` | Elimina y devuelve 204. |
+| GET | `/api/v1/licitaciones/{id}/ofertas` | Ofertas paginadas de la licitación. |
+| POST | `/api/v1/licitaciones/{id}/ofertas` | Crea oferta usando el id de ruta. |
+| GET | `/api/v1/licitaciones/{id}/mejor-oferta` | Mejor oferta, ahorro, clasificación y aprobador opcional. |
 
-Respuesta de proveedor:
+Listado general: `page`, `pageSize`, `licitacionId`, `proveedorId`, `sort`. Los órdenes reconocidos son `registered`, `registered_desc`, `amount` y `amount_desc`.
 
-- `id`
-- `nombre`
-- `nombreNormalizado`
-- `createdAt`
-- `updatedAt`
-- `deletedAt`
+El endpoint de mejor oferta devuelve 200 con `tieneOferta=false` cuando no hay ofertas. Cuando existe ganadora, consulta los niveles de aprobación y agrega el nombre del aprobador si se encuentra un rango.
 
-Respuesta paginada:
+## Niveles de aprobación
 
-- `items`
-- `totalItems`
-- `page`
-- `pageSize`
-- `totalPages`
+| Método | Ruta | Resultado principal |
+|---|---|---|
+| GET | `/api/v1/niveles-aprobacion` | Página ordenada por mínimo. |
+| GET | `/api/v1/niveles-aprobacion/{id}` | Detalle o 404. |
+| POST | `/api/v1/niveles-aprobacion` | Crea y devuelve 201. |
+| PUT | `/api/v1/niveles-aprobacion/{id}` | Actualiza. |
+| DELETE | `/api/v1/niveles-aprobacion/{id}` | Elimina y devuelve 204. |
+| GET | `/api/v1/niveles-aprobacion/aprobador?montoCrc=...` | Aprobador aplicable o 404. |
 
-### Evidencia Iteracion 1
+Listado: `page`, `pageSize`.
 
-- Rama: `feature/iteracion-01-landing-proveedores`.
-- Commit: `5696a0f`.
-- Pull Request: `#9`.
-- Pruebas funcionales: `ProveedorApiTests`.
+## Tipos de cambio y conversión
 
+| Método | Ruta | Resultado principal |
+|---|---|---|
+| GET | `/api/v1/tipos-cambio` | Página de tipos de cambio. |
+| GET | `/api/v1/tipos-cambio/activo` | Registro activo o 404. |
+| GET | `/api/v1/tipos-cambio/{id}` | Detalle o 404. |
+| POST | `/api/v1/tipos-cambio` | Crea y devuelve 201. |
+| PUT | `/api/v1/tipos-cambio/{id}` | Actualiza fecha y valor. |
+| PATCH | `/api/v1/tipos-cambio/{id}/activar` | Activa y desactiva el anterior. |
+| DELETE | `/api/v1/tipos-cambio/{id}` | Elimina y devuelve 204. |
+| GET | `/api/v1/moneda/convertir?montoCrc=...&moneda=...` | Presentación en CRC o USD. |
 
-## Licitaciones - Iteracion 2
+Listado: `page`, `pageSize`. La conversión USD requiere un tipo activo; CRC se devuelve sin consultar una tasa.
 
-La API REST de licitaciones esta disponible bajo /api/v1/licitaciones.
+## DTO
 
-Endpoints reales:
-- GET /api/v1/licitaciones: lista paginada de licitaciones activas; responde 200.
-- GET /api/v1/licitaciones/{id}: consulta detalle; responde 200 o 404.
-- POST /api/v1/licitaciones: crea licitacion en Borrador; responde 201, 400 o 409.
-- PUT /api/v1/licitaciones/{id}: actualiza licitacion permitida; responde 200, 400, 404 o 409.
-- DELETE /api/v1/licitaciones/{id}: aplica borrado logico; responde 204, 400, 404 o 409.
-- POST /api/v1/licitaciones/{id}/publish: publica una licitacion en Borrador y vigente; responde 200, 400, 404 o 409.
-- POST /api/v1/licitaciones/{id}/close: cierra una licitacion Publicada; responde 200, 400, 404 o 409.
+Los contratos de negocio están en Application y no exponen directamente entidades EF Core. Incluyen solicitudes de creación/actualización, respuestas, páginas y resultados de mejor oferta, aprobador y moneda. `CrearOfertaLicitacionRequest` vive en el proyecto API para la variante anidada.
 
-Parametros de listado reales:
-- page, pageSize, search y sort.
-- page menor que 1 se normaliza a 1; pageSize menor que 1 se normaliza a 10 y el maximo es 100.
-- search filtra por Codigo o Titulo.
-- sort acepta code, code_desc y close_desc.
+## Paginación y filtros
 
-Contratos de solicitud reales:
-- CrearLicitacionRequest: codigo, titulo, presupuestoCrc, fechaCierreUtc.
-- ActualizarLicitacionRequest: codigo, titulo, presupuestoCrc, fechaCierreUtc, version.
+- `page < 1` se normaliza a 1.
+- `pageSize < 1` usa el valor por defecto del módulo.
+- `pageSize > 100` se limita a 100.
+- Proveedores: búsqueda por nombre y orden.
+- Licitaciones: búsqueda por código/título y orden.
+- Ofertas: filtros por licitación/proveedor y orden.
+- Aprobaciones y tipos de cambio: paginación sin filtro textual.
 
-Respuesta LicitacionResponse:
-- id, codigo, codigoNormalizado, titulo, presupuestoCrc, fechaCierreUtc.
-- estado, estadoEfectivo, createdAt, updatedAt, publishedAt, closedAt, deletedAt, version.
-- LicitacionPage: items, totalItems, page, pageSize, totalPages.
+## ProblemDetails y correlación
 
-Errores esperados:
-- 400 Bad Request: validaciones de dominio, datos invalidos o transiciones no permitidas.
-- 404 Not Found: licitacion inexistente o retirada.
-- 409 Conflict: codigo normalizado duplicado o conflicto de concurrencia.
-- ProblemDetails incluye code con el codigo de error de aplicacion.
+Los resultados controlados usan `application/problem+json` con:
 
-Publicacion, cierre, borrado logico y concurrencia:
-- publish cambia Borrador a Publicada si la fecha de cierre sigue vigente.
-- close cambia Publicada a Cerrada.
-- DELETE marca DeletedAt y excluye la licitacion de listados activos.
-- version via ActualizarLicitacionRequest y xmin de PostgreSQL detectan concurrencia.
-- Una Publicada vencida se devuelve con estadoEfectivo Cerrada.
+- `status`;
+- `title` y `detail`;
+- extensión `code` con el código de negocio;
+- extensión `correlationId`.
 
-### Evidencia Iteracion 2
-- Rama: feature/iteracion-02-licitaciones.
-- Historias: HU-12 a HU-19.
-- Pruebas: ejecutadas localmente; resultado global 64/64.
-- PR: Pendiente.
-- CI remoto: Pendiente.
-- Merge: Pendiente.
+`CorrelationIdMiddleware` reutiliza `X-Correlation-ID` si el cliente lo envía o genera un GUID. El mismo valor se agrega al encabezado de respuesta. Las excepciones no controladas pasan por un manejador de 500 con un título genérico.
 
-## Ofertas y niveles de aprobacion - Iteracion 3
+## Códigos HTTP
 
-### Ofertas
+- 200: consultas y actualizaciones correctas.
+- 201: creación correcta.
+- 204: eliminación correcta.
+- 400: validación o transición inválida.
+- 404: recurso o configuración activa no encontrada.
+- 409: duplicidad, traslape, activo único o concurrencia.
+- 500: excepción inesperada manejada globalmente.
 
-| Metodo | Ruta | Parametros o contrato | Respuesta observable |
-| --- | --- | --- | --- |
-| GET | `/api/v1/ofertas` | Query `page`, `pageSize`, `licitacionId`, `proveedorId`, `sort` | `200 OK` con `OfertaPage`. |
-| GET | `/api/v1/ofertas/{id}` | `id` UUID | `200 OK` con `OfertaResponse` o `404 Not Found`. |
-| POST | `/api/v1/ofertas` | `CrearOfertaRequest` | `201 Created`; `400 Bad Request`, `404 Not Found` o `409 Conflict`. |
-| PUT | `/api/v1/ofertas/{id}` | `ActualizarOfertaRequest` | `200 OK`; `400`, `404` o `409`. |
-| DELETE | `/api/v1/ofertas/{id}` | `id` UUID | `204 No Content`; `400`, `404` o `409`. |
-| GET | `/api/v1/licitaciones/{id}/ofertas` | `id` UUID; query `page`, `pageSize` | `200 OK` con `OfertaPage`. |
-| POST | `/api/v1/licitaciones/{id}/ofertas` | `CrearOfertaLicitacionRequest` | `201 Created`; `400`, `404` o `409`. |
-| GET | `/api/v1/licitaciones/{id}/mejor-oferta` | `id` UUID | `200 OK` con `MejorOfertaResponse` o error controlado. |
+## Health check
 
-`CrearOfertaRequest` contiene `licitacionId`, `proveedorId` y `montoOfertadoCrc`. La variante anidada recibe `proveedorId` y `montoOfertadoCrc`; el identificador de licitacion proviene de la ruta. `ActualizarOfertaRequest` contiene `montoOfertadoCrc` y `version` opcional.
+`GET /health` devuelve texto con el estado. En ejecución normal, el health check de PostgreSQL se agrega cuando `HealthChecks:PostgreSQL:Enabled=true`; se omite en `Testing`.
 
-`OfertaResponse` expone `id`, `licitacionId`, `proveedorId`, `montoOfertadoCrc`, `fechaRegistro`, `updatedAt` y `version`. `MejorOfertaResponse` incluye `tieneOferta`, la mejor oferta opcional, ahorro CRC, porcentaje, clasificacion, descripcion y aprobador opcional. Sin ofertas devuelve `200 OK` con `tieneOferta = false` y descripcion `Sin ofertas validas`.
+## Swagger y OpenAPI
 
-### Niveles de aprobacion
+- Swagger UI: `/swagger`.
+- Documento: `/swagger/v1/swagger.json`.
 
-| Metodo | Ruta | Parametros o contrato | Respuesta observable |
-| --- | --- | --- | --- |
-| GET | `/api/v1/niveles-aprobacion` | Query `page`, `pageSize` | `200 OK` con `NivelAprobacionPage`. |
-| GET | `/api/v1/niveles-aprobacion/{id}` | `id` UUID | `200 OK` con `NivelAprobacionResponse` o `404 Not Found`. |
-| POST | `/api/v1/niveles-aprobacion` | `CrearNivelAprobacionRequest` | `201 Created`; `400 Bad Request` o `409 Conflict`. |
-| PUT | `/api/v1/niveles-aprobacion/{id}` | `ActualizarNivelAprobacionRequest` | `200 OK`; `400`, `404` o `409`. |
-| DELETE | `/api/v1/niveles-aprobacion/{id}` | `id` UUID | `204 No Content`; `404` o `409`. |
-| GET | `/api/v1/niveles-aprobacion/aprobador?montoCrc=...` | Query decimal `montoCrc` | `200 OK` con `AprobadorResponse`; `400` o `404`. |
+El documento OpenAPI actual es un objeto manual definido en `OpenApiEndpoints`. Enumera rutas y métodos principales, pero es superficial:
 
-Los contratos de alta y actualizacion contienen `montoMinimoCrc`, `montoMaximoCrc` nullable y `aprobador`; la actualizacion agrega `version` opcional. La seleccion del aprobador consulta los rangos persistidos.
+- los esquemas son objetos sin propiedades;
+- la mayoría de POST/PUT no documenta su request body;
+- las respuestas se generalizan y no reflejan siempre 201 o 204;
+- algunos nombres de esquema de respuesta son aproximados.
 
-Los endpoints consumen servicios y DTO de Application. Los errores se traducen localmente a `ProblemDetails` con extension `code` y estados 400/404/409; no se incorporo el manejo global de `ProblemDetails` previsto para Iteracion 4.
+Por tanto, Swagger UI existe y permite consultar el documento, pero no debe considerarse una descripción completa de DTO, cuerpos y respuestas. Generar un contrato OpenAPI derivado de los endpoints es trabajo técnico futuro y no se modifica en Fase 9.
 
-Evidencia: rama `feature/iteracion-03-ofertas-aprobacion`, commit API `37bcb55` y `Iteration3ApiTests`. Pull Request, CI remoto, merge y tag `v0.3.0`: Pendientes.
+## Pruebas relacionadas
+
+`ProveedorApiTests`, `LicitacionApiTests`, `Iteration3ApiTests`, `Iteration4ApiTests`, `ApiHardeningTests` y pruebas E2E/funcionales indirectas. Los resultados numéricos disponibles son evidencia histórica descrita en [pruebas.md](pruebas.md).
